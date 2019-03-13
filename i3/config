@@ -171,11 +171,11 @@ gaps inner 10
 gaps outer 10
 
 # colors                border  background text    indicator child border
-client.focused          #000000 #111010    #f3f4f5 #212121   #212121
-client.focused_inactive #000000 #111010    #f3f4f5 #212121   #212121
-client.unfocused        #000000 #111010    #888888 #212121   #212121
-client.urgent           #000000 #111010    #f3f4f5 #e57373   #e57373
-client.placeholder      #000000 #111010    #f3f4f5 #212121   #212121
+client.focused          #000000 #101010    #f3f4f5 #212121   #212121
+client.focused_inactive #000000 #101010    #f3f4f5 #212121   #212121
+client.unfocused        #000000 #101010    #888888 #212121   #212121
+client.urgent           #000000 #101010    #f3f4f5 #e57373   #e57373
+client.placeholder      #000000 #101010    #f3f4f5 #212121   #212121
 client.background       #111010
 
 # tweaks

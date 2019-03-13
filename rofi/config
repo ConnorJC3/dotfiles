@@ -1,0 +1,6 @@
+rofi.lines: 12
+rofi.font: Noto Sans 12
+rofi.show-icons: true
+rofi.theme: ~/.config/rofi/oxide.rasi
+rofi.display-window: Window
+rofi.display-drun: Launch

@@ -23,26 +23,39 @@
   - bat
   - ranger
   - atool
-  - ffmpegthumnailer
+  - ffmpegthumbnailer
   - w3m
+  - imlib2
   - highlight
   - poppler
+  - pacman-contrib
+  - dunst
+  - libnotify
 
 - yay:
   - i3lock-color
   - i3lock-fancy-rapid-git
   - polybar
   - nerd-fonts-complete
+  - paper-icon-theme
 
 - link:
     ~/.xinitrc:
     ~/.Xresources:
+    ~/.zshrc:
+    ~/.exports:
+    ~/.dircolors:
     ~/.config/i3:
     ~/.config/alacritty:
     ~/.config/polybar:
     ~/.config/compton:
     ~/.config/fontconfig:
     ~/.config/ranger:
+    ~/.config/rofi:
+    ~/.config/dunst:
 
 - shell:
-  - chmod +x ~/.config/polybar/launch.sh
+  - [chmod +x ~/.config/polybar/launch.sh, Marking polybar launch.sh executable]
+  - [chmod +x ~/.config/polybar/scripts/*.sh, Marking polybar scripts executable]
+  - [chmod +x ./utils/*.sh, Marking util scripts executable]
+  - [./utils/install-oh-my-zsh.sh, Installing oh-my-zsh]
