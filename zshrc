@@ -9,9 +9,10 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Plugins
 plugins=(
-    archive
     extract
     git
+    sudo
+    systemd
 )
 
 # Environment variables
