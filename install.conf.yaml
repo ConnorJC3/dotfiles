@@ -1,0 +1,39 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+      force: true
+
+- pacman:
+  - base-devel
+  - noto-fonts
+  - zsh
+  - neovim
+  - i3-gaps
+  - reflector
+  - libglvnd
+  - xorg-server
+  - xorg-xinit
+  - xorg-fonts-75dpi
+  - xorg-fonts-100dpi
+  - alacritty
+  - compton
+  - xautolock
+  - rofi
+
+- aurman:
+  - i3lock-color
+  - i3lock-fancy-rapid-git
+  - polybar
+  - nerd-fonts-complete
+  - adobe-source-sans-pro-fonts
+
+- link:
+    ~/.xinitrc:
+    ~/.Xresources:
+    ~/.config/i3:
+    ~/.config/alacritty:
+    ~/.config/polybar:
+
+- shell:
+  - chmod +x ~/.config/polybar/launch.sh
