@@ -5,8 +5,8 @@
       force: true
 
 - pacman:
-  - base-devel
   - noto-fonts
+  - noto-fonts-emoji
   - zsh
   - neovim
   - i3-gaps
@@ -20,13 +20,19 @@
   - compton
   - xautolock
   - rofi
+  - bat
+  - ranger
+  - atool
+  - ffmpegthumnailer
+  - w3m
+  - highlight
+  - poppler
 
-- aurman:
+- yay:
   - i3lock-color
   - i3lock-fancy-rapid-git
   - polybar
   - nerd-fonts-complete
-  - adobe-source-sans-pro-fonts
 
 - link:
     ~/.xinitrc:
@@ -34,6 +40,9 @@
     ~/.config/i3:
     ~/.config/alacritty:
     ~/.config/polybar:
+    ~/.config/compton:
+    ~/.config/fontconfig:
+    ~/.config/ranger:
 
 - shell:
   - chmod +x ~/.config/polybar/launch.sh
