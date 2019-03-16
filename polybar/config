@@ -59,9 +59,9 @@ font-0 = Hack Nerd Font:size=10
 
 modules-left = i3
 modules-center =
-modules-right = pacman aur root-filesystem boot-filesystem cpu memory wlan alsa date 
+modules-right = pacman aur root-filesystem boot-filesystem cpu memory date 
 
-tray-position = right
+tray-position = none
 tray-padding = 2
 ;tray-background = #0063ff
 

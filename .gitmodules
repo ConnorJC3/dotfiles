@@ -4,3 +4,6 @@
 [submodule "dotbot-yay"]
 	path = dotbot-yay
 	url = https://github.com/alexwh/dotbot-yay
+[submodule "powerlevel10k"]
+	path = powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k

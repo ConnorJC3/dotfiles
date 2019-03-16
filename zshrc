@@ -1,5 +1,8 @@
-# Themes
-ZSH_THEME="agnoster"
+# Theme
+ZSH_THEME="powerlevel10k/powerlevel10k"
+POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status context dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs dir_writable kubecontext time)
 
 # Case-sensitive completion
 CASE_SENSITIVE="true"

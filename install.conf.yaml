@@ -31,6 +31,8 @@
   - pacman-contrib
   - dunst
   - libnotify
+  - zathura
+  - zathura-pdf-poppler
 
 - yay:
   - i3lock-color
@@ -59,3 +61,6 @@
   - [chmod +x ~/.config/polybar/scripts/*.sh, Marking polybar scripts executable]
   - [chmod +x ./utils/*.sh, Marking util scripts executable]
   - [./utils/install-oh-my-zsh.sh, Installing oh-my-zsh]
+
+- link:
+    ~/.oh-my-zsh/custom/themes/powerlevel10k:
