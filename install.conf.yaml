@@ -5,6 +5,21 @@
       force: true
 
 - pacman:
+  - pigz
+  - pacmatic
+  - powerpill
+
+- link:
+    ~/.config/pacman:
+    ~/.config/yay:
+
+- shell:
+  - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
+  - [sudo cp ./root-config/powerpill.json /etc/powerpill/powerpill.json, Installing powerpill config]
+  - [sudo cp ./root-config/pacmatic-wrapper /usr/bin/pacmatic-wrapper, Installing pacmatic wrapper]
+  - [sudo chmod +x /usr/bin/pacmatic-wrapper, Marking pacmantic wrapper executable]
+
+- pacman:
   - noto-fonts
   - noto-fonts-emoji
   - zsh
@@ -14,8 +29,7 @@
   - libglvnd
   - xorg-server
   - xorg-xinit
-  - xorg-fonts-75dpi
-  - xorg-fonts-100dpi
+  - xorg-xprop
   - alacritty
   - compton
   - xautolock
@@ -33,12 +47,14 @@
   - libnotify
   - zathura
   - zathura-pdf-poppler
+  - neofetch
+  - iwd
 
 - yay:
   - i3lock-color
   - i3lock-fancy-rapid-git
   - polybar
-  - nerd-fonts-complete
+  - nerd-fonts-hack
   - paper-icon-theme
 
 - link:
@@ -55,12 +71,17 @@
     ~/.config/ranger:
     ~/.config/rofi:
     ~/.config/dunst:
+    ~/.config/neofetch:
+    ~/.oh-my-zsh:
 
 - shell:
   - [chmod +x ~/.config/polybar/launch.sh, Marking polybar launch.sh executable]
   - [chmod +x ~/.config/polybar/scripts/*.sh, Marking polybar scripts executable]
-  - [chmod +x ./utils/*.sh, Marking util scripts executable]
-  - [./utils/install-oh-my-zsh.sh, Installing oh-my-zsh]
 
-- link:
-    ~/.oh-my-zsh/custom/themes/powerlevel10k:
+- shell:
+  - [sudo ln -sf /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d, Disabling bitmap fonts]
+  - [sudo ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d, Enabling sub-pixel RGB]
+  - [sudo ln -sf /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d, Enabling LCD filter]
+  - [sudo cp ./root-config/reflector.service /etc/systemd/system/reflector.service, Installing reflector service]
+  - [sudo systemctl enable reflector, Enabling reflector service]
+  - [sudo systemctl enable iwd, Enabling iwd service]

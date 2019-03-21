@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+pacman_program="powerpill" /usr/bin/pacmatic "$@"

@@ -417,14 +417,14 @@ menu-2-1-exec = menu-open-0
 [module/pacman]
 type = custom/script
 exec = ~/.config/polybar/scripts/pacman.sh
-interval = 600
+interval = 60
 label = %{F#5c5c5c}pacman%{F-} %output%
 format-underline = ${colors.notice}
 
 [module/aur]
 type = custom/script
 exec = ~/.config/polybar/scripts/aur.sh
-interval = 600
+interval = 60
 label = %{F#5c5c5c}aur%{F-} %output%
 format-underline = ${colors.notice}
 
