@@ -183,6 +183,7 @@ focus_follows_mouse no
 
 # window tweaks
 for_window [class=".*"] title_format "      %title"
+for_window [title="^Minesweeper$"] floating enable
 
 bindsym $mod+r mode "resize"
 

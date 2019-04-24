@@ -6,7 +6,6 @@
 
 - pacman:
   - pigz
-  - pacmatic
   - powerpill
 
 - link:
@@ -16,8 +15,6 @@
 - shell:
   - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
   - [sudo cp ./root-config/powerpill.json /etc/powerpill/powerpill.json, Installing powerpill config]
-  - [sudo cp ./root-config/pacmatic-wrapper /usr/bin/pacmatic-wrapper, Installing pacmatic wrapper]
-  - [sudo chmod +x /usr/bin/pacmatic-wrapper, Marking pacmantic wrapper executable]
 
 - pacman:
   - noto-fonts
