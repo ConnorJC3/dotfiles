@@ -28,3 +28,12 @@ source ~/.oh-my-zsh/oh-my-zsh.sh
 if [ -x "$(command -v dircolors)" ]; then
     eval "$(dircolors -b ~/.dircolors)"
 fi
+
+# rbenv
+eval "$(rbenv init -)"
+
+# Autostart X on login
+if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+  exec startx
+fi
+

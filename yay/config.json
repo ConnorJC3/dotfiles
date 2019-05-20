@@ -5,7 +5,7 @@
 	"editorflags": "",
 	"makepkgbin": "makepkg",
 	"makepkgconf": "",
-	"pacmanbin": "/usr/bin/powerpill",
+	"pacmanbin": "/usr/bin/pacman",
 	"pacmanconf": "/etc/pacman.conf",
 	"tarbin": "bsdtar",
 	"redownload": "no",
