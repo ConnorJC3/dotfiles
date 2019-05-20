@@ -6,7 +6,6 @@
 
 - pacman:
   - pigz
-  - powerpill
 
 - link:
     ~/.config/pacman:
@@ -14,7 +13,6 @@
 
 - shell:
   - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
-  - [sudo cp ./root-config/powerpill.json /etc/powerpill/powerpill.json, Installing powerpill config]
 
 - pacman:
   - noto-fonts
@@ -45,7 +43,6 @@
   - zathura
   - zathura-pdf-poppler
   - neofetch
-  - iwd
 
 - yay:
   - i3lock-color
@@ -81,4 +78,3 @@
   - [sudo ln -sf /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d, Enabling LCD filter]
   - [sudo cp ./root-config/reflector.service /etc/systemd/system/reflector.service, Installing reflector service]
   - [sudo systemctl enable reflector, Enabling reflector service]
-  - [sudo systemctl enable iwd, Enabling iwd service]
