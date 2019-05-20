@@ -1,5 +1,5 @@
 ! Oxide Color scheme
-! Diki Ananta (https://github.com/dikiaap/dotfiles)
+! Many thanks to Diki Ananta (https://github.com/dikiaap/dotfiles)
 
 #define oxide_00_black      #212121
 #define oxide_01_red        #e57373
@@ -13,11 +13,7 @@
 #define oxide_15_bright_white   #f3f4f5
 
 *foreground:   oxide_07_white
-#ifdef background_opacity
-*background:   [background_opacity]oxide_00_black
-#else
 *background:   oxide_00_black
-#endif
 *cursorColor:  oxide_07_white
 
 *color0:       oxide_00_black
