@@ -13,68 +13,34 @@
 
 - shell:
   - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
+  - [sudo cp ./root-config/reflector.conf /etc/xdg/reflector/reflector.conf, Installing reflector config]
+  - [sudo systemctl enable --now reflector, Enabling reflector service]
 
 - pacman:
   - noto-fonts
   - noto-fonts-emoji
   - zsh
-  - neovim
-  - i3-gaps
   - reflector
-  - libglvnd
-  - xorg-server
-  - xorg-xinit
-  - xorg-xprop
   - alacritty
-  - compton
-  - xautolock
-  - rofi
   - bat
-  - ranger
-  - atool
-  - ffmpegthumbnailer
-  - w3m
-  - imlib2
-  - highlight
-  - poppler
   - pacman-contrib
-  - dunst
-  - libnotify
-  - zathura
-  - zathura-pdf-poppler
   - neofetch
 
 - yay:
-  - i3lock-color
-  - i3lock-fancy-rapid-git
-  - polybar
   - nerd-fonts-hack
-  - paper-icon-theme
 
 - link:
     ~/.xinitrc:
-    ~/.Xresources:
     ~/.zshrc:
-    ~/.exports:
+    ~/.zshenv:
+    ~/.zlogin:
     ~/.dircolors:
-    ~/.config/i3:
     ~/.config/alacritty:
-    ~/.config/polybar:
-    ~/.config/compton:
     ~/.config/fontconfig:
-    ~/.config/ranger:
-    ~/.config/rofi:
-    ~/.config/dunst:
     ~/.config/neofetch:
     ~/.oh-my-zsh:
-
-- shell:
-  - [chmod +x ~/.config/polybar/launch.sh, Marking polybar launch.sh executable]
-  - [chmod +x ~/.config/polybar/scripts/*.sh, Marking polybar scripts executable]
 
 - shell:
   - [sudo ln -sf /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d, Disabling bitmap fonts]
   - [sudo ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d, Enabling sub-pixel RGB]
   - [sudo ln -sf /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d, Enabling LCD filter]
-  - [sudo cp ./root-config/reflector.service /etc/systemd/system/reflector.service, Installing reflector service]
-  - [sudo systemctl enable reflector, Enabling reflector service]
