@@ -6,6 +6,7 @@
 
 - pacman:
   - pigz
+  - pbzip2
 
 - link:
     ~/.config/pacman:
@@ -17,6 +18,8 @@
   - [sudo systemctl enable --now reflector, Enabling reflector service]
 
 - pacman:
+  - plasma-meta
+  - kde-applications-meta
   - noto-fonts
   - noto-fonts-emoji
   - zsh
@@ -38,9 +41,9 @@
     ~/.config/alacritty:
     ~/.config/fontconfig:
     ~/.config/neofetch:
-    ~/.oh-my-zsh:
 
 - shell:
   - [sudo ln -sf /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d, Disabling bitmap fonts]
   - [sudo ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d, Enabling sub-pixel RGB]
   - [sudo ln -sf /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d, Enabling LCD filter]
+  - [sudo systemctl enable paccache.timer, Enabling paccache timer]

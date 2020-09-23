@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 set -e
+./check.sh
+yay -Syu
 
 CONFIG="install.conf.yaml"
 DOTBOT_DIR="dotbot"
