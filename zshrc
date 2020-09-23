@@ -2,7 +2,7 @@
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status context dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs dir_writable kubecontext time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs dir_writable time)
 
 # Case-sensitive completion
 CASE_SENSITIVE="true"
@@ -31,9 +31,3 @@ fi
 
 # rbenv
 eval "$(rbenv init -)"
-
-# Autostart X on login
-if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-  exec startx
-fi
-

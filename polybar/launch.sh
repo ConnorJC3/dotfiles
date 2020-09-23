@@ -6,5 +6,5 @@ killall -q polybar
 # Wait for the processes to shut down
 while pgrep -x polybar >/dev/null; do sleep 1; done
 
-polybar dummy &
+#polybar dummy &
 polybar bar &

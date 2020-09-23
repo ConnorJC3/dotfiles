@@ -55,6 +55,7 @@
     ~/.xinitrc:
     ~/.Xresources:
     ~/.zshrc:
+    ~/.zprofile:
     ~/.exports:
     ~/.dircolors:
     ~/.config/i3:

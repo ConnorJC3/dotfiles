@@ -59,7 +59,7 @@ font-0 = Hack Nerd Font:size=10
 
 modules-left = i3
 modules-center =
-modules-right = pacman aur root-filesystem boot-filesystem cpu memory date 
+modules-right = ace-cloud ace-home pacman aur root-filesystem boot-filesystem cpu memory date 
 
 tray-position = none
 tray-padding = 2
@@ -427,6 +427,20 @@ exec = ~/.config/polybar/scripts/aur.sh
 interval = 60
 label = %{F#5c5c5c}aur%{F-} %output%
 format-underline = ${colors.notice}
+
+[module/ace-cloud]
+type = custom/script
+exec = ~/.config/polybar/scripts/ace-cloud.sh
+interval = 60
+label = %{F#5c5c5c}ace-cloud%{F-} %output%
+format-underline = ${xrdb:color2}
+
+[module/ace-home]
+type = custom/script
+exec = ~/.config/polybar/scripts/ace-home.sh
+interval = 60
+label = %{F#5c5c5c}uf-ace.com%{F-} %output%
+format-underline = ${xrdb:color2}
 
 [settings]
 screenchange-reload = true

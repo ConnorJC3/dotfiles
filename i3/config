@@ -31,7 +31,7 @@ font pango:Noto Sans 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec --no-startup-id alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -185,6 +185,10 @@ focus_follows_mouse no
 for_window [class=".*"] title_format "      %title"
 for_window [class="^Gwe$"] floating enable
 for_window [class="^Nvidia-settings$"] floating enable
+for_window [class="^Steam$"] floating enable
+for_window [class="^Steam$" title="^Steam$"] floating disable
+for_window [class="^Chromium-browser$"] move scratchpad
+for_window [class="^Polybar$"] border pixel 0
 
 bindsym $mod+r mode "resize"
 
@@ -195,3 +199,5 @@ exec_always --no-startup-id nvidia-settings -l
 
 exec --no-startup-id xautolock -time 10 -locker "i3lock-fancy-rapid 5 3 --timepos='x+110:h-70' --datepos='x+43:h-45' --clock --date-align 1 --datestr 'Type password to unlock...' --insidecolor=00000000 --ringcolor=ffffffff --line-uses-inside --keyhlcolor=d23c3dff --bshlcolor=d23c3dff --separatorcolor=00000000 --insidevercolor=00000000 --insidewrongcolor=d23c3dff --ringvercolor=ffffffff --indpos='x+280:h-70' --radius=20 --ring-width=4 --veriftext='' --wrongtext='' --verifcolor=ffffffff --timecolor=ffffffff --datecolor=ffffffff --time-font='sans-serif' --date-font='sans-serif' --layout-font='sans-serif' --verif-font='sans-serif' --wrong-font='sans-serif' --noinputtext='' --force-clock"
 exec --no-startup-id compton
+
+gaps top 53
