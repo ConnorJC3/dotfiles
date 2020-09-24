@@ -49,6 +49,8 @@
     ~/.config/alacritty:
     ~/.config/fontconfig:
     ~/.config/neofetch:
+    ~/.mozilla/firefox/profiles.ini: firefox/profiles.ini
+    ~/.mozilla/firefox/main/user.js: firefox/user.js
 
 - clean:
     ~/:
