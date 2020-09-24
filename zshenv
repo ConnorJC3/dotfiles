@@ -11,4 +11,4 @@ export EDITOR="vim"
 export PAGER="less"
 
 # bat theme
-export BAT_THEM="TwoDark"
+export BAT_THEME="TwoDark"

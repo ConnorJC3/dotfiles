@@ -34,8 +34,15 @@ if ! sudo true; then
 fi
 
 if [[ ! -L /dev/disk/by-label/ARCH ]]; then
+  echo "Your boot (EFI system) partition MUST be labeled BOOT"
+  echo "fatlabel /dev/sdaX BOOT"
+  echo "Run partprove after labeling to reload partitions"
+  exit 5
+fi
+
+if [[ ! -L /dev/disk/by-label/ARCH ]]; then
   echo "Your primary arch partition MUST be labeled ARCH"
-  echo "ext2/3/4 - e2label /dev/sdX ARCH"
+  echo "ext2/3/4 - e2label /dev/sdaX ARCH"
   echo "btrfs    - btrfs filesystem label / ARCH"
   echo "Run partprove after labeling to reload partitions"
   exit 5

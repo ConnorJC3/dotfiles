@@ -2,7 +2,7 @@
 
 set -e
 ./check.sh
-yay -Syu
+yay -Syu --noconfirm
 
 CONFIG="install.conf.yaml"
 DOTBOT_DIR="dotbot"
