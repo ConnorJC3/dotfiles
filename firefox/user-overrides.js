@@ -76,6 +76,9 @@ user_pref("dom.push.enabled", true);
 // (Disables disgusting hourglass loading icon)
 user_pref("ui.prefersReducedMotion", 0);
 
+// Fixes twitch and other video sites
+user_pref("media.autoplay.blocking_policy", 0);
+
 // Better scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.lines.durationMaxMS", 125);
