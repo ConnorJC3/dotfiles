@@ -37,6 +37,7 @@
   - fzf
   - nvidia-dkms
   - nvidia-utils
+  - efibootmgr
 
 - yay:
   - nerd-fonts-hack
