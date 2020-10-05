@@ -7,6 +7,7 @@
 - pacman:
   - pigz
   - pbzip2
+  - reflector
 
 - link:
     ~/.config/pacman:
@@ -18,36 +19,40 @@
   - [sudo systemctl enable --now reflector, Enabling reflector service]
 
 - pacman:
+  - sddm
   - plasma-meta
+  - plasma-wayland-session
   - kde-applications-meta
+  - qt5-wayland
   - noto-fonts
   - noto-fonts-emoji
   - zsh
-  - reflector
-  - alacritty
+  - kitty
   - bat
   - pacman-contrib
   - neofetch
-  - firefox
   - curl
   - podman
   - fuse-overlayfs
   - slirp4netns
   - diff-so-fancy
   - fzf
-  - nvidia-dkms
+  - nvidia
   - nvidia-utils
   - efibootmgr
+  - qemu
+  - libvirt
+  - edk2-ovmf
+  - virt-manager
 
 - yay:
   - nerd-fonts-hack
+  - firefox-nightly
 
 - link:
-    ~/.xinitrc:
     ~/.zshrc:
     ~/.zshenv:
-    ~/.zlogin:
-    ~/.config/alacritty:
+    ~/.config/kitty:
     ~/.config/fontconfig:
     ~/.config/neofetch:
     ~/.mozilla/firefox/profiles.ini: firefox/profiles.ini
@@ -63,9 +68,11 @@
   - [sudo ln -sf /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d, Disabling bitmap fonts]
   - [sudo ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d, Enabling sub-pixel RGB]
   - [sudo ln -sf /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d, Enabling LCD filter]
-  - [sudo systemctl mask systemd-fsck-root.service, Disable root fsck (not needed on btrfs)]
-  - [sudo systemctl enable paccache.timer, Enabling paccache timer]
   - [sudo ./root-config/boot.sh, Setting up EFISTUB]
   - [sudo cp ./root-config/kwin.sh /etc/profile.d/kwin.sh, Installing KWin config]
   - [sudo cp ./root-config/sysctl.conf /etc/sysctl.d/99-sysctl.conf, Installing sysctl tweaks]
   - [sudo sysctl --system, Loading sysctl tweaks]
+  - [sudo systemctl mask systemd-fsck-root.service, Disable root fsck (not needed on btrfs)]
+  - [sudo systemctl enable paccache.timer, Enabling paccache timer]
+  - [sudo systemctl enable --now libvirtd, Enabling libvirtd]
+  - [sudo systemctl enable --now sddm, Enabling display manager]

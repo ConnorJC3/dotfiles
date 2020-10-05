@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 QUIET="quiet loglevel=3 rd.udev.log-priority=3 vt.global_cursor_default=0"
-WAYLAND="nvidia-drm.modeset=1"
-KERNEL="${QUIET} ${WAYLAND}"
+VFIO="intel_iommu=on"
+KERNEL="${QUIET} ${VFIO}"
 
 PARTITION=`readlink -f /dev/disk/by-label/BOOT`
 while efibootmgr | grep "Arch Linux" > /dev/null; do

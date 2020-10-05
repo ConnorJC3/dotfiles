@@ -79,6 +79,9 @@ user_pref("ui.prefersReducedMotion", 0);
 // Fixes twitch and other video sites
 user_pref("media.autoplay.blocking_policy", 0);
 
+// OpenGL (better than WebRender on NVIDIA)
+user_pref("layers.acceleration.force-enabled", true);
+
 // Better scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.lines.durationMaxMS", 125);
