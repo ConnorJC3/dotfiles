@@ -87,7 +87,6 @@ autoload -Uz _zinit
 # prompt (sync load)
 zinit light denysdovhan/spaceship-prompt
 
-# plugins we want loaded asap (mostly visual stuff)
 zinit wait"0" lucid for \
   skywind3000/z.lua \
   atinit"zicompinit; zicdreplay" \
@@ -98,8 +97,3 @@ zinit wait"0" lucid for \
     zsh-users/zsh-completions \
   atclone"dircolors -b LS_COLORS > clrs.zsh" atpull"%atclone" pick"clrs.zsh" nocompile"!" \
     trapd00r/LS_COLORS
-
-# plugins we don't care about for a long time
-zinit wait"1" lucid for \
-  gusaiani/elixir-oh-my-zsh \
-  wfxr/forgit

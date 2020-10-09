@@ -736,7 +736,7 @@ user_pref("security.mixed_content.block_display_content", true);
 user_pref("security.mixed_content.block_object_subrequest", true);
 /* 1244: enable HTTPS-Only mode [FF76+]
  * When "https_only_mode" (all windows) is true, "https_only_mode_pbm" (private windows only) is ignored
- * [WARNING] This is experimental, see [1] and you can't set exceptions if FPI is enabled, see [2]
+ * [WARNING] This is experimental [1] and you can't set exceptions if FPI is enabled [2] (fixed in FF83)
  * [SETTING] to add site exceptions: Page Info>Permissions>Use insecure HTTP (FF80+)
  * [SETTING] Privacy & Security>HTTPS-Only Mode (FF80+ with browser.preferences.exposeHTTPSOnly = true)
  * [1] https://bugzilla.mozilla.org/1613063 [META]
@@ -794,9 +794,9 @@ user_pref("security.insecure_connection_text.enabled", true); // [FF60+]
 user_pref("_user.js.parrot", "1400 syntax error: the parrot's bereft of life!");
 /* 1401: disable websites choosing fonts (0=block, 1=allow)
  * This can limit most (but not all) JS font enumeration which is a high entropy fingerprinting vector
- * [SETUP-WEB] Can break some PDFs (missing text). Limiting to default fonts can "uglify" the web
+ * [WARNING] **DO NOT USE**: in FF80+ RFP covers this, and non-RFP users should use font vis (4618)
  * [SETTING] General>Language and Appearance>Fonts & Colors>Advanced>Allow pages to choose... ***/
-user_pref("browser.display.use_document_fonts", 0);
+   // user_pref("browser.display.use_document_fonts", 0);
 /* 1403: disable icon fonts (glyphs) and local fallback rendering
  * [1] https://bugzilla.mozilla.org/789788
  * [2] https://gitlab.torproject.org/legacy/trac/-/issues/8455 ***/
@@ -812,9 +812,8 @@ user_pref("gfx.font_rendering.opentype_svg.enabled", false);
 user_pref("gfx.font_rendering.graphite.enabled", false);
 /* 1409: limit system font exposure to a whitelist [FF52+] [RESTART]
  * If the whitelist is empty, then whitelisting is considered disabled and all fonts are allowed
- * [NOTE] in FF80 RFP restricts the whitelist to bundled and "Base Fonts"
- * ...and in FF81+ the whitelist **overrides** RFP's font visibility (see 4618)
- * [WARNING] Creating your own probably highly-unique whitelist will raise your entropy.
+ * [WARNING] **DO NOT USE**: in FF80+ RFP covers this, and non-RFP users should use font vis (4618)
+ * [NOTE] In FF81+ the whitelist **overrides** RFP's font visibility (see 4618)
  * [1] https://bugzilla.mozilla.org/1121643 ***/
    // user_pref("font.system.whitelist", ""); // [HIDDEN PREF]
 
@@ -1791,91 +1790,84 @@ user_pref("media.autoplay.enabled.user-gestures-needed", false);
 /* END: internal custom pref to test for syntax errors ***/
 user_pref("_user.js.parrot", "SUCCESS: No no he's not dead, he's, he's restin'!");
 
+// // Globally useful settings
+// // You almost certainly want these
+// //
 // Safe(r) with FPI
 user_pref("network.http.altsvc.enabled", true);
 user_pref("network.http.altsvc.oe", true);
 user_pref("security.ssl.disable_session_identifiers", false);
 user_pref("security.tls.enable_0rtt_data", true);
-
-// Restore previous session
-user_pref("browser.startup.page", 3);
-
 // Safe(r) with good search engine
 user_pref("browser.search.region", "US");
 user_pref("browser.search.suggest.enabled", true);
 user_pref("browser.urlbar.suggest.searches", true);
 user_pref("keyword.enabled", true);
-
 // Reduce tracking entropy
 user_pref("dom.battery.enabled", false);
 user_pref("media.media-capabilities.enabled", false);
 user_pref("dom.vr.enabled", false);
 user_pref("dom.storageManager.enabled", false);
-
 // Retain web fonts
 user_pref("browser.display.use_document_fonts", 1);
-
 // Disabling ipv6 by default in 20XX??
 user_pref("network.dns.disableIPv6", false);
-
 // Disable built in password manager
 user_pref("signon.rememberSignons", false);
-
-// Prevent clipboard hijacking
-user_pref("dom.event.clipboardevents.enabled", true);
-
 // Allow wasm
 user_pref("javascript.options.wasm", true);
-
-// Force enable dark mode (currently ignored with RFP enabled)
-user_pref("ui.systemUsesDarkTheme", 1);
-
 // Restore downloads behavior
 user_pref("browser.download.useDownloadDir", true);
-
+// Retain history/sessions/downloads on shutdown
+user_pref("privacy.sanitize.sanitizeOnShutdown", false);
+user_pref("privacy.clearOnShutdown.downloads", false);
+user_pref("privacy.clearOnShutdown.history", false);
+user_pref("privacy.clearOnShutdown.sessions", false);
 // Block cookies from unvisited websites
 // But disable FF blocker for other requests (useless conflict with uBlock Origin)
 user_pref("network.cookie.cookieBehavior", 3);
 user_pref("privacy.trackingprotection.cryptomining.enabled", false);
 user_pref("privacy.trackingprotection.fingerprinting.enabled", false);
 user_pref("privacy.trackingprotection.socialtracking.enabled", false);
-
-// Retain history/sessions/downloads on shutdown
-user_pref("privacy.sanitize.sanitizeOnShutdown", false);
-user_pref("privacy.clearOnShutdown.downloads", false);
-user_pref("privacy.clearOnShutdown.history", false);
-user_pref("privacy.clearOnShutdown.sessions", false);
-
+user_pref("privacy.trackingprotection.enabled", false);
 // Disable useless warnings
 user_pref("browser.tabs.warnOnClose", false);
 user_pref("browser.tabs.warnOnCloseOtherTabs", false);
-
-// Disable annoying backspace keybind
-user_pref("browser.backspace_action", 2);
-
 // Disable useless "features"
 user_pref("browser.messaging-system.whatsNewPanel.enabled", false);
 user_pref("extensions.pocket.enabled", false);
 user_pref("identity.fxaccounts.enabled", false);
-
-// Disable RFP letterboxing
-user_pref("privacy.resistFingerprinting.letterboxing", false);
-
+// Fixes Twitch and other video sites
+user_pref("media.autoplay.blocking_policy", 0);
+// Allow animations in browser UI
+// (Disables disgusting hourglass loading icon)
+user_pref("ui.prefersReducedMotion", 0);
 // Allow service workers (and related features)
 user_pref("dom.serviceWorkers.enabled", true);
 user_pref("dom.push.enabled", true);
 
-// Allow animations in browser UI
-// (Disables disgusting hourglass loading icon)
-user_pref("ui.prefersReducedMotion", 0);
+// // Hardware specific settings
+// // These _may_ not work on your hardware, toggle if you have issues
+// //
+// WebRender
+// You MUST enable layers.force-acceleration.enabled if you toggle this off for GPU accelerated decoding to work
+user_pref("gfx.webrender.all", true);
+// GPU accelerated decoding
+// *REQUIRES EXTRA WORK*: Set MOZ_USE_EGL=1 (X11) or MOZ_ENABLE_WAYLAND=1 (Wayland) environment variable
+// If this doesn't work check https://wiki.archlinux.org/index.php/Hardware_video_acceleration
+// HIGHLY recommended extension: https://addons.mozilla.org/en-US/firefox/addon/enhanced-h264ify/
+user_pref("media.ffmpeg.vaapi.enabled", true);
+user_pref("ffmpeg.dmabuf-textures.enabled", true);
+user_pref("media.ffvpx.enabled", false);
 
-// Fixes twitch and other video sites
-user_pref("media.autoplay.blocking_policy", 0);
-
-// OpenGL (better than WebRender on NVIDIA)
-user_pref("layers.acceleration.force-enabled", true);
-user_pref("gfx.webrender.all", false);
-
+// // Personal settings
+// //
+// Force enable dark mode (only used in browser chrome, ignored on websites with RFP)
+user_pref("ui.systemUsesDarkTheme", 1);
+// Restore previous session
+user_pref("browser.startup.page", 3);
+// Disable annoying backspace keybind
+user_pref("browser.backspace_action", 2);
 // Better scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.lines.durationMaxMS", 125);
