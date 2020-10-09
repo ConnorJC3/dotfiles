@@ -1850,20 +1850,13 @@ user_pref("dom.push.enabled", true);
 // // These _may_ not work on your hardware, toggle if you have issues
 // //
 // WebRender
-// You MUST enable layers.force-acceleration.enabled if you toggle this off for GPU accelerated decoding to work
 user_pref("gfx.webrender.all", true);
-// GPU accelerated decoding
-// *REQUIRES EXTRA WORK*: Set MOZ_USE_EGL=1 (X11) or MOZ_ENABLE_WAYLAND=1 (Wayland) environment variable
-// If this doesn't work check https://wiki.archlinux.org/index.php/Hardware_video_acceleration
-// HIGHLY recommended extension: https://addons.mozilla.org/en-US/firefox/addon/enhanced-h264ify/
-user_pref("media.ffmpeg.vaapi.enabled", true);
-user_pref("ffmpeg.dmabuf-textures.enabled", true);
-user_pref("media.ffvpx.enabled", false);
 
 // // Personal settings
 // //
 // Force enable dark mode (only used in browser chrome, ignored on websites with RFP)
 user_pref("ui.systemUsesDarkTheme", 1);
+user_pref("browser.in-content.dark-mode", true);
 // Restore previous session
 user_pref("browser.startup.page", 3);
 // Disable annoying backspace keybind
