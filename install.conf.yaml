@@ -34,7 +34,6 @@
   - fuse-overlayfs
   - slirp4netns
   - diff-so-fancy
-  - fzf
   - efibootmgr
   - qemu
   - libvirt
