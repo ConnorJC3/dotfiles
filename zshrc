@@ -87,6 +87,7 @@ autoload -Uz _zinit
 # prompt (sync load)
 zinit light denysdovhan/spaceship-prompt
 
+# plugins (async load)
 zinit wait"0" lucid for \
   skywind3000/z.lua \
   atinit"zicompinit; zicdreplay" \
