@@ -57,7 +57,6 @@
     ~/.config/neofetch:
     ~/.mozilla/firefox/profiles.ini: firefox/profiles.ini
     ~/.mozilla/firefox/main/user.js: firefox/user.js
-    ~/.local/share/applications/firefox-nightly.desktop: applications/firefox-nightly.desktop
 
 - clean:
     ~/:
