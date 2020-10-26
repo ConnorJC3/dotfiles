@@ -54,11 +54,13 @@ user_pref("ui.prefersReducedMotion", 0);
 user_pref("dom.serviceWorkers.enabled", true);
 user_pref("dom.push.enabled", true);
 
-// // Hardware specific settings
-// // These _may_ not work on your hardware, toggle if you have issues
+// // Setup specific settings
+// // These _may_ not work for you, toggle if you have issues
 // //
 // WebRender
 user_pref("gfx.webrender.all", true);
+// Fission (separate process per domain)
+user_pref("fission.autostart", true);
 
 // // Personal settings
 // //
