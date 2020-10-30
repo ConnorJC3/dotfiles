@@ -378,6 +378,7 @@ user_pref("_user.js.parrot", "0700 syntax error: the parrot's given up the ghost
  * [NOTE] This is just an application level fallback. Disabling IPv6 is best done at an
  * OS/network level, and/or configured properly in VPN setups. If you are not masking your IP,
  * then this won't make much difference. If you are masking your IP, then it can only help.
+ * [NOTE] PHP defaults to IPv6 with "localhost". Use "php -S 127.0.0.1:PORT"
  * [TEST] https://ipleak.org/
  * [1] https://github.com/arkenfox/user.js/issues/437#issuecomment-403740626
  * [2] https://www.internetsociety.org/tag/ipv6-security/ (see Myths 2,4,5,6) ***/
@@ -1046,8 +1047,14 @@ user_pref("javascript.options.asmjs", false);
    // user_pref("javascript.options.ion", false);
    // user_pref("javascript.options.baselinejit", false);
    // user_pref("javascript.options.jit_trustedprincipals", true); // [FF75+] [HIDDEN PREF]
-/* 2422: disable WebAssembly [FF52+] [SETUP-PERF]
- * [1] https://developer.mozilla.org/docs/WebAssembly ***/
+/* 2422: disable WebAssembly [FF52+]
+ * Vulnerabilities have increasingly been found, including those known and fixed
+ * in native programs years ago [2]. WASM has powerful low-level access, making
+ * certain attacks (brute-force) and vulnerabilities more possible
+ * [STATS] ~0.2% of websites, about half of which are for crytopmining / malvertising [2][3]
+ * [1] https://developer.mozilla.org/docs/WebAssembly
+ * [2] https://spectrum.ieee.org/tech-talk/telecom/security/more-worries-over-the-security-of-web-assembly
+ * [3] https://www.zdnet.com/article/half-of-the-websites-using-webassembly-use-it-for-malicious-purposes ***/
 user_pref("javascript.options.wasm", false);
 /* 2429: enable (limited but sufficient) window.opener protection [FF65+]
  * Makes rel=noopener implicit for target=_blank in anchor and area elements when no rel attribute is set ***/
@@ -1659,43 +1666,10 @@ user_pref("_user.js.parrot", "SUCCESS: No no he's not dead, he's, he's restin'!"
 // // Globally useful settings
 // // You almost certainly want these
 // //
-// Safe(r) with FPI
-user_pref("network.http.altsvc.enabled", true);
-user_pref("network.http.altsvc.oe", true);
-user_pref("security.ssl.disable_session_identifiers", false);
-user_pref("security.tls.enable_0rtt_data", true);
-// Safe(r) with good search engine
-user_pref("browser.search.region", "US");
-user_pref("browser.search.suggest.enabled", true);
-user_pref("browser.urlbar.suggest.searches", true);
-user_pref("keyword.enabled", true);
-// Reduce tracking entropy
-user_pref("dom.battery.enabled", false);
-user_pref("media.media-capabilities.enabled", false);
-user_pref("dom.vr.enabled", false);
-user_pref("dom.storageManager.enabled", false);
-// Retain web fonts
-user_pref("browser.display.use_document_fonts", 1);
 // Disabling ipv6 by default in 20XX??
 user_pref("network.dns.disableIPv6", false);
 // Disable built in password manager
 user_pref("signon.rememberSignons", false);
-// Allow wasm
-user_pref("javascript.options.wasm", true);
-// Restore downloads behavior
-user_pref("browser.download.useDownloadDir", true);
-// Retain history/sessions/downloads on shutdown
-user_pref("privacy.sanitize.sanitizeOnShutdown", false);
-user_pref("privacy.clearOnShutdown.downloads", false);
-user_pref("privacy.clearOnShutdown.history", false);
-user_pref("privacy.clearOnShutdown.sessions", false);
-// Block cookies from unvisited websites
-// But disable FF blocker for other requests (useless conflict with uBlock Origin)
-user_pref("network.cookie.cookieBehavior", 3);
-user_pref("privacy.trackingprotection.cryptomining.enabled", false);
-user_pref("privacy.trackingprotection.fingerprinting.enabled", false);
-user_pref("privacy.trackingprotection.socialtracking.enabled", false);
-user_pref("privacy.trackingprotection.enabled", false);
 // Disable useless warnings
 user_pref("browser.tabs.warnOnClose", false);
 user_pref("browser.tabs.warnOnCloseOtherTabs", false);
@@ -1708,9 +1682,50 @@ user_pref("media.autoplay.blocking_policy", 0);
 // Allow animations in browser UI
 // (Disables disgusting hourglass loading icon)
 user_pref("ui.prefersReducedMotion", 0);
+
+// // Fix the web settings
+// // Revert some privacy/security fixes to improve/fix browsing
+// //
+// Safe(r) with FPI
+user_pref("network.http.altsvc.enabled", true);
+user_pref("network.http.altsvc.oe", true);
+user_pref("security.ssl.disable_session_identifiers", false);
+user_pref("security.tls.enable_0rtt_data", true);
+// Safe(r) with good search engine
+user_pref("browser.search.region", "US");
+user_pref("browser.search.suggest.enabled", true);
+user_pref("browser.urlbar.suggest.searches", true);
+user_pref("keyword.enabled", true);
+// Retain web fonts
+user_pref("browser.display.use_document_fonts", 1);
+// Allow webassembly
+user_pref("javascript.options.wasm", true);
+// Restore downloads behavior
+user_pref("browser.download.useDownloadDir", true);
+// Retain history/sessions/downloads on shutdown
+user_pref("privacy.sanitize.sanitizeOnShutdown", false);
+user_pref("privacy.clearOnShutdown.downloads", false);
+user_pref("privacy.clearOnShutdown.history", false);
+user_pref("privacy.clearOnShutdown.sessions", false);
 // Allow service workers (and related features)
 user_pref("dom.serviceWorkers.enabled", true);
 user_pref("dom.push.enabled", true);
+
+// // Anti-tracking settings
+// // You probably want these, but they may break particularly weird sites
+// //
+// Reduce tracking entropy
+user_pref("dom.battery.enabled", false);
+user_pref("media.media-capabilities.enabled", false);
+user_pref("dom.vr.enabled", false);
+user_pref("dom.storageManager.enabled", false);
+// Block cookies from unvisited websites
+// But disable FF blocker for other requests (useless conflict with uBlock Origin)
+user_pref("network.cookie.cookieBehavior", 3);
+user_pref("privacy.trackingprotection.cryptomining.enabled", false);
+user_pref("privacy.trackingprotection.fingerprinting.enabled", false);
+user_pref("privacy.trackingprotection.socialtracking.enabled", false);
+user_pref("privacy.trackingprotection.enabled", false);
 
 // // Setup specific settings
 // // These _may_ not work for you, toggle if you have issues
@@ -1729,6 +1744,8 @@ user_pref("browser.in-content.dark-mode", true);
 user_pref("browser.startup.page", 3);
 // Disable annoying backspace keybind
 user_pref("browser.backspace_action", 2);
+// HTTPS only mode
+user_pref("dom.security.https_only_mode", true);
 // Better scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.lines.durationMaxMS", 125);
