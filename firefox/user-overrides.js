@@ -77,8 +77,6 @@ user_pref("browser.in-content.dark-mode", true);
 user_pref("browser.startup.page", 3);
 // Disable annoying backspace keybind
 user_pref("browser.backspace_action", 2);
-// HTTPS only mode
-user_pref("dom.security.https_only_mode", true);
 // Better scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.lines.durationMaxMS", 125);
