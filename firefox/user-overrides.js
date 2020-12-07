@@ -31,8 +31,6 @@ user_pref("browser.search.region", "US");
 user_pref("browser.search.suggest.enabled", true);
 user_pref("browser.urlbar.suggest.searches", true);
 user_pref("keyword.enabled", true);
-// Retain web fonts
-user_pref("browser.display.use_document_fonts", 1);
 // Allow webassembly
 user_pref("javascript.options.wasm", true);
 // Restore downloads behavior

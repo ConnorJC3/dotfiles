@@ -1,7 +1,7 @@
 /******
 * name: arkenfox user.js
-* date: 13 Oct 2020
-* version 82-alpha
+* date: 22 Nov 2020
+* version 84-alpha
 * url: https://github.com/arkenfox/user.js
 * license: MIT: https://github.com/arkenfox/user.js/blob/master/LICENSE.txt
 
@@ -26,13 +26,18 @@
            [SETUP-PERF] may impact performance
               [WARNING] used sparingly, heed them
 
-* RELEASES
+* RELEASES: https://github.com/arkenfox/user.js/releases
 
-  * Archive: https://github.com/arkenfox/user.js/releases
-  * Use the correct release that matches your Firefox version
-  * Each release
-    - run the prefsCleaner or reset deprecated prefs (9999s) and prefs made redundant by RFP (4600s)
+  * It is best to use the arkenfox release that is optimized for and matches your Firefox version
+  * EVERYONE: each release
+    - run prefsCleaner or reset deprecated prefs (9999s) and prefs made redundant by RPF (4600s)
     - re-enable section 4600 if you don't use RFP
+    ESR78
+    - If you are not using arkenfox v78... (not a definitive list)
+      - 1244: HTTPS-Only mode is enabled
+      - 1401: document fonts is inactive as it is now covered by RFP in FF80+
+      - 4600: some prefs may apply even if you use RFP (currently none apply as of FF84)
+      - 9999: switch the appropriate deprecated section(s) back on
 
 * INDEX:
 
@@ -167,19 +172,17 @@ user_pref("browser.region.update.enabled", false); // [[FF79+]
  * [TEST] https://addons.mozilla.org/about ***/
 user_pref("intl.accept_languages", "en-US, en");
 /* 0211: enforce US English locale regardless of the system locale
- * [SETUP-WEB] May break some input methods e.g xim/ibus for CJK languages, see [2]
- * [1] https://bugzilla.mozilla.org/867501
- * [2] https://bugzilla.mozilla.org/1629630 ***/
+ * [SETUP-WEB] May break some input methods e.g xim/ibus for CJK languages, see [1]
+ * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=867501,1629630 ***/
 user_pref("javascript.use_us_english_locale", true); // [HIDDEN PREF]
 
 /*** [SECTION 0300]: QUIET FOX
-     Starting in user.js v67, we only disable the auto-INSTALL of Firefox. You still get prompts
-     to update, in one click. We have NEVER disabled auto-CHECKING, and highly discourage that.
-     Previously we also disabled auto-INSTALLING of extensions (302b).
+     We only disable the auto-INSTALL of Firefox (app) updates. You still get prompts to update,
+     and it only takes one click. We highly discourage disabling auto-CHECKING for updates.
 
-     There are many legitimate reasons to turn off auto-INSTALLS, including hijacked or monetized
-     extensions, time constraints, legacy issues, dev/testing, and fear of breakage/bugs. It is
-     still important to do updates for security reasons, please do so manually if you make changes.
+     Legitimate reasons to disable auto-INSTALLS include hijacked/monetized extensions, time
+     constraints, legacy issues, dev/testing, and fear of breakage/bugs. It is still important
+     to do updates for security reasons, please do so manually if you make changes.
 ***/
 user_pref("_user.js.parrot", "0300 syntax error: the parrot's not pinin' for the fjords!");
 /* 0301b: disable auto-CHECKING for extension and theme updates ***/
@@ -216,7 +219,7 @@ user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
  * [1] https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/telemetry/internals/preferences.html
  * [2] https://medium.com/georg-fritzsche/data-preference-changes-in-firefox-58-2d5df9c428b5 ***/
 user_pref("toolkit.telemetry.unified", false);
-user_pref("toolkit.telemetry.enabled", false); // see [NOTE] above FF58+
+user_pref("toolkit.telemetry.enabled", false); // see [NOTE]
 user_pref("toolkit.telemetry.server", "data:,");
 user_pref("toolkit.telemetry.archive.enabled", false);
 user_pref("toolkit.telemetry.newProfilePing.enabled", false); // [FF55+]
@@ -299,7 +302,7 @@ user_pref("browser.safebrowsing.downloads.remote.url", "");
  * [SETTING] Privacy & Security>Security>... "Warn you about unwanted and uncommon software" ***/
    // user_pref("browser.safebrowsing.downloads.remote.block_potentially_unwanted", false);
    // user_pref("browser.safebrowsing.downloads.remote.block_uncommon", false);
-/* 0419: disable 'ignore this warning' on SB warnings
+/* 0419: disable 'ignore this warning' on SB warnings [FF45+]
  * If clicked, it bypasses the block for that session. This is a means for admins to enforce SB
  * [TEST] see github wiki APPENDIX A: Test Sites: Section 5
  * [1] https://bugzilla.mozilla.org/1226490 ***/
@@ -343,6 +346,7 @@ user_pref("browser.ping-centre.telemetry", false);
  * [1] https://wiki.mozilla.org/Firefox/Features/Form_Autofill ***/
 user_pref("extensions.formautofill.addresses.enabled", false); // [FF55+]
 user_pref("extensions.formautofill.available", "off"); // [FF56+]
+user_pref("extensions.formautofill.creditCards.available", false); // [FF57+]
 user_pref("extensions.formautofill.creditCards.enabled", false); // [FF56+]
 user_pref("extensions.formautofill.heuristics.enabled", false); // [FF55+]
 /* 0518: disable Web Compatibility Reporter [FF56+]
@@ -374,7 +378,7 @@ user_pref("_user.js.parrot", "0700 syntax error: the parrot's given up the ghost
 /* 0701: disable IPv6
  * IPv6 can be abused, especially with MAC addresses, and they do not play nice with VPNs. That's
  * even assuming your ISP and/or router and/or website can handle it. Sites will fall back to IPv4
- * [STATS] Firefox telemetry (June 2020) shows only 5% of all connections are IPv6
+ * [STATS] Firefox telemetry (Dec 2020) shows ~8% of all connections are IPv6
  * [NOTE] This is just an application level fallback. Disabling IPv6 is best done at an
  * OS/network level, and/or configured properly in VPN setups. If you are not masking your IP,
  * then this won't make much difference. If you are masking your IP, then it can only help.
@@ -636,7 +640,6 @@ user_pref("_user.js.parrot", "1200 syntax error: the parrot's a stiff!");
 user_pref("security.ssl.require_safe_negotiation", true);
 /* 1202: control TLS versions with min and max
  * 1=TLS 1.0, 2=TLS 1.1, 3=TLS 1.2, 4=TLS 1.3
- * [STATS] Firefox telemetry (June 2020) shows only 0.16% of SSL handshakes use 1.0 or 1.1
  * [WARNING] Leave these at default, otherwise you alter your TLS fingerprint.
  * [1] https://www.ssllabs.com/ssl-pulse/ ***/
    // user_pref("security.tls.version.min", 3); // [DEFAULT: 3]
@@ -711,6 +714,12 @@ user_pref("security.family_safety.mode", 0);
  * by inspecting ALL your web traffic, then leave at current default=1
  * [1] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/16206 ***/
 user_pref("security.cert_pinning.enforcement_level", 2);
+/* 1224: enforce CRLite [FF73+]
+ * In FF84+ it covers valid certs and in mode 2 doesn't fall back to OCSP
+ * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=1429800,1670985
+ * [2] https://blog.mozilla.org/security/tag/crlite/ ***/
+user_pref("security.remote_settings.crlite_filters.enabled", true);
+user_pref("security.pki.crlite_mode", 2);
 
 /** MIXED CONTENT ***/
 /* 1240: enforce no insecure active content on https pages
@@ -723,14 +732,21 @@ user_pref("security.mixed_content.block_display_content", true);
 user_pref("security.mixed_content.block_object_subrequest", true);
 /* 1244: enable HTTPS-Only mode [FF76+]
  * When "https_only_mode" (all windows) is true, "https_only_mode_pbm" (private windows only) is ignored
- * [WARNING] This is experimental [1] and you can't set exceptions if FPI is enabled [2] (fixed in FF83)
- * [SETTING] to add site exceptions: Page Info>Permissions>Use insecure HTTP (FF80+)
- * [SETTING] Privacy & Security>HTTPS-Only Mode (FF80+ with browser.preferences.exposeHTTPSOnly = true)
- * [1] https://bugzilla.mozilla.org/1613063 [META]
- * [2] https://bugzilla.mozilla.org/1647829 ***/
-   // user_pref("dom.security.https_only_mode", true); // [FF76+]
+ * [SETTING] to add site exceptions: Page Info>HTTPS-Only mode>On/Off/Off temporarily
+ * [SETTING] Privacy & Security>HTTPS-Only Mode
+ * [TEST] http://example.com [upgrade]
+ * [TEST] http://neverssl.org/ [no upgrade]
+ * [1] https://bugzilla.mozilla.org/1613063 [META] ***/
+user_pref("dom.security.https_only_mode", true); // [FF76+]
    // user_pref("dom.security.https_only_mode_pbm", true); // [FF80+]
-   // user_pref("dom.security.https_only_mode.upgrade_local", true); // [FF77+]
+/* 1245: enable HTTPS-Only mode for local resources [FF77+] ***/
+   // user_pref("dom.security.https_only_mode.upgrade_local", true);
+/* 1246: disable HTTP background requests [FF82+]
+ * When attempting to upgrade, if the server doesn't respond within 3 seconds, firefox
+ * sends HTTP requests in order to check if the server supports HTTPS or not.
+ * This is done to avoid waiting for a timeout which takes 90 seconds
+ * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=1642387,1660945 ***/
+user_pref("dom.security.https_only_mode_send_http_background_request", false);
 
 /** CIPHERS [WARNING: do not meddle with your cipher suite: see the section 1200 intro]
  * These are all the ciphers still using SHA-1 and CBC which are weaker than the available alternatives. (see "Cipher Suites" in [1])
@@ -755,7 +771,7 @@ user_pref("security.mixed_content.block_object_subrequest", true);
 /** UI (User Interface) ***/
 /* 1270: display warning on the padlock for "broken security" (if 1201 is false)
  * Bug: warning padlock not indicated for subresources on a secure page! [2]
- * [STATS] SSL Labs (June 2020) reports 98.8% of sites have secure renegotiation [3]
+ * [STATS] SSL Labs (Dec 2020) reports 99.0% of sites have secure renegotiation [3]
  * [1] https://wiki.mozilla.org/Security:Renegotiation
  * [2] https://bugzilla.mozilla.org/1353705
  * [3] https://www.ssllabs.com/ssl-pulse/ ***/
@@ -795,8 +811,8 @@ user_pref("gfx.font_rendering.opentype_svg.enabled", false);
 user_pref("gfx.font_rendering.graphite.enabled", false);
 /* 1409: limit system font exposure to a whitelist [FF52+] [RESTART]
  * If the whitelist is empty, then whitelisting is considered disabled and all fonts are allowed
- * [WARNING] **DO NOT USE**: in FF80+ RFP covers this, and non-RFP users should use font vis (4618)
  * [NOTE] In FF81+ the whitelist **overrides** RFP's font visibility (see 4618)
+ * [WARNING] **DO NOT USE**: in FF80+ RFP covers this, and non-RFP users should use font vis (4618)
  * [1] https://bugzilla.mozilla.org/1121643 ***/
    // user_pref("font.system.whitelist", ""); // [HIDDEN PREF]
 
@@ -1179,6 +1195,10 @@ user_pref("browser.display.use_system_colors", false); // [DEFAULT: false]
  * for these will show/use their correct 3rd party origin
  * [1] https://groups.google.com/forum/#!topic/mozilla.dev.platform/BdFOMAuCGW8/discussion */
 user_pref("permissions.delegation.enabled", false);
+/* 2624: enable "window.name" protection [FF82+]
+ * If a new page from another domain is loaded into a tab, then window.name is set to an empty string. The original
+ * string is restored if the tab reverts back to the original page. This change prevents some cross-site attacks ***/
+user_pref("privacy.window.name.update.enabled", true);
 
 /** DOWNLOADS ***/
 /* 2650: discourage downloading to desktop
@@ -1259,8 +1279,10 @@ user_pref("network.cookie.thirdparty.nonsecureSessionOnly", true); // [FF58+]
  * [WARNING] This will break a LOT of sites' functionality AND extensions!
  * You are better off using an extension for more granular control ***/
    // user_pref("dom.storage.enabled", false);
-/* 2730: disable offline cache ***/
-user_pref("browser.cache.offline.enable", false);
+/* 2730: enforce no offline cache storage (appCache)
+ * The API is easily fingerprinted, use the "storage" pref instead ***/
+   // user_pref("browser.cache.offline.enable", false);
+user_pref("browser.cache.offline.storage.enable", false); // [FF71+] [DEFAULT: false FF84+]
 /* 2740: disable service worker cache and cache storage
  * [NOTE] We clear service worker cache on exiting Firefox (see 2803)
  * [1] https://w3c.github.io/ServiceWorker/#privacy ***/
@@ -1276,6 +1298,8 @@ user_pref("browser.cache.offline.enable", false);
 /* 2755: disable Storage Access API [FF65+]
  * [1] https://developer.mozilla.org/en-US/docs/Web/API/Storage_Access_API ***/
    // user_pref("dom.storage_access.enabled", false);
+/* 2760: enable Local Storage Next Generation (LSNG) [FF65+] ***/
+user_pref("dom.storage.next_gen", true);
 
 /*** [SECTION 2800]: SHUTDOWN
      You should set the values to what suits you best.
@@ -1331,48 +1355,44 @@ user_pref("privacy.cpd.siteSettings", false); // Site Preferences
 user_pref("privacy.sanitize.timeSpan", 0);
 
 /*** [SECTION 4000]: FPI (FIRST PARTY ISOLATION)
- 4001: FPI
- ** 1278037 - isolate indexedDB (FF51+)
- ** 1277803 - isolate favicons (FF52+)
- ** 1264562 - isolate OCSP cache (FF52+)
- ** 1268726 - isolate Shared Workers (FF52+)
- ** 1316283 - isolate SSL session cache (FF52+)
- ** 1317927 - isolate media cache (FF53+)
- ** 1323644 - isolate HSTS and HPKP (FF54+)
- ** 1334690 - isolate HTTP Alternative Services (FF54+)
- ** 1334693 - isolate SPDY/HTTP2 (FF55+)
- ** 1337893 - isolate DNS cache (FF55+)
- ** 1344170 - isolate blob: URI (FF55+)
- ** 1300671 - isolate data:, about: URLs (FF55+)
- ** 1473247 - isolate IP addresses (FF63+)
- ** 1492607 - isolate postMessage with targetOrigin "*" (requires 4002) (FF65+)
- ** 1542309 - isolate top-level domain URLs when host is in the public suffix list (FF68+)
- ** 1506693 - isolate pdfjs range-based requests (FF68+)
- ** 1330467 - isolate site permissions (FF69+)
- ** 1534339 - isolate IPv6 (FF73+)
- 4003: NETWORK PARTITON
- ** 1647732 - isolate font cache (FF80+)
- ** 1649673 - isolate speculative connections (FF80+)
+   1278037 - indexedDB (FF51+)
+   1277803 - favicons (FF52+)
+   1264562 - OCSP cache (FF52+)
+   1268726 - Shared Workers (FF52+)
+   1316283 - SSL session cache (FF52+)
+   1317927 - media cache (FF53+)
+   1323644 - HSTS and HPKP (FF54+)
+   1334690 - HTTP Alternative Services (FF54+)
+   1334693 - SPDY/HTTP2 (FF55+)
+   1337893 - DNS cache (FF55+)
+   1344170 - blob: URI (FF55+)
+   1300671 - data:, about: URLs (FF55+)
+   1473247 - IP addresses (FF63+)
+   1492607 - postMessage with targetOrigin "*" (requires 4002) (FF65+)
+   1542309 - top-level domain URLs when host is in the public suffix list (FF68+)
+   1506693 - pdfjs range-based requests (FF68+)
+   1330467 - site permissions (FF69+)
+   1534339 - IPv6 (FF73+)
 ***/
 user_pref("_user.js.parrot", "4000 syntax error: the parrot's pegged out");
 /* 4001: enable First Party Isolation [FF51+]
  * [SETUP-WEB] May break cross-domain logins and site functionality until perfected
- * [1] https://bugzilla.mozilla.org/1260931
- * [2] https://bugzilla.mozilla.org/1299996 [META] ***/
+ * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=1260931,1299996 ***/
 user_pref("privacy.firstparty.isolate", true);
 /* 4002: enforce FPI restriction for window.opener [FF54+]
  * [NOTE] Setting this to false may reduce the breakage in 4001
  * FF65+ blocks postMessage with targetOrigin "*" if originAttributes don't match. But
- * to reduce breakage it ignores the 1st-party domain (FPD) originAttribute, see [2],[3]
+ * to reduce breakage it ignores the 1st-party domain (FPD) originAttribute, see [2] [3]
  * The 2nd pref removes that limitation and will only allow communication if FPDs also match.
  * [1] https://bugzilla.mozilla.org/1319773#c22
  * [2] https://bugzilla.mozilla.org/1492607
  * [3] https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage ***/
    // user_pref("privacy.firstparty.isolate.restrict_opener_access", true); // [DEFAULT: true]
    // user_pref("privacy.firstparty.isolate.block_post_message", true);
-/* 4003: enable site partitioning (FF78+)
- * [1] https://bugzilla.mozilla.org/1590107 [META] */
-user_pref("privacy.partition.network_state", true);
+/* 4003: enable scheme with FPI [FF78+]
+ * [NOTE] Experimental: existing data and site permissions are incompatible
+ * and some site exceptions may not work e.g. HTTPS-only mode (see 1244) ***/
+   // user_pref("privacy.firstparty.isolate.use_site", true);
 
 /*** [SECTION 4500]: RFP (RESIST FINGERPRINTING)
    RFP covers a wide range of ongoing fingerprinting solutions.
@@ -1436,6 +1456,7 @@ user_pref("privacy.partition.network_state", true);
  FF78+
    1621433 - randomize canvas (previously FF58+ returned an all-white canvas) (FF78+)
    1653987 - limit font visibility to bundled and "Base Fonts" (see 4618) (non-ANDROID) (FF80+)
+   1461454 - spoof smooth=true and powerEfficient=false for supported media in MediaCapabilities (FF82+)
 ***/
 user_pref("_user.js.parrot", "4500 syntax error: the parrot's popped 'is clogs");
 /* 4501: enable privacy.resistFingerprinting [FF41+]
@@ -1447,8 +1468,7 @@ user_pref("privacy.resistFingerprinting", true);
 /* 4502: set new window sizes to round to hundreds [FF55+] [SETUP-CHROME]
  * Width will round down to multiples of 200s and height to 100s, to fit your screen.
  * The override values are a starting point to round from if you want some control
- * [1] https://bugzilla.mozilla.org/1330882
- * [2] https://hardware.metrics.mozilla.com/ ***/
+ * [1] https://bugzilla.mozilla.org/1330882 ***/
    // user_pref("privacy.window.maxInnerWidth", 1000);
    // user_pref("privacy.window.maxInnerHeight", 1000);
 /* 4503: disable mozAddonManager Web API [FF57+]
@@ -1684,7 +1704,7 @@ user_pref("media.autoplay.blocking_policy", 0);
 user_pref("ui.prefersReducedMotion", 0);
 
 // // Fix the web settings
-// // Revert some privacy/security fixes to improve/fix browsing
+// // Revert some privacy/security fixes to improve browsing experience
 // //
 // Safe(r) with FPI
 user_pref("network.http.altsvc.enabled", true);
@@ -1740,7 +1760,7 @@ user_pref("fission.autostart", true);
 // Force enable dark mode (only used in browser chrome, ignored on websites with RFP)
 user_pref("ui.systemUsesDarkTheme", 1);
 user_pref("browser.in-content.dark-mode", true);
-// Restore previous session
+// Restore previous session on startup
 user_pref("browser.startup.page", 3);
 // Disable annoying backspace keybind
 user_pref("browser.backspace_action", 2);
