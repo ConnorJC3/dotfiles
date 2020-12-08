@@ -1,6 +1,13 @@
-# aliases
+# aliases and functions
 alias ls="ls --color=auto"
 alias docker="podman"
+function paru {
+  if [[ -n "$1" ]]; then
+    command paru "$@"
+  else
+    command paru --noconfirm -Syu
+  fi
+}
 
 # rbenv
 if [ -x "$(command -v rvenv)" ]; then

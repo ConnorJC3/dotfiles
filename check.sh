@@ -12,14 +12,6 @@ if [[ ! -x "$(command -v git)" ]]; then
   exit 2
 fi
 
-if [[ ! -x "$(command -v paru)" ]]; then
-  echo "Missing paru"
-  echo "git clone https://aur.archlinux.org/paru.git"
-  echo "cd paru"
-  echo "makepkg -si"
-  exit 2
-fi
-
 if [[ "$EUID" -eq 0 ]]; then
   echo "Do NOT run as root, create your own user!"
   echo "useradd -m -U USERNAME"
@@ -33,23 +25,25 @@ if ! sudo true; then
   exit 4
 fi
 
-if [[ ! -L /dev/disk/by-label/BOOT ]]; then
-  echo "Your boot (EFI system) partition MUST be labeled BOOT"
-  echo "fatlabel /dev/sdaX BOOT"
-  echo "Run partprove after labeling to reload partitions"
-  exit 5
-fi
+if [[ $BARE ]]; then
+  if [[ ! -L /dev/disk/by-label/BOOT ]]; then
+    echo "Your boot (EFI system) partition MUST be labeled BOOT"
+    echo "fatlabel /dev/sdaX BOOT"
+    echo "Run partprove after labeling to reload partitions"
+    exit 5
+  fi
 
-if [[ ! -L /dev/disk/by-label/ARCH ]]; then
-  echo "Your primary arch partition MUST be labeled ARCH"
-  echo "ext2/3/4 - e2label /dev/sdaX ARCH"
-  echo "btrfs    - btrfs filesystem label / ARCH"
-  echo "Run partprove after labeling to reload partitions"
-  exit 5
-fi
+  if [[ ! -L /dev/disk/by-label/ARCH ]]; then
+    echo "Your primary arch partition MUST be labeled ARCH"
+    echo "ext2/3/4 - e2label /dev/sdaX ARCH"
+    echo "btrfs    - btrfs filesystem label / ARCH"
+    echo "Run partprove after labeling to reload partitions"
+    exit 5
+  fi
 
-if ! findmnt /boot/ &> /dev/null; then
-  echo "You MUST mount your ESP directly at /boot/"
-  echo "Mounting at /boot/EFI/ or similar is unsupported"
-  exit 6
+  if ! findmnt /boot/ &> /dev/null; then
+    echo "You MUST mount your ESP directly at /boot/"
+    echo "Mounting at /boot/EFI/ or similar is unsupported"
+    exit 6
+  fi
 fi
