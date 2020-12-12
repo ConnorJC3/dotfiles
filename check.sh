@@ -37,7 +37,7 @@ if [[ $BARE ]]; then
     echo "Your primary arch partition MUST be labeled ARCH"
     echo "ext2/3/4 - e2label /dev/sdaX ARCH"
     echo "btrfs    - btrfs filesystem label / ARCH"
-    echo "Run partprove after labeling to reload partitions"
+    echo "Run partprobe after labeling to reload partitions"
     exit 5
   fi
 
