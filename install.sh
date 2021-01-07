@@ -26,4 +26,15 @@ fi
 if [[ $NVIDIA ]]; then
   invoke_dotbot nvidia.conf.yaml
 fi
+if [[ $GRAPHICAL ]]; then
+  invoke_dotbot graphical.conf.yaml
+fi
 invoke_dotbot main.conf.yaml
+
+if [[ -z $BOOTSTRAP ]]; then
+  echo "Changes require a reboot"
+  read -n 1 -r -p "Reboot now? (y/n) " REBOOT_NOW
+  if [[ $REBOOT_NOW =~ ^[Yy]$ ]]; then
+    sudo reboot
+  fi
+fi
