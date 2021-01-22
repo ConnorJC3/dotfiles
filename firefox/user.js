@@ -1,7 +1,7 @@
 /******
 * name: arkenfox user.js
-* date: 22 Nov 2020
-* version 84-alpha
+* date: 17 Jan 2021
+* version 85-alpha
 * url: https://github.com/arkenfox/user.js
 * license: MIT: https://github.com/arkenfox/user.js/blob/master/LICENSE.txt
 
@@ -25,6 +25,7 @@
          [SETUP-CHROME] changes how Firefox itself behaves (i.e. not directly website related)
            [SETUP-PERF] may impact performance
               [WARNING] used sparingly, heed them
+  6. Override Recipes: https://github.com/arkenfox/user.js/issues/1080
 
 * RELEASES: https://github.com/arkenfox/user.js/releases
 
@@ -115,7 +116,6 @@ user_pref("browser.newtabpage.activity-stream.telemetry", false);
  * Runs code received from a server (aka Remote Code Execution) and sends information back to a metrics server
  * [1] https://abouthome-snippets-service.readthedocs.io/ ***/
 user_pref("browser.newtabpage.activity-stream.feeds.snippets", false);
-user_pref("browser.newtabpage.activity-stream.asrouter.providers.snippets", "{}");
 /* 0105c: disable Activity Stream Top Stories, Pocket-based and/or sponsored content ***/
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
 user_pref("browser.newtabpage.activity-stream.section.highlights.includePocket", false);
@@ -455,14 +455,6 @@ user_pref("keyword.enabled", false);
 user_pref("browser.fixup.alternate.enabled", false);
 /* 0803: display all parts of the url in the location bar ***/
 user_pref("browser.urlbar.trimURLs", false);
-/* 0805: disable coloring of visited links - CSS history leak
- * [NOTE] This has NEVER been fully "resolved": in Mozilla/docs it is stated it's
- * only in 'certain circumstances', also see latest comments in [2]
- * [TEST] https://earthlng.github.io/testpages/visited_links.html (see github wiki APPENDIX A on how to use)
- * [1] https://dbaron.org/mozilla/visited-privacy
- * [2] https://bugzilla.mozilla.org/147777
- * [3] https://developer.mozilla.org/docs/Web/CSS/Privacy_and_the_:visited_selector ***/
-user_pref("layout.css.visited_links_enabled", false);
 /* 0807: disable live search suggestions
 /* [NOTE] Both must be true for the location bar to work
  * [SETUP-CHROME] Change these if you trust and use a privacy respecting search engine
@@ -483,6 +475,10 @@ user_pref("browser.urlbar.dnsResolveSingleWordsAfterSearch", 0);
    // user_pref("browser.urlbar.suggest.bookmark", false);
    // user_pref("browser.urlbar.suggest.openpage", false);
    // user_pref("browser.urlbar.suggest.topsites", false); // [FF78+]
+/* 0850b: disable tab-to-search [FF85+]
+ * Alternatively, you can exclude on a per-engine basis by unchecking them in Options>Search
+ * [SETTING] Privacy & Security>Address Bar>When using the address bar, suggest>Search engines ***/
+   // user_pref("browser.urlbar.suggest.engines", false);
 /* 0850c: disable location bar dropdown
  * This value controls the total number of entries to appear in the location bar dropdown
  * [NOTE] Items (bookmarks/history/openpages) with a high "frecency"/"bonus" will always
@@ -633,9 +629,11 @@ user_pref("_user.js.parrot", "1200 syntax error: the parrot's a stiff!");
  * if it disables renegotiations but the problem is that the browser can't know that.
  * Setting this pref to true is the only way for the browser to ensure there will be
  * no unsafe renegotiations on the channel between the browser and the server.
+ * [STATS] SSL Labs (Dec 2020) reports 99.0% of sites have secure renegotiation [4]
  * [1] https://wiki.mozilla.org/Security:Renegotiation
  * [2] https://tools.ietf.org/html/rfc5746
- * [3] https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3555 ***/
+ * [3] https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3555
+ * [4] https://www.ssllabs.com/ssl-pulse/ ***/
 user_pref("security.ssl.require_safe_negotiation", true);
 /* 1202: control TLS versions with min and max
  * 1=TLS 1.0, 2=TLS 1.1, 3=TLS 1.2, 4=TLS 1.3
@@ -770,10 +768,8 @@ user_pref("dom.security.https_only_mode_send_http_background_request", false);
 /** UI (User Interface) ***/
 /* 1270: display warning on the padlock for "broken security" (if 1201 is false)
  * Bug: warning padlock not indicated for subresources on a secure page! [2]
- * [STATS] SSL Labs (Dec 2020) reports 99.0% of sites have secure renegotiation [3]
  * [1] https://wiki.mozilla.org/Security:Renegotiation
- * [2] https://bugzilla.mozilla.org/1353705
- * [3] https://www.ssllabs.com/ssl-pulse/ ***/
+ * [2] https://bugzilla.mozilla.org/1353705 ***/
 user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
 /* 1271: control "Add Security Exception" dialog on SSL warnings
  * 0=do neither 1=pre-populate url 2=pre-populate url + pre-fetch cert (default)
@@ -818,10 +814,7 @@ user_pref("gfx.font_rendering.graphite.enabled", false);
 /*** [SECTION 1600]: HEADERS / REFERERS
      Only *cross domain* referers need controlling: leave 1601, 1602, 1605 and 1606 alone
      ---
-            harden it a bit: set XOriginPolicy (1603) to 1 (as per the settings below)
-       harden it a bit more: set XOriginPolicy (1603) to 2 (and optionally 1604 to 1 or 2), expect breakage
-     ---
-     If you want any REAL control over referers and breakage, then use an extension
+     Expect some breakage: Use an extension if you need precise control
      ---
                     full URI: https://example.com:8888/foo/bar.html?id=1234
        scheme+host+port+path: https://example.com:8888/foo/bar.html
@@ -832,17 +825,17 @@ user_pref("gfx.font_rendering.graphite.enabled", false);
 user_pref("_user.js.parrot", "1600 syntax error: the parrot rests in peace!");
 /* 1601: ALL: control when images/links send a referer
  * 0=never, 1=send only when links are clicked, 2=for links and images (default) ***/
-   // user_pref("network.http.sendRefererHeader", 2); // [DEFAULT: 2]
+   // user_pref("network.http.sendRefererHeader", 2);
 /* 1602: ALL: control the amount of information to send
  * 0=send full URI (default), 1=scheme+host+port+path, 2=scheme+host+port ***/
-   // user_pref("network.http.referer.trimmingPolicy", 0); // [DEFAULT: 0]
+   // user_pref("network.http.referer.trimmingPolicy", 0);
 /* 1603: CROSS ORIGIN: control when to send a referer
  * 0=always (default), 1=only if base domains match, 2=only if hosts match
  * [SETUP-WEB] Known to cause issues with older modems/routers and some sites e.g vimeo, icloud ***/
-user_pref("network.http.referer.XOriginPolicy", 1);
+user_pref("network.http.referer.XOriginPolicy", 2);
 /* 1604: CROSS ORIGIN: control the amount of information to send [FF52+]
  * 0=send full URI (default), 1=scheme+host+port+path, 2=scheme+host+port ***/
-user_pref("network.http.referer.XOriginTrimmingPolicy", 0); // [DEFAULT: 0]
+user_pref("network.http.referer.XOriginTrimmingPolicy", 2);
 /* 1605: ALL: disable spoofing a referer
  * [WARNING] Do not set this to true, as spoofing effectively disables the anti-CSRF
  * (Cross-Site Request Forgery) protections that some sites may rely on ***/
@@ -1197,7 +1190,10 @@ user_pref("permissions.delegation.enabled", false);
 /* 2624: enable "window.name" protection [FF82+]
  * If a new page from another domain is loaded into a tab, then window.name is set to an empty string. The original
  * string is restored if the tab reverts back to the original page. This change prevents some cross-site attacks ***/
-user_pref("privacy.window.name.update.enabled", true);
+user_pref("privacy.window.name.update.enabled", true); // [DEFAULT: true FF86+]
+/* 2625: disable bypassing 3rd party extension install prompts [FF82+]
+ * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=1659530,1681331 ***/
+user_pref("extensions.postDownloadThirdPartyPrompt", false);
 
 /** DOWNLOADS ***/
 /* 2650: discourage downloading to desktop
