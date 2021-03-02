@@ -1,6 +1,10 @@
+# $PATH additions
+export PATH=$PATH:$(yarn global bin)
+export PATH=$HOME/.local/bin:$PATH
+
 # aliases and functions
 alias ls="ls --color=auto"
-alias docker="podman"
+alias fly="fly --target=realliance"
 function paru {
   if [[ -n "$1" ]]; then
     command paru "$@"
@@ -10,7 +14,7 @@ function paru {
 }
 
 # rbenv
-if [ -x "$(command -v rvenv)" ]; then
+if [ -x "$(command -v rbenv)" ]; then
   eval "$(rbenv init -)"
 fi
 

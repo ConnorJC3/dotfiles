@@ -1723,6 +1723,8 @@ user_pref("privacy.clearOnShutdown.sessions", false);
 // Allow service workers (and related features)
 user_pref("dom.serviceWorkers.enabled", true);
 user_pref("dom.push.enabled", true);
+// Allow many redirects
+user_pref("network.http.redirection-limit", 50);
 
 // // Anti-tracking settings
 // // You probably want these, but they may break particularly weird sites
@@ -1757,6 +1759,10 @@ user_pref("browser.in-content.dark-mode", true);
 user_pref("browser.startup.page", 3);
 // Disable annoying backspace keybind
 user_pref("browser.backspace_action", 2);
+// Allow scripts to close their window
+user_pref("dom.allow_scripts_to_close_windows", true);
+// Disable popup blocker (never has blocked a popup, always gets in the way)
+user_pref("dom.disable_open_during_load", false);
 // Better scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.lines.durationMaxMS", 125);
