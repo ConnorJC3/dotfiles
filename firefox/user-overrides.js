@@ -45,6 +45,8 @@ user_pref("dom.serviceWorkers.enabled", true);
 user_pref("dom.push.enabled", true);
 // Allow many redirects
 user_pref("network.http.redirection-limit", 50);
+// Allow websites to use the clipboard from JS
+user_pref("dom.allow_cut_copy", true);
 
 // // Anti-tracking settings
 // // You probably want these, but they may break particularly weird sites
@@ -69,6 +71,14 @@ user_pref("privacy.trackingprotection.enabled", false);
 user_pref("gfx.webrender.all", true);
 // Fission (separate process per domain)
 user_pref("fission.autostart", true);
+// Proton (new firefox design)
+user_pref("browser.proton.enabled", true);
+user_pref("browser.proton.appmenu.enabled", true);
+user_pref("browser.proton.tabs.enabled", true);
+user_pref("browser.proton.toolbar.enabled", true);
+user_pref("browser.proton.contextmenus.enabled", true);
+user_pref("browser.proton.urlbar.enabled", true);
+user_pref("browser.newtabpage.activity-stream.newNewtabExperience.enabled", true);
 
 // // Personal settings
 // //
@@ -83,6 +93,12 @@ user_pref("browser.backspace_action", 2);
 user_pref("dom.allow_scripts_to_close_windows", true);
 // Disable popup blocker (never has blocked a popup, always gets in the way)
 user_pref("dom.disable_open_during_load", false);
+// Allow scripts to close the window (useful for kubelogin)
+user_pref("dom.allow_scripts_to_close_windows", true);
+// Proton compact theme
+user_pref("browser.proton.toolbar.version", 3);
+// Disable separate title bar
+user_pref("browser.tabs.drawInTitlebar", true);
 // Better scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.lines.durationMaxMS", 125);
