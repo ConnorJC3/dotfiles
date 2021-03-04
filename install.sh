@@ -23,8 +23,11 @@ fi
 if [[ $BARE ]]; then
   invoke_dotbot bare.conf.yaml
 fi
-if [[ $NVIDIA ]]; then
+if [[ $NVIDIA_GPU ]]; then
   invoke_dotbot nvidia.conf.yaml
+fi
+if [[ $AMD_GPU ]]; then
+  invoke_dotbot amd.conf.yaml
 fi
 if [[ $GRAPHICAL ]]; then
   invoke_dotbot graphical.conf.yaml

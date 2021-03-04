@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LATEST_VERSION=2
+LATEST_VERSION=3
 
 function ask_question {
   read -n 1 -r -p "$1" "$2"
@@ -14,12 +14,18 @@ function ask_question {
 }
 
 function setup_config {
-  rm -f ./saved-config.sh
-  echo "#!/usr/bin/env bash" >> ./saved-config.sh
+  while [[ -z $CONFIRM ]]; do
+    rm -f ./saved-config.sh
+    echo "#!/usr/bin/env bash" >> ./saved-config.sh
 
-  ask_question "Running on bare metal? (y/n) " BARE
-  ask_question "Using NVIDIA graphics card? (y/n) " NVIDIA
-  ask_question "Graphical system (no means cmdline only)? (y/n) " GRAPHICAL
+    ask_question "Graphical system (no means cmdline only)? (y/n) " GRAPHICAL
+    ask_question "Running on bare metal (setup EFISTUB)? (y/n) " BARE
+    ask_question "Using NVIDIA graphics card? (y/n) " NVIDIA_GPU
+    ask_question "Using AMD graphics card (y/n) " AMD_GPU
+    ask_question "Using Intel processor (y/n) " INTEL_CPU
+    ask_question "Using AMD processor (y/n) " AMD_CPU
+    ask_question "Confirm answers (y/n) " CONFIRM
+  done
 
   # redo bootstrap if new version
   unset BOOTSTRAP

@@ -1,9 +1,19 @@
 #!/usr/bin/env bash
 
-QUIET="quiet loglevel=3 rd.udev.log-priority=3 vt.global_cursor_default=0"
-VFIO="intel_iommu=on"
-NVIDIA="nvidia-drm.modeset=1"
-KERNEL="${QUIET} ${VFIO} ${NVIDIA}"
+source ../saved-config.sh
+# Quiet boot
+KERNEL="quiet loglevel=3 rd.udev.log-priority=3 vt.global_cursor_default=0"
+# VFIO
+if [[ $INTEL_CPU ]]; then
+  KERNEL="$KERNEL intel_iommu=on"
+elif [[ $AMD_CPU ]]; then
+  KERNEL="$KERNEL amd_iommu=on"
+fi
+# NVIDIA
+if [[ $NVIDIA ]]; then
+  KERNEL="$KERNEL nvidia-drm.modeset=1"
+fi
+echo $KERNEL
 
 PARTITION=`readlink -f /dev/disk/by-label/BOOT`
 while efibootmgr | grep "Arch Linux" > /dev/null; do
