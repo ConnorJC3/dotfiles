@@ -5,13 +5,6 @@ export PATH=$HOME/.local/bin:$PATH
 # aliases and functions
 alias ls="ls --color=auto"
 alias fly="fly --target=realliance"
-function paru {
-  if [[ -n "$1" ]]; then
-    command paru "$@"
-  else
-    command paru --noconfirm -Syu
-  fi
-}
 
 # rbenv
 if [ -x "$(command -v rbenv)" ]; then
