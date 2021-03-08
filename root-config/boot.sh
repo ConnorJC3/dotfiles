@@ -13,7 +13,6 @@ fi
 if [[ $NVIDIA ]]; then
   KERNEL="$KERNEL nvidia-drm.modeset=1"
 fi
-echo $KERNEL
 
 PARTITION=`readlink -f /dev/disk/by-label/BOOT`
 while efibootmgr | grep "Arch Linux" > /dev/null; do
