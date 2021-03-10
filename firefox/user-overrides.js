@@ -76,9 +76,10 @@ user_pref("browser.proton.enabled", true);
 user_pref("browser.proton.appmenu.enabled", true);
 user_pref("browser.proton.tabs.enabled", true);
 user_pref("browser.proton.toolbar.enabled", true);
-user_pref("browser.proton.contextmenus.enabled", true);
 user_pref("browser.proton.urlbar.enabled", true);
 user_pref("browser.newtabpage.activity-stream.newNewtabExperience.enabled", true);
+// Explicitly disable proton context menu (use native)
+user_pref("browser.proton.contextmenus.enabled", false);
 
 // // Personal settings
 // //
