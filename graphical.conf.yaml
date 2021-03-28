@@ -1,9 +1,9 @@
 ---
 - defaults:
     link:
-    create: true
-    relink: true
-    force: true
+      create: true
+      relink: true
+      force: true
 
 - pacman:
     - sddm
@@ -28,6 +28,8 @@
 
 - shell:
     - [sudo chattr +i firefox/profiles.ini, Locking firefox profiles]
+    - [sudo mkdir -p /etc/firefox/policies, Creating policies.json directory]
+    - [sudo cp ./root-config/policies.json /etc/firefox/policies/policies.json, Installing policies.json]
     - [sudo ln -sf /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d, Disabling bitmap fonts]
     - [sudo ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d, Enabling sub-pixel RGB]
     - [sudo ln -sf /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d, Enabling LCD filter]

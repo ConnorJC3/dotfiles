@@ -1,9 +1,9 @@
 ---
 - defaults:
     link:
-    create: true
-    relink: true
-    force: true
+      create: true
+      relink: true
+      force: true
 
 - pacman:
     - zsh
@@ -31,7 +31,7 @@
 - clean:
     ~/:
     ~/.config:
-    recursive: true
+      recursive: true
 
 - shell:
     - [sudo chsh -s /usr/bin/zsh $USER, Changing default shell to zsh]
