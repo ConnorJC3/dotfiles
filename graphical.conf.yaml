@@ -1,23 +1,24 @@
+---
 - defaults:
     link:
-      create: true
-      relink: true
-      force: true
+    create: true
+    relink: true
+    force: true
 
 - pacman:
-  - sddm
-  - plasma-desktop
-  - plasma-pa
-  - plasma-disks
-  - plasma-browser-integration
-  - plasma-systemmonitor
-  - noto-fonts
-  - noto-fonts-emoji
-  - kitty
+    - sddm
+    - plasma-desktop
+    - plasma-pa
+    - plasma-disks
+    - plasma-browser-integration
+    - plasma-systemmonitor
+    - noto-fonts
+    - noto-fonts-emoji
+    - kitty
 
 - paru:
-  - nerd-fonts-hack
-  - firefox-nightly
+    - nerd-fonts-hack
+    - firefox-nightly
 
 - link:
     ~/.config/kitty:
@@ -26,8 +27,8 @@
     ~/.mozilla/firefox/main/user.js: firefox/user.js
 
 - shell:
-  - [sudo chattr +i firefox/profiles.ini, Locking firefox profiles]
-  - [sudo ln -sf /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d, Disabling bitmap fonts]
-  - [sudo ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d, Enabling sub-pixel RGB]
-  - [sudo ln -sf /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d, Enabling LCD filter]
-  - [sudo systemctl enable sddm, Enabling display manager]
+    - [sudo chattr +i firefox/profiles.ini, Locking firefox profiles]
+    - [sudo ln -sf /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d, Disabling bitmap fonts]
+    - [sudo ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d, Enabling sub-pixel RGB]
+    - [sudo ln -sf /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d, Enabling LCD filter]
+    - [sudo systemctl enable sddm, Enabling display manager]

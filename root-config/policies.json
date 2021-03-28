@@ -1,0 +1,43 @@
+{
+  "policies": {
+    "ExtensionSettings": {
+      "uBlock0@raymondhill.net": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "poop@cm.org": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/privacy-oriented-origin-policy/latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "smart-referer@meh.paranoid.pk": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/smart-referer/latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "dark-mode-website-switcher@rugk.github.io": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/dark-mode-website-switcher/latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "skipredirect@sblask": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/skip-redirect/latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "redirector@einaregilsson.com": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/redirector/latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "{446900e4-71c2-419f-a6a7-df9c091e268b}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/auto-tab-discard/latest.xpi",
+        "installation_mode": "normal_installed"
+      },
+      "{74145f27-f039-47ce-a470-a662b129930a}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/clearurls/latest.xpi",
+        "installation_mode": "normal_installed"
+      }
+    },
+    "NoDefaultBookmarks": true
+  }
+}

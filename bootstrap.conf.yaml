@@ -1,19 +1,20 @@
+---
 - defaults:
     link:
-      create: true
-      relink: true
-      force: true
+    create: true
+    relink: true
+    force: true
 
 - pacman:
-  - pigz
-  - pbzip2
-  - reflector
+    - pigz
+    - pbzip2
+    - reflector
 
 - link:
     ~/.config/pacman:
     ~/.config/paru:
 
 - shell:
-  - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
-  - [sudo cp ./root-config/reflector.conf /etc/xdg/reflector/reflector.conf, Installing reflector config]
-  - [sudo systemctl enable --now reflector, Enabling reflector service]
+    - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
+    - [sudo cp ./root-config/reflector.conf /etc/xdg/reflector/reflector.conf, Installing reflector config]
+    - [sudo systemctl enable --now reflector, Enabling reflector service]
