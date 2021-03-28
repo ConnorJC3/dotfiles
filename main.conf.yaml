@@ -5,13 +5,7 @@
       force: true
 
 - pacman:
-  - sddm
-  - plasma-meta
-  - kde-applications-meta
-  - noto-fonts
-  - noto-fonts-emoji
   - zsh
-  - kitty
   - bat
   - pacman-contrib
   - neofetch
@@ -20,25 +14,18 @@
   - fuse-overlayfs
   - slirp4netns
   - diff-so-fancy
-  - efibootmgr
   - qemu
   - libvirt
   - edk2-ovmf
   - virt-manager
 
 - paru:
-  - nerd-fonts-hack
-  - firefox-nightly
   - kernel-modules-hook
 
 - link:
     ~/.zshrc:
     ~/.zshenv:
-    ~/.config/kitty:
-    ~/.config/fontconfig:
     ~/.config/neofetch:
-    ~/.mozilla/firefox/profiles.ini: firefox/profiles.ini
-    ~/.mozilla/firefox/main/user.js: firefox/user.js
 
 - clean:
     ~/:
@@ -55,4 +42,3 @@
   - [sudo systemctl mask systemd-fsck-root.service, Disable root fsck (not needed on btrfs)]
   - [sudo systemctl enable paccache.timer, Enabling paccache timer]
   - [sudo systemctl enable --now libvirtd, Enabling libvirtd]
-  - [sudo systemctl enable --now sddm, Enabling display manager]

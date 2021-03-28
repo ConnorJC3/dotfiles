@@ -1,2 +1,5 @@
+- pacman:
+  - efibootmgr
+
 - shell:
   - [sudo ./root-config/boot.sh, Setting up EFISTUB]
