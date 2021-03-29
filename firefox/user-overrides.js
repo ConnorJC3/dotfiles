@@ -63,6 +63,7 @@ user_pref("privacy.trackingprotection.cryptomining.enabled", false);
 user_pref("privacy.trackingprotection.fingerprinting.enabled", false);
 user_pref("privacy.trackingprotection.socialtracking.enabled", false);
 user_pref("privacy.trackingprotection.enabled", false);
+user_pref("privacy.trackingprotection.pbmode.enabled", false);
 
 // // Setup specific settings
 // // These _may_ not work for you, toggle if you have issues
@@ -96,10 +97,12 @@ user_pref("dom.allow_scripts_to_close_windows", true);
 user_pref("dom.disable_open_during_load", false);
 // Allow scripts to close the window (useful for kubelogin)
 user_pref("dom.allow_scripts_to_close_windows", true);
-// Proton compact theme
-user_pref("browser.proton.toolbar.version", 3);
+// UI Density: Compact
+user_pref("browser.uidensity", 1);
 // Disable separate title bar
 user_pref("browser.tabs.drawInTitlebar", true);
+// Disable containers (useless conflict with FPI)
+user_pref("privacy.userContext.enabled", false);
 // Better scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.lines.durationMaxMS", 125);

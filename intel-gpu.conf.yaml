@@ -1,0 +1,5 @@
+---
+- pacman:
+    - mesa
+    - xf86-video-intel
+    - vulkan-intel

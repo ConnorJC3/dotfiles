@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-LATEST_VERSION=3
+LATEST_VERSION=4
 
 function ask_question {
-  read -n 1 -r -p "$1" "$2"
+  read -n 1 -r -p "${1} (y/n) " "$2"
   # move to new line
   echo
   if [[ "${!2}" =~ ^[Yy]$ ]]; then
@@ -18,13 +18,15 @@ function setup_config {
     rm -f ./saved-config.sh
     echo "#!/usr/bin/env bash" >> ./saved-config.sh
 
-    ask_question "Graphical system (no means cmdline only)? (y/n) " GRAPHICAL
-    ask_question "Running on bare metal (setup EFISTUB)? (y/n) " BARE
-    ask_question "Using NVIDIA graphics card? (y/n) " NVIDIA_GPU
-    ask_question "Using AMD graphics card (y/n) " AMD_GPU
-    ask_question "Using Intel processor (y/n) " INTEL_CPU
-    ask_question "Using AMD processor (y/n) " AMD_CPU
-    ask_question "Confirm answers (y/n) " CONFIRM
+    ask_question "Setup EFISTUB (no means manual bootloader)?" EFISTUB
+    ask_question "Graphical system (no means cmdline only)?" GRAPHICAL
+    ask_question "Using Intel CPU?" INTEL_CPU
+    ask_question "Using AMD CPU?" AMD_CPU
+    [[ $GRAPHICAL ]] && ask_question "Using Intel iGPU?" INTEL_GPU
+    [[ $GRAPHICAL ]] && ask_question "Using AMD GPU?" AMD_GPU
+    [[ $GRAPHICAL ]] && ask_question "Using NVIDIA GPU?" NVIDIA_GPU
+    ask_question "Confirm answers?" CONFIRM
+    echo
   done
 
   # redo bootstrap if new version

@@ -1,0 +1,17 @@
+{
+  "name": "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}",
+  "description": "ignored",
+  "type": "storage",
+  "data": {
+    "faqs": false,
+    "pinned": true,
+    "audio": true,
+    "online": true,
+    "form": true,
+    "notification.permission": true,
+    "page.context": false,
+    "tab.context": false,
+    "link.context": false,
+    "favicon": false
+  }
+ }

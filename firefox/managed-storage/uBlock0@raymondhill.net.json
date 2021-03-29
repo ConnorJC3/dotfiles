@@ -1,0 +1,8 @@
+{
+ "name": "uBlock0@raymondhill.net",
+ "description": "ignored",
+ "type": "storage",
+ "data": {
+   "adminSettings": "{\"userSettings\":{\"advancedUserEnabled\":true,\"contextMenuEnabled\":false,\"popupPanelSections\":15,\"webrtcIPAddressHidden\":true},\"selectedFilterLists\":[\"user-filters\",\"ublock-filters\",\"ublock-badware\",\"ublock-privacy\",\"ublock-abuse\",\"ublock-unbreak\",\"adguard-generic\",\"adguard-mobile\",\"easylist\",\"adguard-spyware\",\"easyprivacy\",\"urlhaus-1\",\"adguard-annoyance\",\"adguard-social\",\"fanboy-thirdparty_social\",\"fanboy-cookiemonster\",\"fanboy-annoyance\",\"fanboy-social\",\"ublock-annoyances\",\"dpollock-0\",\"mvps-0\",\"plowe-0\"]}"
+ }
+}

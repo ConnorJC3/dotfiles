@@ -25,7 +25,7 @@ if ! sudo true; then
   exit 4
 fi
 
-if [[ $BARE ]]; then
+if [[ $EFISTUB ]]; then
   if [[ ! -L /dev/disk/by-label/BOOT ]]; then
     echo "Your boot (EFI system) partition MUST be labeled BOOT"
     echo "fatlabel /dev/sdaX BOOT"

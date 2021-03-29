@@ -1,9 +1,9 @@
 ---
 - defaults:
     link:
-    create: true
-    relink: true
-    force: true
+      create: true
+      relink: true
+      force: true
 
 - pacman:
     - pigz
