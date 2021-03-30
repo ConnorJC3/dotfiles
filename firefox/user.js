@@ -1735,6 +1735,8 @@ user_pref("dom.push.enabled", true);
 user_pref("network.http.redirection-limit", 50);
 // Allow websites to use the clipboard from JS
 user_pref("dom.allow_cut_copy", true);
+// Broken, laggy, and mostly useless
+user_pref("security.OCSP.require", false);
 
 // // Anti-tracking settings
 // // You probably want these, but they may break particularly weird sites
@@ -1744,14 +1746,6 @@ user_pref("dom.battery.enabled", false);
 user_pref("media.media-capabilities.enabled", false);
 user_pref("dom.vr.enabled", false);
 user_pref("dom.storageManager.enabled", false);
-// Block cookies from unvisited websites
-// But disable FF blocker for other requests (useless conflict with uBlock Origin)
-user_pref("network.cookie.cookieBehavior", 3);
-user_pref("privacy.trackingprotection.cryptomining.enabled", false);
-user_pref("privacy.trackingprotection.fingerprinting.enabled", false);
-user_pref("privacy.trackingprotection.socialtracking.enabled", false);
-user_pref("privacy.trackingprotection.enabled", false);
-user_pref("privacy.trackingprotection.pbmode.enabled", false);
 
 // // Setup specific settings
 // // These _may_ not work for you, toggle if you have issues

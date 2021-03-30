@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ../saved-config.sh
+source `dirname "$0"`/../saved-config.sh
 # Quiet boot
 KERNEL=" quiet loglevel=3 rd.udev.log-priority=3 vt.global_cursor_default=0"
 # CPU specific (VFIO, ucode)
@@ -11,7 +11,7 @@ elif [[ $AMD_CPU ]]; then
   KERNEL="$KERNEL amd_iommu=on"
 fi
 # NVIDIA
-if [[ $NVIDIA ]]; then
+if [[ $NVIDIA_GPU ]]; then
   KERNEL="$KERNEL nvidia-drm.modeset=1"
 fi
 
