@@ -49,8 +49,6 @@ user_pref("dom.push.enabled", true);
 user_pref("network.http.redirection-limit", 50);
 // Allow websites to use the clipboard from JS
 user_pref("dom.allow_cut_copy", true);
-// Broken, laggy, and mostly useless
-user_pref("security.OCSP.require", false);
 
 // // Anti-tracking settings
 // // You probably want these, but they may break particularly weird sites
