@@ -1705,6 +1705,8 @@ user_pref("media.autoplay.blocking_policy", 0);
 // Allow animations in browser UI
 // (Disables disgusting hourglass loading icon)
 user_pref("ui.prefersReducedMotion", 0);
+// Disable containers (useless conflict with FPI)
+user_pref("privacy.userContext.enabled", false);
 
 // // Fix the web settings
 // // Revert some privacy/security fixes to improve browsing experience
@@ -1783,8 +1785,8 @@ user_pref("dom.allow_scripts_to_close_windows", true);
 user_pref("browser.uidensity", 1);
 // Disable separate title bar
 user_pref("browser.tabs.drawInTitlebar", true);
-// Disable containers (useless conflict with FPI)
-user_pref("privacy.userContext.enabled", false);
+// Disable Ctrl-Q shortcut (*nix only)
+user_pref("browser.quitShortcut.disabled", true);
 // Better scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.lines.durationMaxMS", 125);
