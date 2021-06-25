@@ -1,7 +1,7 @@
 /******
 * name: arkenfox user.js
-* date: 02 March 2021
-* version 87-alpha
+* date: 16 June 2021
+* version 90-alpha
 * url: https://github.com/arkenfox/user.js
 * license: MIT: https://github.com/arkenfox/user.js/blob/master/LICENSE.txt
 
@@ -38,6 +38,7 @@
     - If you are not using arkenfox v78... (not a definitive list)
       - 1244: HTTPS-Only mode is enabled
       - 1401: document fonts is inactive as it is now covered by RFP in FF80+
+      - 2626: non-native widget theme is enforced
       - 4600: some prefs may apply even if you use RFP
       - 9999: switch the appropriate deprecated section(s) back on
 
@@ -92,7 +93,8 @@ user_pref("_user.js.parrot", "0100 syntax error: the parrot's dead!");
 /* 0101: disable default browser check
  * [SETTING] General>Startup>Always check if Firefox is your default browser ***/
 user_pref("browser.shell.checkDefaultBrowser", false);
-/* 0102: set START page (0=blank, 1=home, 2=last visited page, 3=resume previous session)
+/* 0102: set startup page [SETUP-CHROME]
+ * 0=blank, 1=home, 2=last visited page, 3=resume previous session
  * [NOTE] Session Restore is not used in PB mode (0110) and is cleared with history (2803, 2804)
  * [SETTING] General>Startup>Restore previous session ***/
 user_pref("browser.startup.page", 0);
@@ -115,7 +117,7 @@ user_pref("browser.newtabpage.activity-stream.telemetry", false);
 /* 0105b: disable Activity Stream Snippets
  * Runs code received from a server (aka Remote Code Execution) and sends information back to a metrics server
  * [1] https://abouthome-snippets-service.readthedocs.io/ ***/
-user_pref("browser.newtabpage.activity-stream.feeds.snippets", false);
+user_pref("browser.newtabpage.activity-stream.feeds.snippets", false); // [DEFAULT: false FF89+]
 /* 0105c: disable Activity Stream Top Stories, Pocket-based and/or sponsored content ***/
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
 user_pref("browser.newtabpage.activity-stream.section.highlights.includePocket", false);
@@ -199,10 +201,6 @@ user_pref("app.update.auto", false);
 /* 0308: disable search engine updates (e.g. OpenSearch)
  * [NOTE] This does not affect Mozilla's built-in or Web Extension search engines ***/
 user_pref("browser.search.update", false);
-/* 0309: disable sending Flash crash reports ***/
-user_pref("dom.ipc.plugins.flash.subprocess.crashreporter.enabled", false);
-/* 0310: disable sending the URL of the website where a plugin crashed ***/
-user_pref("dom.ipc.plugins.reportCrashURL", false);
 /* 0320: disable about:addons' Recommendations pane (uses Google Analytics) ***/
 user_pref("extensions.getAddons.showPane", false); // [HIDDEN PREF]
 /* 0321: disable recommendations in about:addons' Extensions and Themes panes [FF68+] ***/
@@ -276,9 +274,9 @@ user_pref("extensions.blocklist.enabled", true); // [DEFAULT: true]
     Firefox also takes measures such as striping out identifying parameters and since SBv4 (FF57+)
     doesn't even use cookies. (#Turn on browser.safebrowsing.debug to monitor this activity)
 
-    #Required reading [#] https://feeding.cloud.geek.nz/posts/how-safe-browsing-works-in-firefox/
-    [1] https://wiki.mozilla.org/Security/Safe_Browsing
-    [2] https://support.mozilla.org/en-US/kb/how-does-phishing-and-malware-protection-work
+    [1] https://feeding.cloud.geek.nz/posts/how-safe-browsing-works-in-firefox/
+    [2] https://wiki.mozilla.org/Security/Safe_Browsing
+    [3] https://support.mozilla.org/en-US/kb/how-does-phishing-and-malware-protection-work
 ***/
 /* 0410: disable SB (Safe Browsing)
  * [WARNING] Do this at your own risk! These are the master switches.
@@ -311,8 +309,6 @@ user_pref("browser.safebrowsing.downloads.remote.url", "");
      built-in features to Firefox, that are hidden from the about:addons UI.
      To view your System Add-ons go to about:support, they are listed under "Firefox Features"
 
-     Some System Add-ons have no on-off prefs. Instead you can manually remove them. Note that app
-     updates will restore them. They may also be updated and possibly restored automatically (see 0505)
      * Portable: "...\App\Firefox64\browser\features\" (or "App\Firefox\etc" for 32bit)
      * Windows: "...\Program Files\Mozilla\browser\features" (or "Program Files (X86)\etc" for 32bit)
      * Mac: "...\Applications\Firefox\Contents\Resources\browser\features\"
@@ -320,7 +316,7 @@ user_pref("browser.safebrowsing.downloads.remote.url", "");
      * Linux: "/usr/lib/firefox/browser/features" (or similar)
 
      [1] https://firefox-source-docs.mozilla.org/toolkit/mozapps/extensions/addon-manager/SystemAddons.html
-     [2] https://dxr.mozilla.org/mozilla-central/source/browser/extensions
+     [2] https://searchfox.org/mozilla-central/source/browser/extensions
 ***/
 user_pref("_user.js.parrot", "0500 syntax error: the parrot's cashed in 'is chips!");
 /* 0503: disable Normandy/Shield [FF60+]
@@ -359,17 +355,16 @@ user_pref("network.prefetch-next", false);
 /* 0602: disable DNS prefetching
  * [1] https://developer.mozilla.org/docs/Web/HTTP/Headers/X-DNS-Prefetch-Control ***/
 user_pref("network.dns.disablePrefetch", true);
-user_pref("network.dns.disablePrefetchFromHTTPS", true); // [DEFAULT: true]
+   // user_pref("network.dns.disablePrefetchFromHTTPS", true); // [DEFAULT: true]
 /* 0603: disable predictor / prefetching ***/
 user_pref("network.predictor.enabled", false);
-user_pref("network.predictor.enable-prefetch", false); // [FF48+] [DEFAULT: false]
+   // user_pref("network.predictor.enable-prefetch", false); // [FF48+] [DEFAULT: false]
 /* 0605: disable link-mouseover opening connection to linked server
  * [1] https://news.slashdot.org/story/15/08/14/2321202/how-to-quash-firefoxs-silent-requests ***/
 user_pref("network.http.speculative-parallel-limit", 0);
 /* 0606: enforce no "Hyperlink Auditing" (click tracking)
  * [1] https://www.bleepingcomputer.com/news/software/major-browsers-to-prevent-disabling-of-click-tracking-privacy-risk/ ***/
-user_pref("browser.send_pings", false); // [DEFAULT: false]
-user_pref("browser.send_pings.require_same_host", true); // defense-in-depth
+   // user_pref("browser.send_pings", false); // [DEFAULT: false]
 
 /*** [SECTION 0700]: HTTP* / TCP/IP / DNS / PROXY / SOCKS etc ***/
 user_pref("_user.js.parrot", "0700 syntax error: the parrot's given up the ghost!");
@@ -387,8 +382,8 @@ user_pref("network.dns.disableIPv6", true);
 /* 0702: disable HTTP2
  * HTTP2 raises concerns with "multiplexing" and "server push", does nothing to
  * enhance privacy, and opens up a number of server-side fingerprinting opportunities.
- * [WARNING] Disabling this made sense in the past, and doesn't break anything, but HTTP2 is
- * at 40% (December 2019) and growing [5]. Don't be that one person using HTTP1.1 on HTTP2 sites
+ * [WARNING] Don't disable HTTP2. Don't be that one person using HTTP1.1 on HTTP2 sites
+ * [STATS] Over 50% of sites (April 2021) and growing [5]
  * [1] https://http2.github.io/faq/
  * [2] https://blog.scottlogic.com/2014/11/07/http-2-a-quick-look.html
  * [3] https://http2.github.io/http2-spec/#rfc.section.10.8
@@ -431,8 +426,7 @@ user_pref("network.gio.supported-protocols", ""); // [HIDDEN PREF]
      your environment (no unwanted eyeballs), your device (restricted access), your device's
      unattended state (locked, encrypted, forensic hardened). Likewise, you may want to check
      the items cleared on shutdown in section 2800.
-     [NOTE] The urlbar is also commonly referred to as the location bar and address bar
-     #Required reading [#] https://xkcd.com/538/
+     [1] https://xkcd.com/538/
 ***/
 user_pref("_user.js.parrot", "0800 syntax error: the parrot's ceased to be!");
 /* 0801: disable location bar using search
@@ -663,10 +657,9 @@ user_pref("security.tls.version.enable-deprecated", false);
 user_pref("security.tls.enable_0rtt_data", false);
 
 /** OCSP (Online Certificate Status Protocol)
-    #Required reading [#] https://scotthelme.co.uk/revocation-is-broken/ ***/
-/* 1210: enable OCSP Stapling
- * [1] https://blog.mozilla.org/security/2013/07/29/ocsp-stapling-in-firefox/ ***/
-user_pref("security.ssl.enable_ocsp_stapling", true);
+    [1] https://scotthelme.co.uk/revocation-is-broken/
+    [2] https://blog.mozilla.org/security/2013/07/29/ocsp-stapling-in-firefox/
+***/
 /* 1211: control when to use OCSP fetching (to confirm current validity of certificates)
  * 0=disabled, 1=enabled (default), 2=enabled for EV certificates only
  * OCSP (non-stapled) leaks information about the sites you visit to the CA (cert authority)
@@ -724,9 +717,6 @@ user_pref("security.pki.crlite_mode", 2);
 user_pref("security.mixed_content.block_active_content", true); // [DEFAULT: true]
 /* 1241: disable insecure passive content (such as images) on https pages [SETUP-WEB] ***/
 user_pref("security.mixed_content.block_display_content", true);
-/* 1243: block unencrypted requests from Flash on encrypted pages to mitigate MitM attacks [FF59+]
- * [1] https://bugzilla.mozilla.org/1190623 ***/
-user_pref("security.mixed_content.block_object_subrequest", true);
 /* 1244: enable HTTPS-Only mode [FF76+]
  * When "https_only_mode" (all windows) is true, "https_only_mode_pbm" (private windows only) is ignored
  * [SETTING] to add site exceptions: Padlock>HTTPS-Only mode>On/Off/Off temporarily
@@ -744,10 +734,14 @@ user_pref("dom.security.https_only_mode", true); // [FF76+]
  * This is done to avoid waiting for a timeout which takes 90 seconds
  * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=1642387,1660945 ***/
 user_pref("dom.security.https_only_mode_send_http_background_request", false);
+/* 1247: treat .onion as a secure context [FF60+] [TOR]
+ * [NOTE] Firefox cannot access .onion sites by default: it is strongly recommended you just use Tor Browser
+ * [1] https://bugzilla.mozilla.org/1382359 ***/
+   // user_pref("dom.securecontext.whitelist_onions", true);
 
 /** CIPHERS [WARNING: do not meddle with your cipher suite: see the section 1200 intro]
- * These are all the ciphers still using SHA-1 and CBC which are weaker than the available alternatives. (see "Cipher Suites" in [1])
- * Additionally some have other weaknesses like key sizes of 128 (or lower) [2] and/or no Perfect Forward Secrecy [3].
+ * These are the ciphers listed under "Cipher Suites" [1] that are either still using SHA-1 and CBC,
+ * and/or are missing Perfect Forward Secrecy [3] and/or have other weaknesses like key sizes of 128
  * [1] https://browserleaks.com/ssl
  * [2] https://en.wikipedia.org/wiki/Key_size
  * [3] https://en.wikipedia.org/wiki/Forward_secrecy
@@ -762,6 +756,8 @@ user_pref("dom.security.https_only_mode_send_http_background_request", false);
    // user_pref("security.ssl3.ecdhe_ecdsa_aes_128_sha", false);
    // user_pref("security.ssl3.ecdhe_rsa_aes_128_sha", false);
    // user_pref("security.ssl3.ecdhe_rsa_aes_256_sha", false);
+   // user_pref("security.ssl3.rsa_aes_128_gcm_sha256", false); // no PFS
+   // user_pref("security.ssl3.rsa_aes_256_gcm_sha384", false); // no PFS
    // user_pref("security.ssl3.rsa_aes_128_sha", false); // no PFS
    // user_pref("security.ssl3.rsa_aes_256_sha", false); // no PFS
 
@@ -788,7 +784,7 @@ user_pref("security.insecure_connection_text.enabled", true); // [FF60+]
 user_pref("_user.js.parrot", "1400 syntax error: the parrot's bereft of life!");
 /* 1401: disable websites choosing fonts (0=block, 1=allow)
  * This can limit most (but not all) JS font enumeration which is a high entropy fingerprinting vector
- * [WARNING] **DO NOT USE**: in FF80+ RFP covers this, and non-RFP users should use font vis (4618)
+ * [WARNING] **DO NOT USE**: in FF80+ RFP covers this, and non-RFP users should use font vis (4620)
  * [SETTING] General>Language and Appearance>Fonts & Colors>Advanced>Allow pages to choose... ***/
    // user_pref("browser.display.use_document_fonts", 0);
 /* 1403: disable icon fonts (glyphs) and local fallback rendering
@@ -806,8 +802,8 @@ user_pref("gfx.font_rendering.opentype_svg.enabled", false);
 user_pref("gfx.font_rendering.graphite.enabled", false);
 /* 1409: limit system font exposure to a whitelist [FF52+] [RESTART]
  * If the whitelist is empty, then whitelisting is considered disabled and all fonts are allowed
- * [NOTE] In FF81+ the whitelist **overrides** RFP's font visibility (see 4618)
- * [WARNING] **DO NOT USE**: in FF80+ RFP covers this, and non-RFP users should use font vis (4618)
+ * [NOTE] In FF81+ the whitelist **overrides** RFP's font visibility (see 4620)
+ * [WARNING] **DO NOT USE**: in FF80+ RFP covers this, and non-RFP users should use font vis (4620)
  * [1] https://bugzilla.mozilla.org/1121643 ***/
    // user_pref("font.system.whitelist", ""); // [HIDDEN PREF]
 
@@ -820,7 +816,7 @@ user_pref("gfx.font_rendering.graphite.enabled", false);
        scheme+host+port+path: https://example.com:8888/foo/bar.html
             scheme+host+port: https://example.com:8888
      ---
-     #Required reading [#] https://feeding.cloud.geek.nz/posts/tweaking-referrer-for-privacy-in-firefox/
+     [1] https://feeding.cloud.geek.nz/posts/tweaking-referrer-for-privacy-in-firefox/
 ***/
 user_pref("_user.js.parrot", "1600 syntax error: the parrot rests in peace!");
 /* 1601: ALL: control when images/links send a referer
@@ -831,7 +827,7 @@ user_pref("_user.js.parrot", "1600 syntax error: the parrot rests in peace!");
    // user_pref("network.http.referer.trimmingPolicy", 0);
 /* 1603: CROSS ORIGIN: control when to send a referer
  * 0=always (default), 1=only if base domains match, 2=only if hosts match
- * [SETUP-WEB] Known to cause issues with older modems/routers and some sites e.g vimeo, icloud ***/
+ * [SETUP-WEB] Known to cause issues with older modems/routers and some sites e.g vimeo, icloud, instagram ***/
 user_pref("network.http.referer.XOriginPolicy", 2);
 /* 1604: CROSS ORIGIN: control the amount of information to send [FF52+]
  * 0=send full URI (default), 1=scheme+host+port+path, 2=scheme+host+port ***/
@@ -849,9 +845,8 @@ user_pref("network.http.referer.XOriginTrimmingPolicy", 2);
  * [4] https://blog.mozilla.org/security/2021/03/22/firefox-87-trims-http-referrers-by-default-to-protect-user-privacy/ ***/
    // user_pref("network.http.referer.defaultPolicy", 2); // [DEFAULT: 2 FF87+]
    // user_pref("network.http.referer.defaultPolicy.pbmode", 2); // [DEFAULT: 2]
-/* 1607: TOR: hide (not spoof) referrer when leaving a .onion domain [FF54+]
- * [NOTE] Firefox cannot access .onion sites by default. We recommend you use
- * the Tor Browser which is specifically designed for hidden services
+/* 1607: hide (not spoof) referrer when leaving a .onion domain [FF54+] [TOR]
+ * [NOTE] Firefox cannot access .onion sites by default: it is strongly recommended you just use Tor Browser
  * [1] https://bugzilla.mozilla.org/1305144 ***/
    // user_pref("network.http.referer.hideOnionSource", true);
 /* 1610: ALL: enable the DNT (Do Not Track) HTTP header
@@ -881,11 +876,6 @@ user_pref("privacy.userContext.enabled", true);
 
 /*** [SECTION 1800]: PLUGINS ***/
 user_pref("_user.js.parrot", "1800 syntax error: the parrot's pushing up daisies!");
-/* 1803: disable Flash plugin
- * 0=deactivated, 1=ask, 2=enabled
- * ESR52.x is the last branch to *fully* support NPAPI, FF52+ stable only supports Flash
- * [NOTE] You can still override individual sites via site permissions ***/
-user_pref("plugin.state.flash", 0);
 /* 1820: disable GMP (Gecko Media Plugins)
  * [1] https://wiki.mozilla.org/GeckoMediaPlugins ***/
    // user_pref("media.gmp-provider.enabled", false);
@@ -895,6 +885,7 @@ user_pref("plugin.state.flash", 0);
 /* 1830: disable all DRM content (EME: Encryption Media Extension)
  * [SETUP-WEB] e.g. Netflix, Amazon Prime, Hulu, HBO, Disney+, Showtime, Starz, DirectTV
  * [SETTING] General>DRM Content>Play DRM-controlled content
+ * [TEST] https://bitmovin.com/demos/drm
  * [1] https://www.eff.org/deeplinks/2017/10/drms-dead-canary-how-we-just-lost-web-what-we-learned-it-and-what-we-need-do-next ***/
 user_pref("media.eme.enabled", false);
 
@@ -922,7 +913,6 @@ user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true); // [FF70
 user_pref("webgl.disabled", true);
 user_pref("webgl.enable-webgl2", false);
 /* 2012: limit WebGL ***/
-   // user_pref("webgl.min_capability_mode", true);
 user_pref("webgl.disable-fail-if-major-performance-caveat", true); // [DEFAULT: true FF86+]
 /* 2022: disable screensharing ***/
 user_pref("media.getusermedia.screensharing.enabled", false);
@@ -1024,8 +1014,8 @@ user_pref("_user.js.parrot", "2400 syntax error: the parrot's kicked the bucket!
 /* 2402: disable website access to clipboard events/content [SETUP-HARDEN]
  * [NOTE] This will break some sites' functionality e.g. Outlook, Twitter, Facebook, Wordpress
  * This applies to onCut/onCopy/onPaste events - i.e. it requires interaction with the website
- * [WARNING] If both 'middlemouse.paste' and 'general.autoScroll' are true (at least one
- * is default false) then enabling this pref can leak clipboard content [1]
+ * [WARNING] In FF88 or lower, with clipboardevents enabled, if both 'middlemouse.paste' and
+ * 'general.autoScroll' are true (at least one is default false) then the clipboard can leak [1]
  * [1] https://bugzilla.mozilla.org/1528289 ***/
    // user_pref("dom.event.clipboardevents.enabled", false);
 /* 2404: disable clipboard commands (cut/copy) from "non-privileged" content [FF41+]
@@ -1077,11 +1067,6 @@ user_pref("_user.js.parrot", "2500 syntax error: the parrot's shuffled off 'is m
  * [NOTE] From FF52+ Battery Status API is only available in chrome/privileged code [1]
  * [1] https://bugzilla.mozilla.org/1313580 ***/
    // user_pref("dom.battery.enabled", false);
-/* 2505: disable media device enumeration [FF29+]
- * [NOTE] media.peerconnection.enabled should also be set to false (see 2001)
- * [1] https://wiki.mozilla.org/Media/getUserMedia
- * [2] https://developer.mozilla.org/docs/Web/API/MediaDevices/enumerateDevices ***/
-user_pref("media.navigator.enabled", false);
 /* 2508: disable hardware acceleration to reduce graphics fingerprinting [SETUP-HARDEN]
  * [WARNING] Affects text rendering (fonts will look different), impacts video performance,
  * and parts of Quantum that utilize the GPU will also be affected as they are rolled out
@@ -1089,9 +1074,6 @@ user_pref("media.navigator.enabled", false);
  * [1] https://wiki.mozilla.org/Platform/GFX/HardwareAcceleration ***/
    // user_pref("gfx.direct2d.disabled", true); // [WINDOWS]
    // user_pref("layers.acceleration.disabled", true);
-/* 2510: disable Web Audio API [FF51+]
- * [1] https://bugzilla.mozilla.org/1288359 ***/
-user_pref("dom.webaudio.enabled", false);
 /* 2517: disable Media Capabilities API [FF63+]
  * [WARNING] This *may* affect media performance if disabled, no one is sure
  * [1] https://github.com/WICG/media-capabilities
@@ -1160,17 +1142,18 @@ user_pref("webchannel.allowObject.urlWhitelist", "");
  * [3] CVE-2017-5383: https://www.mozilla.org/security/advisories/mfsa2017-02/
  * [4] https://www.xudongz.com/blog/2017/idn-phishing/ ***/
 user_pref("network.IDN_show_punycode", true);
-/* 2620: enforce Firefox's built-in PDF reader [SETUP-CHROME]
+/* 2620: enforce PDFJS, disable PDFJS scripting [SETUP-CHROME]
  * This setting controls if the option "Display in Firefox" is available in the setting below
  *   and by effect controls whether PDFs are handled in-browser or externally ("Ask" or "Open With")
  * PROS: pdfjs is lightweight, open source, and as secure/vetted as any pdf reader out there (more than most)
- *   Exploits are rare (1 serious case in 4 yrs), treated seriously and patched quickly.
+ *   Exploits are rare (one serious case in seven years), treated seriously and patched quickly.
  *   It doesn't break "state separation" of browser content (by not sharing with OS, independent apps).
  *   It maintains disk avoidance and application data isolation. It's convenient. You can still save to disk.
  * CONS: You may prefer a different pdf reader for security reasons
  * CAVEAT: JS can still force a pdf to open in-browser by bundling its own code (rare)
  * [SETTING] General>Applications>Portable Document Format (PDF) ***/
 user_pref("pdfjs.disabled", false); // [DEFAULT: false]
+user_pref("pdfjs.enableScripting", false); // [FF86+]
 /* 2621: disable links launching Windows Store on Windows 8/8.1/10 [WINDOWS] ***/
 user_pref("network.protocol-handler.external.ms-windows-store", false);
 /* 2622: enforce no system colors; they can be fingerprinted
@@ -1190,6 +1173,12 @@ user_pref("privacy.window.name.update.enabled", true); // [DEFAULT: true FF86+]
 /* 2625: disable bypassing 3rd party extension install prompts [FF82+]
  * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=1659530,1681331 ***/
 user_pref("extensions.postDownloadThirdPartyPrompt", false);
+/* 2626: enforce non-native widget theme
+ * Security: removes/reduces system API calls, e.g. win32k API [1]
+ * Fingerprinting: provides a uniform look and feel across platforms [2]
+ * [1] https://bugzilla.mozilla.org/1381938
+ * [2] https://bugzilla.mozilla.org/1411425 ***/
+user_pref("widget.non-native-theme.enabled", true); // [DEFAULT: true FF89+]
 
 /** DOWNLOADS ***/
 /* 2650: discourage downloading to desktop
@@ -1245,17 +1234,23 @@ user_pref("security.dialog_enable_delay", 700);
      accessible to websites except shared/service workers where the cookie setting *must* be "Allow"
 ***/
 user_pref("_user.js.parrot", "2700 syntax error: the parrot's joined the bleedin' choir invisible!");
-/* 2701: disable 3rd-party cookies and site-data [SETUP-WEB]
- * 0=Accept cookies and site data, 1=(Block) All third-party cookies, 2=(Block) All cookies,
- * 3=(Block) Cookies from unvisited websites, 4=(Block) Cross-site and social media trackers (default)
- * [NOTE] You can set exceptions under site permissions or use an extension
+/* 2701: disable or isolate 3rd-party cookies and site-data [SETUP-WEB]
+ * 0 = Accept cookies and site data
+ * 1 = (Block) All third-party cookies
+ * 2 = (Block) All cookies
+ * 3 = (Block) Cookies from unvisited websites
+ * 4 = (Block) Cross-site tracking cookies (default)
+ * 5 = (Isolate All) Cross-site cookies (TCP: Total Cookie Protection / dFPI: dynamic FPI) [1] (FF86+)
+ * Option 5 with FPI enabled (4001) is ignored and not shown, and option 4 used instead
+ * [NOTE] You can set cookie exceptions under site permissions or use an extension
  * [NOTE] Enforcing category to custom ensures ETP related prefs are always honored
- * [SETTING] Privacy & Security>Enhanced Tracking Protection>Custom>Cookies ***/
+ * [SETTING] Privacy & Security>Enhanced Tracking Protection>Custom>Cookies
+ * [1] https://blog.mozilla.org/security/2021/02/23/total-cookie-protection/ ***/
 user_pref("network.cookie.cookieBehavior", 1);
 user_pref("browser.contentblocking.category", "custom");
 /* 2702: set third-party cookies (if enabled, see 2701) to session-only
-   [NOTE] .sessionOnly overrides .nonsecureSessionOnly except when .sessionOnly=false and
-   .nonsecureSessionOnly=true. This allows you to keep HTTPS cookies, but session-only HTTP ones
+ * [NOTE] .sessionOnly overrides .nonsecureSessionOnly except when .sessionOnly=false and
+ * .nonsecureSessionOnly=true. This allows you to keep HTTPS cookies, but session-only HTTP ones
  * [1] https://feeding.cloud.geek.nz/posts/tweaking-cookies-for-privacy-in-firefox/ ***/
 user_pref("network.cookie.thirdparty.sessionOnly", true);
 user_pref("network.cookie.thirdparty.nonsecureSessionOnly", true); // [FF58+]
@@ -1264,7 +1259,16 @@ user_pref("network.cookie.thirdparty.nonsecureSessionOnly", true); // [FF58+]
  * [NOTE] The setting below is disabled (but not changed) if you block all cookies (2701 = 2)
  * [SETTING] Privacy & Security>Cookies and Site Data>Delete cookies and site data when Firefox is closed ***/
    // user_pref("network.cookie.lifetimePolicy", 2);
-/* 2710: disable DOM (Document Object Model) Storage
+/* 2710: enable Enhanced Tracking Protection (ETP) in all windows
+ * [SETTING] Privacy & Security>Enhanced Tracking Protection>Custom>Tracking content
+ * [SETTING] to add site exceptions: Urlbar>ETP Shield
+ * [SETTING] to manage site exceptions: Options>Privacy & Security>Enhanced Tracking Protection>Manage Exceptions ***/
+user_pref("privacy.trackingprotection.enabled", true);
+/* 2711: enable various ETP lists ***/
+user_pref("privacy.trackingprotection.socialtracking.enabled", true);
+   // user_pref("privacy.trackingprotection.cryptomining.enabled", true); // [DEFAULT: true]
+   // user_pref("privacy.trackingprotection.fingerprinting.enabled", true); // [DEFAULT: true]
+/* 2720: disable DOM (Document Object Model) Storage
  * [WARNING] This will break a LOT of sites' functionality AND extensions!
  * You are better off using an extension for more granular control ***/
    // user_pref("dom.storage.enabled", false);
@@ -1292,8 +1296,8 @@ user_pref("dom.storage.next_gen", true);
 
 /*** [SECTION 2800]: SHUTDOWN
      You should set the values to what suits you best.
-     - "Offline Website Data" includes appCache (2730), localStorage (2710),
-       service worker cache (2740), and QuotaManager (IndexedDB (2720), asm-cache)
+     - "Offline Website Data" includes appCache (2730), localStorage (2720),
+       service worker cache (2740), and QuotaManager (IndexedDB, asm-cache)
      - In both 2803 + 2804, the 'download' and 'history' prefs are combined in the
        Firefox interface as "Browsing & Download History" and their values will be synced
 ***/
@@ -1403,7 +1407,7 @@ user_pref("privacy.firstparty.isolate", true);
  FF56+
    1369303 - spoof/disable performance API (see 4602, 4603)
    1333651 - spoof User Agent & Navigator API (see section 4700)
-      JS: FF78+ the version is spoofed as 78, and the OS as Windows 10, OS 10.15, Android 9, or Linux
+      JS: FF78+ the version is spoofed as ESR, and the OS as Windows 10, OS 10.15, Android 9 (FF91+ as 10), or Linux
       HTTP Headers: spoofed as Windows or Android
    1369319 - disable device sensor API (see 4604)
    1369357 - disable site specific zoom (see 4605)
@@ -1416,40 +1420,39 @@ user_pref("privacy.firstparty.isolate", true);
    1217290 & 1409677 - enable fingerprinting resistance for WebGL (see 2010-12)
    1382545 - reduce fingerprinting in Animation API
    1354633 - limit MediaError.message to a whitelist
-   1382533 - enable fingerprinting resistance for Presentation API
+   1382533 & 1697680 - enable fingerprinting resistance for Presentation API (FF57-87)
       This blocks exposure of local IP Addresses via mDNS (Multicast DNS)
  FF58+
     967895 - spoof canvas and enable site permission prompt before allowing canvas data extraction
  FF59+
    1372073 - spoof/block fingerprinting in MediaDevices API
       Spoof: enumerate devices reports one "Internal Camera" and one "Internal Microphone" if
-             media.navigator.enabled is true (see 2505 which we chose to keep disabled)
-      Block: suppresses the ondevicechange event (see 4612)
+             media.navigator.enabled is true (see 4612 which we chose to keep disabled)
+      Block: suppresses the ondevicechange event (see 4613)
    1039069 - warn when language prefs are set to non en-US (see 0210, 0211)
    1222285 & 1433592 - spoof keyboard events and suppress keyboard modifier events
       Spoofing mimics the content language of the document. Currently it only supports en-US.
       Modifier events suppressed are SHIFT and both ALT keys. Chrome is not affected.
  FF60-67
-   1337157 - disable WebGL debug renderer info (see 4613) (FF60+)
+   1337157 - disable WebGL debug renderer info (see 4614) (FF60+)
    1459089 - disable OS locale in HTTP Accept-Language headers (ANDROID) (FF62+)
-   1479239 - return "no-preference" with prefers-reduced-motion (see 4614) (FF63+)
-   1363508 - spoof/suppress Pointer Events (see 4615) (FF64+)
+   1479239 - return "no-preference" with prefers-reduced-motion (see 4615) (FF63+)
+   1363508 - spoof/suppress Pointer Events (see 4616) (FF64+)
       FF65: pointerEvent.pointerid (1492766)
-   1485266 - disable exposure of system colors to CSS or canvas (see 4616) (FF67+)
+   1485266 - disable exposure of system colors to CSS or canvas (see 4617) (FF67+)
    1407366 - enable inner window letterboxing (see 4504) (FF67+)
-   1494034 - return "light" with prefers-color-scheme (see 4617) (FF67+)
+   1494034 - return "light" with prefers-color-scheme (see 4618) (FF67+)
  FF68-77
-   1564422 - spoof audioContext outputLatency (FF70+)
-   1595823 - spoof audioContext sampleRate (FF72+)
+   1564422 - spoof audioContext outputLatency (see 4619) (FF70+)
+   1595823 - return audioContext sampleRate as 44100 (see 4619) (FF72+)
    1607316 - spoof pointer as coarse and hover as none (ANDROID) (FF74+)
  FF78+
    1621433 - randomize canvas (previously FF58+ returned an all-white canvas) (FF78+)
-   1653987 - limit font visibility to bundled and "Base Fonts" (see 4618) (non-ANDROID) (FF80+)
+   1653987 - limit font visibility to bundled and "Base Fonts" (see 4620) (Windows, Mac, some Linux) (FF80+)
    1461454 - spoof smooth=true and powerEfficient=false for supported media in MediaCapabilities (FF82+)
 ***/
 user_pref("_user.js.parrot", "4500 syntax error: the parrot's popped 'is clogs");
 /* 4501: enable privacy.resistFingerprinting [FF41+]
- * This pref is the master switch for all other privacy.resist* prefs unless stated
  * [SETUP-WEB] RFP can cause the odd website to break in strange ways, and has a few side affects,
  * but is largely robust nowadays. Give it a try. Your choice. Also see 4504 (letterboxing).
  * [1] https://bugzilla.mozilla.org/418986 ***/
@@ -1489,20 +1492,18 @@ user_pref("ui.prefersReducedMotion", 1); // [HIDDEN PREF]
 user_pref("_user.js.parrot", "4600 syntax error: the parrot's crossed the Jordan");
 /* [SETUP-non-RFP] Non-RFP users replace the * with a slash on this line to enable these
 // FF55+
-// 4601: [2514] spoof (or limit?) number of CPU cores [FF48+]
-   // [NOTE] *may* affect core chrome/Firefox performance, will affect content.
+// 4601: [2514] spoof number of CPU cores [FF48+]
    // [1] https://bugzilla.mozilla.org/1008453
    // [2] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/21675
    // [3] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/22127
    // [4] https://html.spec.whatwg.org/multipage/workers.html#navigator.hardwareconcurrency
-   // user_pref("dom.maxHardwareConcurrency", 2);
-// * * * /
+user_pref("dom.maxHardwareConcurrency", 2);
 // FF56+
 // 4602: [2411] disable resource/navigation timing
 user_pref("dom.enable_resource_timing", false);
 // 4603: [2412] disable timing attacks
    // [1] https://wiki.mozilla.org/Security/Reviews/Firefox/NavigationTimingAPI
-user_pref("dom.enable_performance", false);
+   // user_pref("dom.enable_performance", false);
 // 4604: [2512] disable device sensor API
    // Optional protection depending on your device
    // [1] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/15758
@@ -1529,7 +1530,6 @@ user_pref("dom.netinfo.enabled", false); // [DEFAULT: true on Android]
    // [2] https://developer.mozilla.org/docs/Web/API/SpeechSynthesis
    // [3] https://wiki.mozilla.org/HTML5_Speech_API
 user_pref("media.webspeech.synth.enabled", false);
-// * * * /
 // FF57+
 // 4610: [2506] disable video statistics - JS performance fingerprinting [FF25+]
    // [1] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/15757
@@ -1542,46 +1542,50 @@ user_pref("media.video_stats.enabled", false);
    // [1] https://developer.mozilla.org/docs/Web/API/Touch_events
    // [2] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/10286
    // user_pref("dom.w3c_touch_events.enabled", 0);
-// * * * /
 // FF59+
-// 4612: [2511] disable MediaDevices change detection [FF51+]
+// 4612: [2505] disable media device enumeration [FF29+]
+   // [NOTE] media.peerconnection.enabled should also be set to false (see 2001)
+   // [1] https://wiki.mozilla.org/Media/getUserMedia
+   // [2] https://developer.mozilla.org/docs/Web/API/MediaDevices/enumerateDevices
+user_pref("media.navigator.enabled", false);
+// 4613: [2511] disable MediaDevices change detection [FF51+]
    // [1] https://developer.mozilla.org/docs/Web/Events/devicechange
    // [2] https://developer.mozilla.org/docs/Web/API/MediaDevices/ondevicechange
 user_pref("media.ondevicechange.enabled", false);
-// * * * /
 // FF60+
-// 4613: [2011] disable WebGL debug info being available to websites
+// 4614: [2011] disable WebGL debug info being available to websites
    // [1] https://bugzilla.mozilla.org/1171228
    // [2] https://developer.mozilla.org/docs/Web/API/WEBGL_debug_renderer_info
 user_pref("webgl.enable-debug-renderer-info", false);
-// * * * /
 // FF63+
-// 4614: enforce prefers-reduced-motion as no-preference [FF63+] [RESTART]
+// 4615: enforce prefers-reduced-motion as no-preference [FF63+] [RESTART]
    // 0=no-preference, 1=reduce
 user_pref("ui.prefersReducedMotion", 0); // [HIDDEN PREF]
 // FF64+
-// 4615: [2516] disable PointerEvents [FF86 or lower]
+// 4616: [2516] disable PointerEvents [FF86 or lower]
    // [1] https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent
    // [-] https://bugzilla.mozilla.org/1688105
 user_pref("dom.w3c_pointer_events.enabled", false);
-// * * * /
 // FF67+
-// 4616: [2618] disable exposure of system colors to CSS or canvas [FF44+]
+// 4617: [2618] disable exposure of system colors to CSS or canvas [FF44+]
    // [NOTE] See second listed bug: may cause black on black for elements with undefined colors
    // [SETUP-CHROME] Might affect CSS in themes and extensions
    // [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=232227,1330876
 user_pref("ui.use_standins_for_native_colors", true);
-// 4617: enforce prefers-color-scheme as light [FF67+]
+// 4618: enforce prefers-color-scheme as light [FF67+]
    // 0=light, 1=dark : This overrides your OS value
 user_pref("ui.systemUsesDarkTheme", 0); // [HIDDEN PREF]
+// FF72+
+// 4619: [2510] disable Web Audio API [FF51+]
+   // [1] https://bugzilla.mozilla.org/1288359
+   // user_pref("dom.webaudio.enabled", false);
 // FF80+
-// 4618: limit font visibility (non-ANDROID) [FF79+]
+// 4620: limit font visibility (non-ANDROID) [FF79+]
    // Uses hardcoded lists with two parts: kBaseFonts + kLangPackFonts [1]
    // 1=only base system fonts, 2=also fonts from optional language packs, 3=also user-installed fonts
    // [NOTE] Bundled fonts are auto-allowed
    // [1] https://searchfox.org/mozilla-central/search?path=StandardFonts*.inc
 user_pref("layout.css.font-visibility.level", 1);
-// * * * /
 // ***/
 
 /*** [SECTION 4700]: RFP ALTERNATIVES (USER AGENT SPOOFING)
@@ -1602,10 +1606,11 @@ user_pref("_user.js.parrot", "4700 syntax error: the parrot's taken 'is last bow
    // user_pref("general.useragent.override", ""); // [HIDDEN PREF]
 
 /*** [SECTION 5000]: PERSONAL
-     Non-project related but useful. If any of these interest you, add them to your overrides ***/
+     Non-project related but useful. If any of these interest you, add them to your overrides
+     To save some overrides, we've made a few active as they seem to be universally used ***/
 user_pref("_user.js.parrot", "5000 syntax error: this is an ex-parrot!");
 /* WELCOME & WHAT's NEW NOTICES ***/
-   // user_pref("browser.startup.homepage_override.mstone", "ignore"); // master switch
+user_pref("browser.startup.homepage_override.mstone", "ignore"); // master switch
    // user_pref("startup.homepage_welcome_url", "");
    // user_pref("startup.homepage_welcome_url.additional", "");
    // user_pref("startup.homepage_override_url", ""); // What's New page after updates
@@ -1632,15 +1637,15 @@ user_pref("_user.js.parrot", "5000 syntax error: this is an ex-parrot!");
    // user_pref("ui.key.menuAccessKey", 0); // disable alt key toggling the menu bar [RESTART]
    // user_pref("view_source.tab", false); // view "page/selection source" in a new window [FF68+, FF59 and under]
 /* UX FEATURES: disable and hide the icons and menus ***/
-   // user_pref("browser.messaging-system.whatsNewPanel.enabled", false); // What's New [FF69+]
+user_pref("browser.messaging-system.whatsNewPanel.enabled", false); // What's New toolbar icon [FF69+]
    // user_pref("extensions.pocket.enabled", false); // Pocket Account [FF46+]
    // user_pref("identity.fxaccounts.enabled", false); // Firefox Accounts & Sync [FF60+] [RESTART]
    // user_pref("reader.parse-on-load.enabled", false); // Reader View
 /* OTHER ***/
    // user_pref("browser.bookmarks.max_backups", 2);
-   // user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false); // disable CFR [FF67+]
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false); // disable CFR [FF67+]
       // [SETTING] General>Browsing>Recommend extensions as you browse
-   // user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false); // disable CFR [FF67+]
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false); // disable CFR [FF67+]
       // [SETTING] General>Browsing>Recommend features as you browse
    // user_pref("network.manage-offline-status", false); // see bugzilla 620472
    // user_pref("xpinstall.signatures.required", false); // enforced extension signing (Nightly/ESR)
@@ -1681,6 +1686,23 @@ user_pref("browser.download.hide_plugins_without_extensions", false);
 // 0105d: disable Activity Stream recent Highlights in the Library [FF57+]
    // [-] https://bugzilla.mozilla.org/1689405
    // user_pref("browser.library.activity-stream.enabled", false);
+// FF89
+// 0309: disable sending Flash crash reports
+   // [-] https://bugzilla.mozilla.org/1682030 [underlying NPAPI code removed]
+user_pref("dom.ipc.plugins.flash.subprocess.crashreporter.enabled", false);
+// 0310: disable sending the URL of the website where a plugin crashed
+   // [-] https://bugzilla.mozilla.org/1682030 [underlying NPAPI code removed]
+user_pref("dom.ipc.plugins.reportCrashURL", false);
+// 1243: block unencrypted requests from Flash on encrypted pages to mitigate MitM attacks [FF59+]
+   // [1] https://bugzilla.mozilla.org/1190623
+   // [-] https://bugzilla.mozilla.org/1682030 [underlying NPAPI code removed]
+user_pref("security.mixed_content.block_object_subrequest", true);
+// 1803: disable Flash plugin
+  // 0=deactivated, 1=ask, 2=enabled
+  // ESR52.x is the last branch to *fully* support NPAPI, FF52+ stable only supports Flash
+  // [NOTE] You can still override individual sites via site permissions
+  // [-] https://bugzilla.mozilla.org/1682030 [underlying NPAPI code removed]
+user_pref("plugin.state.flash", 0); // [DEFAULT: 1]
 // ***/
 
 /* END: internal custom pref to test for syntax errors ***/

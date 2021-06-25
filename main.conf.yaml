@@ -34,6 +34,10 @@
       recursive: true
 
 - shell:
+    - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
+    - [sudo cp ./root-config/reflector.conf /etc/xdg/reflector/reflector.conf, Installing reflector config]
+
+- shell:
     - [sudo chsh -s /usr/bin/zsh $USER, Changing default shell to zsh]
     - [sudo ln -sf /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d, Disabling bitmap fonts]
     - [sudo ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d, Enabling sub-pixel RGB]
