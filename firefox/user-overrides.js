@@ -49,6 +49,9 @@ user_pref("dom.push.enabled", true);
 user_pref("network.http.redirection-limit", 50);
 // Allow websites to use the clipboard from JS
 user_pref("dom.allow_cut_copy", true);
+// Enable WebGL (required on some websites, safe(r) with RFP)
+user_pref("webgl.disabled", false);
+user_pref("webgl.enable-webgl2", true);
 
 // // Anti-tracking settings
 // // You probably want these, but they may break particularly weird sites
@@ -81,6 +84,7 @@ user_pref("browser.proton.contextmenus.enabled", false);
 // Force enable dark mode (only used in browser chrome, ignored on websites with RFP)
 user_pref("ui.systemUsesDarkTheme", 1);
 user_pref("browser.in-content.dark-mode", true);
+// Used to enable dark theme and specify compact UI density (other pref is not consistent)
 user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
 // Restore previous session on startup
 user_pref("browser.startup.page", 3);
@@ -92,8 +96,6 @@ user_pref("dom.allow_scripts_to_close_windows", true);
 user_pref("dom.disable_open_during_load", false);
 // Allow scripts to close the window (useful for kubelogin)
 user_pref("dom.allow_scripts_to_close_windows", true);
-// UI Density: Compact
-user_pref("browser.uidensity", 1);
 // Disable separate title bar
 user_pref("browser.tabs.drawInTitlebar", true);
 // Disable Ctrl-Q shortcut (*nix only)
