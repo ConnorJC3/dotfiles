@@ -19,6 +19,7 @@
     - libvirt
     - edk2-ovmf
     - virt-manager
+    - lua
 
 - paru:
     - kernel-modules-hook

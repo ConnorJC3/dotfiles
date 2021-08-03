@@ -123,6 +123,7 @@ user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
 user_pref("browser.newtabpage.activity-stream.section.highlights.includePocket", false);
 user_pref("browser.newtabpage.activity-stream.showSponsored", false);
 user_pref("browser.newtabpage.activity-stream.feeds.discoverystreamfeed", false); // [FF66+]
+user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false); // [FF83+]
 /* 0105e: clear default topsites
  * [NOTE] This does not block you from adding your own ***/
 user_pref("browser.newtabpage.activity-stream.default.sites", "");
@@ -406,8 +407,6 @@ user_pref("network.http.altsvc.oe", false);
  * as a remote Tor node will handle the DNS request
  * [1] https://trac.torproject.org/projects/tor/wiki/doc/TorifyHOWTO/WebBrowsers ***/
 user_pref("network.proxy.socks_remote_dns", true);
-/* 0708: disable FTP [FF60+] ***/
-   // user_pref("network.ftp.enabled", false); // [DEFAULT: false FF88+]
 /* 0709: disable using UNC (Uniform Naming Convention) paths [FF61+]
  * [SETUP-CHROME] Can break extensions for profiles on network shares
  * [1] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/26424 ***/
@@ -537,6 +536,9 @@ user_pref("signon.formlessCapture.enabled", false);
  * 1=don't allow cross-origin sub-resources to open HTTP authentication credentials dialogs
  * 2=allow sub-resources to open HTTP authentication credentials dialogs (default) ***/
 user_pref("network.auth.subresource-http-auth-allow", 1);
+/* 0913: disable automatic authentication on Microsoft sites [FF91+] [WINDOWS]
+ * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=1695693,1719301 ***/
+user_pref("network.http.windows-sso.enabled", false);
 
 /*** [SECTION 1000]: CACHE / SESSION (RE)STORE / FAVICONS
      Cache tracking/fingerprinting techniques [1][2][3] require a cache. Disabling disk (1001)
@@ -784,7 +786,7 @@ user_pref("security.insecure_connection_text.enabled", true); // [FF60+]
 user_pref("_user.js.parrot", "1400 syntax error: the parrot's bereft of life!");
 /* 1401: disable websites choosing fonts (0=block, 1=allow)
  * This can limit most (but not all) JS font enumeration which is a high entropy fingerprinting vector
- * [WARNING] **DO NOT USE**: in FF80+ RFP covers this, and non-RFP users should use font vis (4620)
+ * [WARNING] DO NOT USE: in FF80+ RFP covers this, and non-RFP users should use font vis (4620)
  * [SETTING] General>Language and Appearance>Fonts & Colors>Advanced>Allow pages to choose... ***/
    // user_pref("browser.display.use_document_fonts", 0);
 /* 1403: disable icon fonts (glyphs) and local fallback rendering
@@ -803,7 +805,7 @@ user_pref("gfx.font_rendering.graphite.enabled", false);
 /* 1409: limit system font exposure to a whitelist [FF52+] [RESTART]
  * If the whitelist is empty, then whitelisting is considered disabled and all fonts are allowed
  * [NOTE] In FF81+ the whitelist **overrides** RFP's font visibility (see 4620)
- * [WARNING] **DO NOT USE**: in FF80+ RFP covers this, and non-RFP users should use font vis (4620)
+ * [WARNING] DO NOT USE: in FF80+ RFP covers this, and non-RFP users should use font vis (4620)
  * [1] https://bugzilla.mozilla.org/1121643 ***/
    // user_pref("font.system.whitelist", ""); // [HIDDEN PREF]
 
@@ -1272,10 +1274,10 @@ user_pref("privacy.trackingprotection.socialtracking.enabled", true);
  * [WARNING] This will break a LOT of sites' functionality AND extensions!
  * You are better off using an extension for more granular control ***/
    // user_pref("dom.storage.enabled", false);
-/* 2730: enforce no offline cache storage (appCache)
- * The API is easily fingerprinted, use the "storage" pref instead ***/
+/* 2730: disable offline cache (appCache)
+ * [NOTE] In FF90+ the storage capability has been removed (1694662). For FF78-89 see the 2730 deprecated pref
+ * [WARNING] The API is easily fingerprinted, do not disable ***/
    // user_pref("browser.cache.offline.enable", false);
-user_pref("browser.cache.offline.storage.enable", false); // [FF71+] [DEFAULT: false FF84+]
 /* 2740: disable service worker cache and cache storage
  * [NOTE] We clear service worker cache on exiting Firefox (see 2803)
  * [1] https://w3c.github.io/ServiceWorker/#privacy ***/
@@ -1391,8 +1393,8 @@ user_pref("privacy.firstparty.isolate", true);
    RFP covers a wide range of ongoing fingerprinting solutions.
    It is an all-or-nothing buy in: you cannot pick and choose what parts you want
 
-   [WARNING] Do NOT use extensions to alter RFP protected metrics
-   [WARNING] Do NOT use prefs in section 4600 with RFP as they can interfere
+   [WARNING] DO NOT USE extensions to alter RFP protected metrics
+   [WARNING] DO NOT USE prefs in section 4600 with RFP as they can interfere
 
  FF41+
     418986 - limit window.screen & CSS media queries leaking identifiable info
@@ -1446,7 +1448,7 @@ user_pref("privacy.firstparty.isolate", true);
    1564422 - spoof audioContext outputLatency (see 4619) (FF70+)
    1595823 - return audioContext sampleRate as 44100 (see 4619) (FF72+)
    1607316 - spoof pointer as coarse and hover as none (ANDROID) (FF74+)
- FF78+
+ FF78-90
    1621433 - randomize canvas (previously FF58+ returned an all-white canvas) (FF78+)
    1653987 - limit font visibility to bundled and "Base Fonts" (see 4620) (Windows, Mac, some Linux) (FF80+)
    1461454 - spoof smooth=true and powerEfficient=false for supported media in MediaCapabilities (FF82+)
@@ -1473,11 +1475,16 @@ user_pref("privacy.resistFingerprinting.block_mozAddonManager", true); // [HIDDE
  * "width1xheight1, width2xheight2, ..." (e.g. "800x600, 1000x1000, 1600x900")
  * [SETUP-WEB] This does NOT require RFP (see 4501) **for now**, so if you're not using 4501, or you are but
  * dislike margins being applied, then flip this pref, keeping in mind that it is effectively fingerprintable
- * [WARNING] The dimension pref is only meant for testing, and we recommend you DO NOT USE it
+ * [WARNING] DO NOT USE: the dimension pref is only meant for testing
  * [1] https://bugzilla.mozilla.org/1407366
  * [2] https://hg.mozilla.org/mozilla-central/rev/6d2d7856e468#l2.32 ***/
 user_pref("privacy.resistFingerprinting.letterboxing", true); // [HIDDEN PREF]
    // user_pref("privacy.resistFingerprinting.letterboxing.dimensions", ""); // [HIDDEN PREF]
+/* 4505: experimental RFP [FF91+]
+ * [WARNING] DO NOT USE unless testing, see [1] comment 12
+ * [1] https://bugzilla.mozilla.org/1635603 ***/
+   // user_pref("privacy.resistFingerprinting.exemptedDomains", "*.example.invalid");
+   // user_pref("privacy.resistFingerprinting.testGranularityMask", 0);
 /* 4510: disable showing about:blank as soon as possible during startup [FF60+]
  * When default true this no longer masks the RFP chrome resizing activity
  * [1] https://bugzilla.mozilla.org/1448423 ***/
@@ -1487,7 +1494,7 @@ user_pref("browser.startup.blankWindow", false);
 user_pref("ui.prefersReducedMotion", 1); // [HIDDEN PREF]
 
 /*** [SECTION 4600]: RFP ALTERNATIVES
-     [WARNING] Do NOT use prefs in this section with RFP as they can interfere
+     [WARNING] DO NOT USE prefs in this section with RFP as they can interfere
 ***/
 user_pref("_user.js.parrot", "4600 syntax error: the parrot's crossed the Jordan");
 /* [SETUP-non-RFP] Non-RFP users replace the * with a slash on this line to enable these
@@ -1698,11 +1705,18 @@ user_pref("dom.ipc.plugins.reportCrashURL", false);
    // [-] https://bugzilla.mozilla.org/1682030 [underlying NPAPI code removed]
 user_pref("security.mixed_content.block_object_subrequest", true);
 // 1803: disable Flash plugin
-  // 0=deactivated, 1=ask, 2=enabled
-  // ESR52.x is the last branch to *fully* support NPAPI, FF52+ stable only supports Flash
-  // [NOTE] You can still override individual sites via site permissions
-  // [-] https://bugzilla.mozilla.org/1682030 [underlying NPAPI code removed]
+   // 0=deactivated, 1=ask, 2=enabled
+   // ESR52.x is the last branch to *fully* support NPAPI, FF52+ stable only supports Flash
+   // [NOTE] You can still override individual sites via site permissions
+   // [-] https://bugzilla.mozilla.org/1682030 [underlying NPAPI code removed]
 user_pref("plugin.state.flash", 0); // [DEFAULT: 1]
+// FF90
+// 0708: disable FTP [FF60+]
+   // [-] https://bugzilla.mozilla.org/1574475
+   // user_pref("network.ftp.enabled", false); // [DEFAULT: false FF88+]
+// 2730: enforce no offline cache storage (appCache) [FF71+]
+   // [-] https://bugzilla.mozilla.org/1694662
+user_pref("browser.cache.offline.storage.enable", false); // [DEFAULT: false FF84+]
 // ***/
 
 /* END: internal custom pref to test for syntax errors ***/
@@ -1791,6 +1805,7 @@ user_pref("browser.proton.contextmenus.enabled", false);
 // Force enable dark mode (only used in browser chrome, ignored on websites with RFP)
 user_pref("ui.systemUsesDarkTheme", 1);
 user_pref("browser.in-content.dark-mode", true);
+user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
 // Restore previous session on startup
 user_pref("browser.startup.page", 3);
 // Disable annoying backspace keybind

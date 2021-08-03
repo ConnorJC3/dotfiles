@@ -8,7 +8,6 @@
 - pacman:
     - pigz
     - pbzip2
-    - reflector
 
 - link:
     ~/.config/pacman:
@@ -16,5 +15,3 @@
 
 - shell:
     - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
-    - [sudo cp ./root-config/reflector.conf /etc/xdg/reflector/reflector.conf, Installing reflector config]
-    - [sudo systemctl enable --now reflector, Enabling reflector service]

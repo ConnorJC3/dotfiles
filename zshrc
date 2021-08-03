@@ -1,5 +1,7 @@
 # $PATH additions
-export PATH=$PATH:$(yarn global bin)
+if [ -x "$(command -v yarn)" ]; then
+  export PATH=$PATH:$(yarn global bin)
+fi
 export PATH=$HOME/.local/bin:$PATH
 
 # aliases and functions

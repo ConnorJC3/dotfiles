@@ -12,6 +12,18 @@ if [[ ! -x "$(command -v git)" ]]; then
   exit 2
 fi
 
+if [[ ! -x "$(command -v ssh)" ]]; then
+  echo "Missing ssh (required for git)"
+  echo "pacman -S openssh"
+  exit 2
+fi
+
+if [[ ! -x "$(command -v python)" ]]; then
+  echo "Missing python (required for dotbot)"
+  echo "pacman -S python"
+  exit 2
+fi
+
 if [[ "$EUID" -eq 0 ]]; then
   echo "Do NOT run as root, create your own user!"
   echo "useradd -m -U USERNAME"

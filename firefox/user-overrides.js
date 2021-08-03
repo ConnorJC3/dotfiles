@@ -81,6 +81,7 @@ user_pref("browser.proton.contextmenus.enabled", false);
 // Force enable dark mode (only used in browser chrome, ignored on websites with RFP)
 user_pref("ui.systemUsesDarkTheme", 1);
 user_pref("browser.in-content.dark-mode", true);
+user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
 // Restore previous session on startup
 user_pref("browser.startup.page", 3);
 // Disable annoying backspace keybind

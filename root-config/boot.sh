@@ -16,16 +16,18 @@ if [[ $NVIDIA_GPU ]]; then
 fi
 
 # Locate boot partition
-PARTITION=`readlink -f /dev/disk/by-label/BOOT`
+PARTITION_PATH=`readlink -f /dev/disk/by-label/BOOT`
+PARTITION=`grep -Eo '[0-9]+$' <<< "$PARTITION_PATH"`
+DISK=/dev/`lsblk -no PKNAME "$PARTITION_PATH"`
 # Delete old entries
 while efibootmgr | grep "Arch Linux" > /dev/null; do
   TARGET=`efibootmgr | grep "Arch Linux" -m 1`
-  efibootmgr --part "${PARTITION:8}" --delete-bootnum --bootnum "${TARGET:4:4}" > /dev/null
+  efibootmgr --disk "$DISK" --part "$PARTITION" --delete-bootnum --bootnum "${TARGET:4:4}" > /dev/null
 done
 # Create new entry
-efibootmgr --part "${PARTITION:8}" --create --label "Arch Linux" --loader "\vmlinuz-linux" --unicode "root=LABEL=ARCH rw ${EXTRA_INITRD}initrd=\initramfs-linux.img${KERNEL}" > /dev/null
+efibootmgr --disk "$DISK" --part "$PARTITION" --create --label "Arch Linux" --loader "\vmlinuz-linux" --unicode "root=LABEL=ARCH rw ${EXTRA_INITRD}initrd=\initramfs-linux.img${KERNEL}" > /dev/null
 
 # Set entry as default
 ENTRY=`efibootmgr | grep "Arch Linux" -m 1`
-efibootmgr --part "${PARTITION:8}" --bootorder "${ENTRY:4:4}" > /dev/null
-efibootmgr --part "${PARTITION:8}" --timeout 0 > /dev/null
+efibootmgr --disk "$DISK" --part "$PARTITION" --bootorder "${ENTRY:4:4}" > /dev/null
+efibootmgr --disk "$DISK" --part "$PARTITION" --timeout 0 > /dev/null

@@ -12,11 +12,14 @@
     - plasma-disks
     - plasma-browser-integration
     - plasma-systemmonitor
+    - breeze
+    - breeze-gtk
     - noto-fonts
     - noto-fonts-emoji
     - kitty
     - pipewire
     - pipewire-pulse
+    - dolphin
 
 - paru:
     - nerd-fonts-hack
