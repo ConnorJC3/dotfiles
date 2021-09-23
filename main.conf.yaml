@@ -20,6 +20,7 @@
     - edk2-ovmf
     - virt-manager
     - lua
+    - linux-headers
 
 - paru:
     - kernel-modules-hook

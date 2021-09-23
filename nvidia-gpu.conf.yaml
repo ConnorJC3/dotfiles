@@ -1,5 +1,5 @@
 ---
 - pacman:
-    - nvidia
+    - nvidia-dkms
     - nvidia-utils
     - libva-vdpau-driver
