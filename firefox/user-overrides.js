@@ -47,11 +47,8 @@ user_pref("dom.serviceWorkers.enabled", true);
 user_pref("dom.push.enabled", true);
 // Allow many redirects
 user_pref("network.http.redirection-limit", 50);
-// Allow websites to use the clipboard from JS
-user_pref("dom.allow_cut_copy", true);
 // Enable WebGL (required on some websites, safe(r) with RFP)
 user_pref("webgl.disabled", false);
-user_pref("webgl.enable-webgl2", true);
 
 // // Anti-tracking settings
 // // You probably want these, but they may break particularly weird sites

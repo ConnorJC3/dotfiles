@@ -37,7 +37,6 @@
 
 - shell:
     - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
-    - [sudo cp ./root-config/reflector.conf /etc/xdg/reflector/reflector.conf, Installing reflector config]
 
 - shell:
     - [sudo chsh -s /usr/bin/zsh $USER, Changing default shell to zsh]
