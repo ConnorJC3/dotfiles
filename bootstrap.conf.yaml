@@ -8,6 +8,7 @@
 - pacman:
     - pigz
     - pbzip2
+    - ccache
 
 - link:
     ~/.config/pacman:

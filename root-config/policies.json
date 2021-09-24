@@ -13,10 +13,6 @@
         "install_url": "https://addons.mozilla.org/firefox/downloads/latest/smart-referer/latest.xpi",
         "installation_mode": "normal_installed"
       },
-      "dark-mode-website-switcher@rugk.github.io": {
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/dark-mode-website-switcher/latest.xpi",
-        "installation_mode": "normal_installed"
-      },
       "{446900e4-71c2-419f-a6a7-df9c091e268b}": {
         "install_url": "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi",
         "installation_mode": "normal_installed"
