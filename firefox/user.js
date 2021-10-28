@@ -1,7 +1,7 @@
 /******
 * name: arkenfox user.js
-* date: 10 September 2021
-* version 92-alpha
+* date: 25 October 2021
+* version 94-alpha
 * url: https://github.com/arkenfox/user.js
 * license: MIT: https://github.com/arkenfox/user.js/blob/master/LICENSE.txt
 
@@ -31,10 +31,8 @@
   * It is best to use the arkenfox release that is optimized for and matches your Firefox version
   * EVERYONE: each release
     - run prefsCleaner to reset prefs made inactive, including deprecated (9999s)
-    ESR78
-    - If you are not using arkenfox v78... (not a definitive list)
-      - 1244: HTTPS-Only mode is enabled
-      - 2502: non-native widget theme is enforced
+    ESR91
+    - If you are not using arkenfox v91... (not a definitive list)
       - 9999: switch the appropriate deprecated section(s) back on
 
 * INDEX:
@@ -55,7 +53,6 @@
   2000: PLUGINS / MEDIA / WEBRTC
   2300: WEB WORKERS
   2400: DOM (DOCUMENT OBJECT MODEL)
-  2500: FINGERPRINTING
   2600: MISCELLANEOUS
   2700: PERSISTENT STORAGE
   2800: SHUTDOWN
@@ -105,7 +102,7 @@ user_pref("browser.newtab.preload", false);
  * [SETTING] Home>Firefox Home Content>...  to show/hide what you want ***/
 user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.telemetry", false);
-user_pref("browser.newtabpage.activity-stream.feeds.snippets", false); // [DEFAULT: false FF89+]
+user_pref("browser.newtabpage.activity-stream.feeds.snippets", false); // [DEFAULT: false]
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
 user_pref("browser.newtabpage.activity-stream.section.highlights.includePocket", false);
 user_pref("browser.newtabpage.activity-stream.showSponsored", false);
@@ -128,11 +125,12 @@ user_pref("geo.provider.use_gpsd", false); // [LINUX]
 /* 0203: disable region updates
  * [1] https://firefox-source-docs.mozilla.org/toolkit/modules/toolkit_modules/Region.html ***/
 user_pref("browser.region.network.url", ""); // [FF78+]
-user_pref("browser.region.update.enabled", false); // [[FF79+]
+user_pref("browser.region.update.enabled", false); // [FF79+]
 /* 0204: set search region
  * [NOTE] May not be hidden if Firefox has changed your settings due to your region (0203) ***/
    // user_pref("browser.search.region", "US"); // [HIDDEN PREF]
-/* 0210: set preferred language for displaying web pages
+/* 0210: set preferred language for displaying pages
+ * [SETTING] General>Language and Appearance>Language>Choose your preferred language...
  * [TEST] https://addons.mozilla.org/about ***/
 user_pref("intl.accept_languages", "en-US, en");
 /* 0211: use US English locale regardless of the system locale
@@ -163,9 +161,6 @@ user_pref("app.update.background.scheduling.enabled", false);
 /* 0306: disable search engine updates (e.g. OpenSearch)
  * [NOTE] This does not affect Mozilla's built-in or Web Extension search engines ***/
 user_pref("browser.search.update", false);
-/* 0307: disable System Add-on updates ***/
-user_pref("extensions.systemAddon.update.enabled", false); // [FF62+]
-user_pref("extensions.systemAddon.update.url", ""); // [FF44+]
 
 /** RECOMMENDATIONS ***/
 /* 0320: disable recommendation pane in about:addons (uses Google Analytics) ***/
@@ -321,13 +316,12 @@ user_pref("network.proxy.socks_remote_dns", true);
  * [SETUP-CHROME] Can break extensions for profiles on network shares
  * [1] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/26424 ***/
 user_pref("network.file.disable_unc_paths", true); // [HIDDEN PREF]
-/* 0704: disable GIO as a potential proxy bypass vector
+/* 0704: disable GIO as a potential proxy bypass vector [FF60+]
  * Gvfs/GIO has a set of supported protocols like obex, network, archive, computer, dav, cdda,
  * gphoto2, trash, etc. By default only smb and sftp protocols are accepted so far (as of FF64)
  * [1] https://bugzilla.mozilla.org/1433507
- * [2] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/23044
- * [3] https://en.wikipedia.org/wiki/GVfs
- * [4] https://en.wikipedia.org/wiki/GIO_(software) ***/
+ * [2] https://en.wikipedia.org/wiki/GVfs
+ * [3] https://en.wikipedia.org/wiki/GIO_(software) ***/
 user_pref("network.gio.supported-protocols", ""); // [HIDDEN PREF]
 /* 0705: disable DNS-over-HTTPS (DoH) rollout [FF60+]
  * 0=off by default, 2=TRR (Trusted Recursive Resolver) first, 3=TRR only, 5=explicitly off
@@ -337,8 +331,11 @@ user_pref("network.gio.supported-protocols", ""); // [HIDDEN PREF]
  * [3] https://blog.mozilla.org/mozilla/news/firefox-by-default-dns-over-https-rollout-in-canada/
  * [4] https://www.eff.org/deeplinks/2020/12/dns-doh-and-odoh-oh-my-year-review-2020 ***/
    // user_pref("network.trr.mode", 5);
-/* 0706: disable proxy direct failover for system requests [FF91+] ***/
-user_pref("network.proxy.failover_direct", false);
+/* 0706: disable proxy direct failover for system requests [FF91+]
+ * [WARNING] Default true is a security feature against malicious extensions [1]
+ * [SETUP-CHROME] If you use a proxy and you trust your extensions
+ * [1] https://blog.mozilla.org/security/2021/10/25/securing-the-proxy-api-for-firefox-add-ons/ ***/
+   // user_pref("network.proxy.failover_direct", false);
 
 /*** [SECTION 0800]: LOCATION BAR / SEARCH BAR / SUGGESTIONS / HISTORY / FORMS ***/
 user_pref("_user.js.parrot", "0800 syntax error: the parrot's ceased to be!");
@@ -373,18 +370,23 @@ user_pref("browser.urlbar.speculativeConnect.enabled", false);
  * 0=never resolve single words, 1=heuristic (default), 2=always resolve
  * [1] https://bugzilla.mozilla.org/1642623 ***/
 user_pref("browser.urlbar.dnsResolveSingleWordsAfterSearch", 0);
-/* 0807: disable tab-to-search [FF85+]
+/* 0807: disable location bar contextual suggestions [FF92+]
+ * [SETTING] Privacy & Security>Address Bar>Contextual Suggestions
+ * [1] https://blog.mozilla.org/data/2021/09/15/data-and-firefox-suggest/ ***/
+user_pref("browser.urlbar.suggest.quicksuggest", false);
+user_pref("browser.urlbar.suggest.quicksuggest.sponsored", false);
+/* 0808: disable tab-to-search [FF85+]
  * Alternatively, you can exclude on a per-engine basis by unchecking them in Options>Search
  * [SETTING] Privacy & Security>Address Bar>When using the address bar, suggest>Search engines ***/
    // user_pref("browser.urlbar.suggest.engines", false);
-/* 0808: disable search and form history
+/* 0810: disable search and form history
  * [SETUP-WEB] Be aware that autocomplete form data can be read by third parties [1][2]
  * [NOTE] We also clear formdata on exit (2803)
  * [SETTING] Privacy & Security>History>Custom Settings>Remember search and form history
  * [1] https://blog.mindedsecurity.com/2011/10/autocompleteagain.html
  * [2] https://bugzilla.mozilla.org/381681 ***/
 user_pref("browser.formfill.enable", false);
-/* 0809: disable Form Autofill
+/* 0811: disable Form Autofill
  * [NOTE] Stored data is NOT secure (uses a JSON file)
  * [NOTE] Heuristics controls Form Autofill on forms without @autocomplete attributes
  * [SETTING] Privacy & Security>Forms and Autofill>Autofill addresses
@@ -394,7 +396,7 @@ user_pref("extensions.formautofill.available", "off"); // [FF56+]
 user_pref("extensions.formautofill.creditCards.available", false); // [FF57+]
 user_pref("extensions.formautofill.creditCards.enabled", false); // [FF56+]
 user_pref("extensions.formautofill.heuristics.enabled", false); // [FF55+]
-/* 0810: disable coloring of visited links
+/* 0820: disable coloring of visited links
  * [SETUP-HARDEN] Bulk rapid history sniffing was mitigated in 2010 [1][2]. Slower and more expensive
  * redraw timing attacks were largely mitigated in FF77+ [3]. Using RFP (4501) further hampers timing
  * attacks. Don't forget clearing history on close (2803). However, social engineering [2#limits][4][5]
@@ -494,13 +496,14 @@ user_pref("security.tls.enable_0rtt_data", false);
    [1] https://scotthelme.co.uk/revocation-is-broken/
    [2] https://blog.mozilla.org/security/2013/07/29/ocsp-stapling-in-firefox/
 ***/
-/* 1211: control when to use OCSP fetching (to confirm current validity of certificates)
+/* 1211: enforce OCSP fetching to confirm current validity of certificates
  * 0=disabled, 1=enabled (default), 2=enabled for EV certificates only
  * OCSP (non-stapled) leaks information about the sites you visit to the CA (cert authority)
  * It's a trade-off between security (checking) and privacy (leaking info to the CA)
  * [NOTE] This pref only controls OCSP fetching and does not affect OCSP stapling
+ * [SETTING] Privacy & Security>Security>Certificates>Query OCSP responder servers...
  * [1] https://en.wikipedia.org/wiki/Ocsp ***/
-user_pref("security.OCSP.enabled", 1);
+user_pref("security.OCSP.enabled", 1); // [DEFAULT: 1]
 /* 1212: set OCSP fetch failures (non-stapled, see 1211) to hard-fail [SETUP-WEB]
  * When a CA cannot be reached to validate a cert, Firefox just continues the connection (=soft-fail)
  * Setting this pref to true tells Firefox to instead terminate the connection (=hard-fail)
@@ -526,7 +529,7 @@ user_pref("security.pki.sha1_enforcement_level", 1);
  * [1] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/21686 ***/
 user_pref("security.family_safety.mode", 0);
 /* 1223: enable strict pinning
- * PKP (Public Key Pinning) 0=disabled 1=allow user MiTM (such as your antivirus), 2=strict
+ * PKP (Public Key Pinning) 0=disabled, 1=allow user MiTM (such as your antivirus), 2=strict
  * [SETUP-WEB] If you rely on an AV (antivirus) to protect your web browsing
  * by inspecting ALL your web traffic, then leave at current default=1
  * [1] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/16206 ***/
@@ -565,7 +568,7 @@ user_pref("dom.security.https_only_mode_send_http_background_request", false);
  * [2] https://bugzilla.mozilla.org/1353705 ***/
 user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
 /* 1271: control "Add Security Exception" dialog on SSL warnings
- * 0=do neither 1=pre-populate url 2=pre-populate url + pre-fetch cert (default)
+ * 0=do neither, 1=pre-populate url, 2=pre-populate url + pre-fetch cert (default)
  * [1] https://github.com/pyllyukko/user.js/issues/210 ***/
 user_pref("browser.ssl_override_behavior", 1);
 /* 1272: display advanced information on Insecure Connection warning pages
@@ -718,32 +721,9 @@ user_pref("dom.disable_open_during_load", true);
 /* 2404: limit events that can cause a popup [SETUP-WEB] ***/
 user_pref("dom.popup_allowed_events", "click dblclick mousedown pointerdown");
 
-/*** [SECTION 2500]: FINGERPRINTING ***/
-user_pref("_user.js.parrot", "2500 syntax error: the parrot's shuffled off 'is mortal coil!");
-/* 2501: enforce no system colors
- * [SETTING] General>Language and Appearance>Fonts and Colors>Colors>Use system colors ***/
-user_pref("browser.display.use_system_colors", false); // [DEFAULT: false]
-/* 2502: enforce non-native widget theme
- * Security: removes/reduces system API calls, e.g. win32k API [1]
- * Fingerprinting: provides a uniform look and feel across platforms [2]
- * [1] https://bugzilla.mozilla.org/1381938
- * [2] https://bugzilla.mozilla.org/1411425 ***/
-user_pref("widget.non-native-theme.enabled", true); // [DEFAULT: true FF89+]
-/* 2503: open links targeting new windows in a new tab instead
- * Stops malicious window sizes and some screen resolution leaks.
- * You can still right-click a link and open in a new window
- * [TEST] https://arkenfox.github.io/TZP/tzp.html#screen
- * [1] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/9881 ***/
-user_pref("browser.link.open_newwindow", 3); // 1=most recent window or tab 2=new window, 3=new tab
-user_pref("browser.link.open_newwindow.restriction", 0);
-/* 2504: disable WebGL (Web Graphics Library)
- * [SETUP-WEB] If you need it then enable it. RFP still randomizes canvas for naive scripts ***/
-user_pref("webgl.disabled", true);
-
 /*** [SECTION 2600]: MISCELLANEOUS ***/
 user_pref("_user.js.parrot", "2600 syntax error: the parrot's run down the curtain!");
 /* 2601: prevent accessibility services from accessing your browser [RESTART]
- * [SETTING] Privacy & Security>Permissions>Prevent accessibility services from accessing your browser (FF80 or lower)
  * [1] https://support.mozilla.org/kb/accessibility-services ***/
 user_pref("accessibility.force_disabled", 1);
 /* 2602: disable sending additional analytics to web servers
@@ -995,14 +975,13 @@ user_pref("privacy.firstparty.isolate", true);
     418986 - limit window.screen & CSS media queries (FF41)
       [TEST] https://arkenfox.github.io/TZP/tzp.html#screen
    1281949 - spoof screen orientation (FF50)
-   1281963 - hide contents of navigator.plugins and navigator.mimeTypes (FF50-88)
    1330890 - spoof timezone as UTC0 (FF55)
    1360039 - spoof navigator.hardwareConcurrency as 2 (FF55)
    1217238 - reduce precision of time exposed by javascript (FF55)
  FF56
    1369303 - spoof/disable performance API
    1333651 - spoof User Agent & Navigator API
-      JS: FF91+ the version is spoofed as ESR, and the OS as Windows 10, OS 10.15, Android 10, or Linux
+      JS: the version is spoofed as ESR, and the OS as Windows 10, OS 10.15, Android 10, or Linux
       HTTP Headers: spoofed as Windows or Android
    1369319 - disable device sensor API
    1369357 - disable site specific zoom
@@ -1015,8 +994,6 @@ user_pref("privacy.firstparty.isolate", true);
    1217290 & 1409677 - enable some fingerprinting resistance for WebGL
    1382545 - reduce fingerprinting in Animation API
    1354633 - limit MediaError.message to a whitelist
-   1382533 & 1697680 - enable fingerprinting resistance for Presentation API (FF57-87)
-      Blocks exposure of local IP Addresses via mDNS (Multicast DNS)
  FF58-90
     967895 - spoof canvas and enable site permission prompt (FF58)
    1372073 - spoof/block fingerprinting in MediaDevices API (FF59)
@@ -1074,10 +1051,33 @@ user_pref("privacy.resistFingerprinting.letterboxing", true); // [HIDDEN PREF]
  * [1] https://bugzilla.mozilla.org/1635603 ***/
    // user_pref("privacy.resistFingerprinting.exemptedDomains", "*.example.invalid");
    // user_pref("privacy.resistFingerprinting.testGranularityMask", 0);
-/* 4510: disable showing about:blank as soon as possible during startup [FF60+]
+/* 4506: disable showing about:blank as soon as possible during startup [FF60+]
  * When default true this no longer masks the RFP chrome resizing activity
  * [1] https://bugzilla.mozilla.org/1448423 ***/
 user_pref("browser.startup.blankWindow", false);
+/* 4510: enforce no system colors
+ * [SETTING] General>Language and Appearance>Fonts and Colors>Colors>Use system colors ***/
+user_pref("browser.display.use_system_colors", false); // [DEFAULT: false]
+/* 4511: enforce non-native widget theme
+ * Security: removes/reduces system API calls, e.g. win32k API [1]
+ * Fingerprinting: provides a uniform look and feel across platforms [2]
+ * [1] https://bugzilla.mozilla.org/1381938
+ * [2] https://bugzilla.mozilla.org/1411425 ***/
+user_pref("widget.non-native-theme.enabled", true); // [DEFAULT: true]
+/* 4512: enforce links targeting new windows to open in a new tab instead
+ * 1=most recent window or tab, 2=new window, 3=new tab
+ * Stops malicious window sizes and some screen resolution leaks.
+ * You can still right-click a link and open in a new window
+ * [SETTING] General>Tabs>Open links in tabs instead of new windows
+ * [TEST] https://arkenfox.github.io/TZP/tzp.html#screen
+ * [1] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/9881 ***/
+user_pref("browser.link.open_newwindow", 3); // [DEFAULT: 3]
+/* 4513: set all open window methods to abide by "browser.link.open_newwindow" (4512)
+ * [1] https://searchfox.org/mozilla-central/source/dom/tests/browser/browser_test_new_window_from_content.js ***/
+user_pref("browser.link.open_newwindow.restriction", 0);
+/* 4520: disable WebGL (Web Graphics Library)
+ * [SETUP-WEB] If you need it then enable it. RFP still randomizes canvas for naive scripts ***/
+user_pref("webgl.disabled", true);
 
 /*** [SECTION 5000]: OPTIONAL OPSEC
    Disk avoidance, application data isolation, eyeballs...
@@ -1206,12 +1206,12 @@ user_pref("security.csp.enable", true); // [DEFAULT: true]
 user_pref("security.dialog_enable_delay", 1000); // [DEFAULT: 1000]
 /* 6005: enforce window.opener protection [FF65+]
  * Makes rel=noopener implicit for target=_blank in anchor and area elements when no rel attribute is set ***/
-user_pref("dom.targetBlankNoOpener.enabled", true); // [DEFAULT: true FF79+]
+user_pref("dom.targetBlankNoOpener.enabled", true); // [DEFAULT: true]
 /* 6006: enforce "window.name" protection [FF82+]
  * If a new page from another domain is loaded into a tab, then window.name is set to an empty string. The original
  * string is restored if the tab reverts back to the original page. This change prevents some cross-site attacks
  * [TEST] https://arkenfox.github.io/TZP/tests/windownamea.html ***/
-user_pref("privacy.window.name.update.enabled", true); // [DEFAULT: true FF86+]
+user_pref("privacy.window.name.update.enabled", true); // [DEFAULT: true]
 /* 6050: prefsCleaner: reset previously active items removed from arkenfox in 79-91 ***/
    // user_pref("browser.newtabpage.activity-stream.asrouter.providers.snippets", "");
    // user_pref("browser.send_pings.require_same_host", "");
@@ -1263,7 +1263,6 @@ user_pref("_user.js.parrot", "7000 syntax error: the parrot's pushing up daisies
    // user_pref("security.ssl3.rsa_aes_256_gcm_sha384", false); // no PFS
    // user_pref("security.ssl3.rsa_aes_128_sha", false); // no PFS
    // user_pref("security.ssl3.rsa_aes_256_sha", false); // no PFS
-   // user_pref("security.ssl3.rsa_des_ede3_sha", false); // 3DES
 /* 7004: control TLS versions
  * [WHY] Passive fingerprinting. Downgrades are still possible: behind user interaction ***/
    // user_pref("security.tls.version.min", 3); // [DEFAULT: 3]
@@ -1283,7 +1282,7 @@ user_pref("_user.js.parrot", "7000 syntax error: the parrot's pushing up daisies
 /* 7008: set the default Referrer Policy [FF59+]
  * 0=no-referer, 1=same-origin, 2=strict-origin-when-cross-origin, 3=no-referrer-when-downgrade
  * [WHY] Defaults are fine. They can be overridden by a site-controlled Referrer Policy ***/
-   // user_pref("network.http.referer.defaultPolicy", 2); // [DEFAULT: 2 FF87+]
+   // user_pref("network.http.referer.defaultPolicy", 2); // [DEFAULT: 2]
    // user_pref("network.http.referer.defaultPolicy.pbmode", 2); // [DEFAULT: 2]
 /* 7009: disable HTTP2
  * [WHY] Passive fingerprinting. ~50% of sites use HTTP2 [1]
@@ -1309,6 +1308,10 @@ user_pref("_user.js.parrot", "7000 syntax error: the parrot's pushing up daisies
  * [WHY] Fingerprintable. Breakage. Cut/copy/paste require user
  * interaction, and paste is limited to focused editable fields ***/
    // user_pref("dom.event.clipboardevents.enabled", false);
+/* 7014: disable System Add-on updates
+ * [WHY] It can compromise security. System addons ship with prefs, use those ***/
+   // user_pref("extensions.systemAddon.update.enabled", false); // [FF62+]
+   // user_pref("extensions.systemAddon.update.url", ""); // [FF44+]
 
 /*** [SECTION 8000]: DON'T BOTHER: NON-RFP
    [WHY] They are insufficient to help anti-fingerprinting and do more harm than good
@@ -1396,7 +1399,15 @@ user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", 
    Documentation denoted as [-]. Items deprecated in FF78 or earlier have been archived at [1]
    [1] https://github.com/arkenfox/user.js/issues/123
 ***/
-user_pref("_user.js.parrot", "9999 syntax error: the parrot's deprecated!");
+user_pref("_user.js.parrot", "9999 syntax error: the parrot's shuffled off 'is mortal coil!");
+/* ESR91.x still uses all the following prefs
+// [NOTE] replace the * with a slash in the line above to re-enable them
+// FF93
+// 7003: disable non-modern cipher suites
+   // [-] https://bugzilla.mozilla.org/1724072
+   // user_pref("security.ssl3.rsa_des_ede3_sha", false); // 3DES
+// ***/
+
 /* ESR78.x still uses all the following prefs
 // [NOTE] replace the * with a slash in the line above to re-enable them
 // FF79

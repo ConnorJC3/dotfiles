@@ -30,4 +30,4 @@ efibootmgr --disk "$DISK" --part "$PARTITION" --create --label "Arch Linux" --lo
 # Set entry as default
 ENTRY=`efibootmgr | grep "Arch Linux" -m 1`
 efibootmgr --disk "$DISK" --part "$PARTITION" --bootorder "${ENTRY:4:4}" > /dev/null
-efibootmgr --disk "$DISK" --part "$PARTITION" --timeout 0 > /dev/null
+efibootmgr --disk "$DISK" --part "$PARTITION" --timeout 0 &> /dev/null || true

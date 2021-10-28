@@ -23,7 +23,7 @@
 
 - paru:
     - nerd-fonts-hack
-    - firefox-nightly-hg
+    - firefox-nightly
 
 - link:
     ~/.config/kitty:

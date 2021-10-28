@@ -26,7 +26,6 @@ if [[ -z $BOOTSTRAP ]]; then
   invoke_dotbot bootstrap.conf.yaml
   echo "BOOTSTRAP=n" >> ./saved-config.sh
 fi
-source ./patches/patch.sh
 [[ $EFISTUB ]] && invoke_dotbot efistub.conf.yaml
 [[ $INTEL_CPU ]] && invoke_dotbot intel-cpu.conf.yaml
 [[ $INTEL_GPU ]] && invoke_dotbot intel-gpu.conf.yaml
