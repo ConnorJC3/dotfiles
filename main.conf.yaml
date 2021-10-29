@@ -21,6 +21,7 @@
     - virt-manager
     - lua
     - linux-headers
+    - libfido2
 
 - paru:
     - kernel-modules-hook
