@@ -12,6 +12,7 @@
     - plasma-disks
     - plasma-browser-integration
     - plasma-systemmonitor
+    - plasma-wayland-session
     - breeze
     - breeze-gtk
     - noto-fonts
@@ -20,6 +21,12 @@
     - pipewire
     - pipewire-pulse
     - dolphin
+
+- pacman:
+    - qt5-wayland
+    - qt6-wayland
+    - glfw-wayland
+    - xorg-xwayland
 
 - paru:
     - nerd-fonts-hack
@@ -40,4 +47,4 @@
     - [sudo ln -sf /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d, Disabling bitmap fonts]
     - [sudo ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d, Enabling sub-pixel RGB]
     - [sudo ln -sf /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d, Enabling LCD filter]
-    - [sudo systemctl enable --now sddm, Enabling display manager]
+    - [sudo systemctl enable sddm, Enabling display manager]

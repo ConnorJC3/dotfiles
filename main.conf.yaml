@@ -25,12 +25,6 @@
     - edk2-ovmf
     - virt-manager
 
-- pacman:
-    - qt5-wayland
-    - qt6-wayland
-    - glfw-wayland
-    - xorg-wayland
-
 - paru:
     - kernel-modules-hook
 

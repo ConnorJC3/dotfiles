@@ -31,14 +31,13 @@ fi
 [[ $INTEL_GPU ]] && invoke_dotbot intel-gpu.conf.yaml
 [[ $AMD_GPU ]] && invoke_dotbot amd-gpu.conf.yaml
 [[ $NVIDIA_GPU ]] && invoke_dotbot nvidia-gpu.conf.yaml
-invoke_dotbot main.conf.yaml
-# Intentially last because it starts SDDM
 [[ $GRAPHICAL ]] && invoke_dotbot graphical.conf.yaml
+invoke_dotbot main.conf.yaml
 
 if [[ -z $BOOTSTRAP ]]; then
-  echo "Changes require a reboot"
+  echo "\n\nChanges require a reboot"
   read -n 1 -r -p "Reboot now? (y/n) " REBOOT_NOW
   if [[ $REBOOT_NOW =~ ^[Yy]$ ]]; then
-    sudo reboot
+    sudo systemctl reboot
   fi
 fi
