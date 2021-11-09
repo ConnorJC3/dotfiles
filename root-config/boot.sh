@@ -11,6 +11,7 @@ elif [[ $AMD_CPU ]]; then
   KERNEL="$KERNEL amd_iommu=on"
 fi
 # NVIDIA
+# Required for wayland! Do not remove!
 if [[ $NVIDIA_GPU ]]; then
   KERNEL="$KERNEL nvidia-drm.modeset=1"
 fi

@@ -11,17 +11,25 @@
     - pacman-contrib
     - neofetch
     - curl
-    - podman
-    - fuse-overlayfs
-    - slirp4netns
     - diff-so-fancy
+    - linux-headers
+    - libfido2
+
+- paru:
+    - containerd
+    - nerdctl-bin
+
+- pacman:
     - qemu
     - libvirt
     - edk2-ovmf
     - virt-manager
-    - lua
-    - linux-headers
-    - libfido2
+
+- pacman:
+    - qt5-wayland
+    - qt6-wayland
+    - glfw-wayland
+    - xorg-wayland
 
 - paru:
     - kernel-modules-hook
