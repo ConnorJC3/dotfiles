@@ -28,7 +28,6 @@ if [[ -z $BOOTSTRAP ]]; then
 fi
 [[ $EFISTUB ]] && invoke_dotbot efistub.conf.yaml
 [[ $INTEL_CPU ]] && invoke_dotbot intel-cpu.conf.yaml
-[[ $AMD_CPU ]] && invoke_dotbot amd-cpu.conf.yaml
 [[ $INTEL_GPU ]] && invoke_dotbot intel-gpu.conf.yaml
 [[ $AMD_GPU ]] && invoke_dotbot amd-gpu.conf.yaml
 [[ $NVIDIA_GPU ]] && invoke_dotbot nvidia-gpu.conf.yaml
