@@ -22,6 +22,9 @@ user_pref("media.autoplay.blocking_policy", 0);
 user_pref("ui.prefersReducedMotion", 0);
 // Disable containers (useless conflict with FPI)
 user_pref("privacy.userContext.enabled", false);
+// Increase connection count per-domain
+// (Trust me you want this)
+user_pref("network.http.max-persistent-connections-per-server", 64);
 
 // // Fix the web settings
 // // Revert some privacy/security fixes to improve browsing experience
