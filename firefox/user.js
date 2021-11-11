@@ -242,7 +242,6 @@ user_pref("extensions.webcompat-reporter.enabled", false); // [DEFAULT: false]
    to Google, only a part-hash of the prefix, hidden with noise of other real part-hashes.
    Firefox takes measures such as stripping out identifying parameters and since SBv4 (FF57+)
    doesn't even use cookies. (#Turn on browser.safebrowsing.debug to monitor this activity)
-   FWIW, Google also swear it is anonymized and only used to flag malicious sites.
 
    [1] https://feeding.cloud.geek.nz/posts/how-safe-browsing-works-in-firefox/
    [2] https://wiki.mozilla.org/Security/Safe_Browsing
@@ -898,7 +897,7 @@ user_pref("privacy.clearOnShutdown.formdata", true); // Form & Search History
 user_pref("privacy.clearOnShutdown.history", true); // Browsing & Download History
 user_pref("privacy.clearOnShutdown.offlineApps", true); // Offline Website Data
 user_pref("privacy.clearOnShutdown.sessions", true); // Active Logins
-user_pref("privacy.clearOnShutdown.siteSettings", false); // Site Preferences
+   // user_pref("privacy.clearOnShutdown.siteSettings", false); // [DEFAULT: false] Site Preferences
 /* 2804: reset default items to clear with Ctrl-Shift-Del (to match 2803) [SETUP-CHROME]
  * This dialog can also be accessed from the menu History>Clear Recent History
  * Firefox remembers your last choices. This will reset them when you start Firefox
@@ -910,9 +909,9 @@ user_pref("privacy.cpd.cookies", true);
 user_pref("privacy.cpd.formdata", true); // Form & Search History
 user_pref("privacy.cpd.history", true); // Browsing & Download History
 user_pref("privacy.cpd.offlineApps", true); // Offline Website Data
-user_pref("privacy.cpd.passwords", false); // this is not listed
+   // user_pref("privacy.cpd.passwords", false); // [DEFAULT: false] this is not listed
 user_pref("privacy.cpd.sessions", true); // Active Logins
-user_pref("privacy.cpd.siteSettings", false); // Site Preferences
+   // user_pref("privacy.cpd.siteSettings", false); // [DEFAULT: false] Site Preferences
 /* 2805: clear Session Restore data when sanitizing on shutdown or manually [FF34+]
  * [NOTE] Not needed if Session Restore is not used (0102) or is already cleared with history (2803)
  * [NOTE] privacy.clearOnShutdown.openWindows prevents resuming from crashes (also see 5008)
@@ -1055,9 +1054,9 @@ user_pref("privacy.resistFingerprinting.letterboxing", true); // [HIDDEN PREF]
  * When default true this no longer masks the RFP chrome resizing activity
  * [1] https://bugzilla.mozilla.org/1448423 ***/
 user_pref("browser.startup.blankWindow", false);
-/* 4510: enforce no system colors
+/* 4510: disable using system colors
  * [SETTING] General>Language and Appearance>Fonts and Colors>Colors>Use system colors ***/
-user_pref("browser.display.use_system_colors", false); // [DEFAULT: false]
+user_pref("browser.display.use_system_colors", false); // [DEFAULT false NON-WINDOWS]
 /* 4511: enforce non-native widget theme
  * Security: removes/reduces system API calls, e.g. win32k API [1]
  * Fingerprinting: provides a uniform look and feel across platforms [2]
@@ -1294,7 +1293,7 @@ user_pref("_user.js.parrot", "7000 syntax error: the parrot's pushing up daisies
 /* 7010: disable HTTP Alternative Services [FF37+]
  * [WHY] Already isolated by network partitioning (FF85+) or FPI ***/
    // user_pref("network.http.altsvc.enabled", false);
-   // user_pref("network.http.altsvc.oe", false);
+   // user_pref("network.http.altsvc.oe", false); // [DEFAULT: false FF94+]
 /* 7011: disable website control over browser right-click context menu
  * [WHY] Just use Shift-Right-Click ***/
    // user_pref("dom.event.contextmenu.enabled", false);
@@ -1355,7 +1354,7 @@ user_pref("browser.startup.homepage_override.mstone", "ignore"); // master switc
    // user_pref("startup.homepage_welcome_url.additional", "");
    // user_pref("startup.homepage_override_url", ""); // What's New page after updates
 /* WARNINGS ***/
-   // user_pref("browser.tabs.warnOnClose", false);
+   // user_pref("browser.tabs.warnOnClose", false); // [DEFAULT false FF94+]
    // user_pref("browser.tabs.warnOnCloseOtherTabs", false);
    // user_pref("browser.tabs.warnOnOpen", false);
    // user_pref("full-screen-api.warning.delay", 0);
@@ -1471,6 +1470,9 @@ user_pref("browser.cache.offline.storage.enable", false); // [DEFAULT: false FF8
 /* END: internal custom pref to test for syntax errors ***/
 user_pref("_user.js.parrot", "SUCCESS: No no he's not dead, he's, he's restin'!");
 
+// Parrot begin guard (if you see this instead of the end guard you messed up)
+user_pref("_user.js.parrot", "FAIL: Starting user-overrides.js");
+
 // // Globally useful settings
 // // You almost certainly want these
 // //
@@ -1496,6 +1498,9 @@ user_pref("privacy.userContext.enabled", false);
 // // Fix the web settings
 // // Revert some privacy/security fixes to improve browsing experience
 // //
+// It's just too slow and adds so little security
+user_pref("security.OCSP.enabled", 0);
+user_pref("security.OCSP.require", false);
 // Safe(r) with FPI
 user_pref("network.http.altsvc.enabled", true);
 user_pref("network.http.altsvc.oe", true);
@@ -1586,3 +1591,6 @@ user_pref("mousewheel.system_scroll_override_on_root_content.horizontal.factor",
 user_pref("mousewheel.system_scroll_override_on_root_content.vertical.factor", 175);
 user_pref("toolkit.scrollbox.horizontalScrollDistance", 6);
 user_pref("toolkit.scrollbox.verticalScrollDistance", 2);
+
+// Parrot end guard
+user_pref("_user.js.parrot", "SUCCESS: Ending user-overrides.js");

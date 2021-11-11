@@ -17,6 +17,8 @@
     - breeze-gtk
     - noto-fonts
     - noto-fonts-emoji
+    - noto-fonts-cjk
+    - noto-fonts-extra
     - kitty
     - pipewire
     - pipewire-pulse

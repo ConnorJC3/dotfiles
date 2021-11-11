@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LATEST_VERSION=4
+LATEST_VERSION=5
 
 function ask_question {
   read -n 1 -r -p "${1} (y/n) " "$2"
@@ -18,10 +18,7 @@ function setup_config {
     rm -f ./saved-config.sh
     echo "#!/usr/bin/env bash" >> ./saved-config.sh
 
-    ask_question "Setup EFISTUB (no means manual bootloader)?" EFISTUB
-    ask_question "Graphical system (no means cmdline only)?" GRAPHICAL
-    ask_question "Using Intel CPU?" INTEL_CPU
-    ask_question "Using AMD CPU?" AMD_CPU
+    ask_question "Graphical system?" GRAPHICAL
     [[ $GRAPHICAL ]] && ask_question "Using Intel iGPU?" INTEL_GPU
     [[ $GRAPHICAL ]] && ask_question "Using AMD GPU?" AMD_GPU
     [[ $GRAPHICAL ]] && ask_question "Using NVIDIA GPU?" NVIDIA_GPU

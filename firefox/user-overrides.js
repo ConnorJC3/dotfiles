@@ -1,3 +1,6 @@
+// Parrot begin guard (if you see this instead of the end guard you messed up)
+user_pref("_user.js.parrot", "FAIL: Starting user-overrides.js");
+
 // // Globally useful settings
 // // You almost certainly want these
 // //
@@ -23,6 +26,9 @@ user_pref("privacy.userContext.enabled", false);
 // // Fix the web settings
 // // Revert some privacy/security fixes to improve browsing experience
 // //
+// It's just too slow and adds so little security
+user_pref("security.OCSP.enabled", 0);
+user_pref("security.OCSP.require", false);
 // Safe(r) with FPI
 user_pref("network.http.altsvc.enabled", true);
 user_pref("network.http.altsvc.oe", true);
@@ -113,3 +119,6 @@ user_pref("mousewheel.system_scroll_override_on_root_content.horizontal.factor",
 user_pref("mousewheel.system_scroll_override_on_root_content.vertical.factor", 175);
 user_pref("toolkit.scrollbox.horizontalScrollDistance", 6);
 user_pref("toolkit.scrollbox.verticalScrollDistance", 2);
+
+// Parrot end guard
+user_pref("_user.js.parrot", "SUCCESS: Ending user-overrides.js");
