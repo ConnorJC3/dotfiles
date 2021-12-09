@@ -28,6 +28,11 @@
       "{9063c2e9-e07c-4c2c-9646-cfe7ca8d0498}": {
         "install_url": "https://addons.mozilla.org/firefox/downloads/latest/old-reddit-redirect/latest.xpi",
         "installation_mode": "normal_installed"
+      },
+      "dark-mode-website-switcher@rugk.github.io": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/file/3874565/dark_website_forcer-1.3-an+fx.xpi",
+	"installation_mode": "normal_installed",
+	"updates_disabled": true
       }
     },
     "SearchEngines": {
