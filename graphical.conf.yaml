@@ -6,15 +6,8 @@
       force: true
 
 - pacman:
-    - sddm
-    - plasma-desktop
-    - plasma-pa
-    - plasma-disks
-    - plasma-browser-integration
-    - plasma-systemmonitor
-    - plasma-wayland-session
-    - breeze
-    - breeze-gtk
+    - gnome
+    - gnome-tweaks
     - noto-fonts
     - noto-fonts-emoji
     - noto-fonts-cjk
@@ -22,7 +15,6 @@
     - kitty
     - pipewire
     - pipewire-pulse
-    - dolphin
 
 - pacman:
     - qt5-wayland
@@ -33,10 +25,14 @@
 - paru:
     - nerd-fonts-hack
     - firefox-nightly
+    - adwaita-slim-gtk-theme
+    - qgnomeplatform
+    - qgnomeplatform-qt6
 
 - link:
     ~/.config/kitty:
     ~/.config/fontconfig:
+    ~/.config/environment.d:
     ~/.mozilla/firefox/profiles.ini: firefox/profiles.ini
     ~/.mozilla/firefox/main/user.js: firefox/user.js
     ~/.mozilla/managed-storage: firefox/managed-storage
