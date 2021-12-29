@@ -10,6 +10,7 @@
     - bat
     - pacman-contrib
     - neofetch
+    - ccache
     - curl
     - diff-so-fancy
     - linux-headers
