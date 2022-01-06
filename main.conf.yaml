@@ -17,16 +17,12 @@
     - libfido2
 
 - pacman:
-    - efibootmgr
     - booster
-    - sbctl-git
+    - sbctl
 
 - paru:
     - containerd
     - nerdctl-bin
-
-- paru:
-    - kernel-modules-hook
 
 - link:
     ~/.zshrc:
@@ -52,3 +48,4 @@
     - [sudo sysctl --system, Loading sysctl tweaks]
     - [sudo systemctl mask systemd-fsck-root.service, Disable root fsck (not needed on btrfs)]
     - [sudo systemctl enable paccache.timer, Enabling paccache timer]
+    - [sudo systemctl enable --now fstrim, Enabling fstrim]
