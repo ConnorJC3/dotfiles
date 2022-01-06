@@ -47,4 +47,4 @@
     - [sudo sysctl --system, Loading sysctl tweaks]
     - [sudo systemctl mask systemd-fsck-root.service, Disable root fsck (not needed on btrfs)]
     - [sudo systemctl enable paccache.timer, Enabling paccache timer]
-    - [sudo systemctl enable --now fstrim, Enabling fstrim]
+    - [sudo systemctl enable --now fstrim.timer, Enabling fstrim timer]
