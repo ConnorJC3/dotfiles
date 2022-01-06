@@ -86,7 +86,7 @@ export SPACESHIP_TERRAFORM_SYMBOL="terraform "
 # zinit installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
   command mkdir -p "$HOME/.zinit" > /dev/null && command chmod g-rwx "$HOME/.zinit" > /dev/null
-  command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" &> /dev/null || echo "Failed to clone zinit!"
+  command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zinit/bin" &> /dev/null || echo "Failed to clone zinit!"
 fi
 source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
@@ -99,7 +99,7 @@ zinit light denysdovhan/spaceship-prompt
 zinit wait"0" lucid for \
   skywind3000/z.lua \
   atinit"zicompinit; zicdreplay" \
-    zdharma/fast-syntax-highlighting \
+    zdharma-continuum/fast-syntax-highlighting \
   atload"_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions \
   blockf atpull"zinit creinstall -q ." \
