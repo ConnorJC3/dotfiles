@@ -14,7 +14,6 @@
     - curl
     - diff-so-fancy
     - linux-headers
-    - libfido2
 
 - pacman:
     - booster

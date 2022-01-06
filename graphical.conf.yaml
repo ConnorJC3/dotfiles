@@ -15,6 +15,7 @@
     - kitty
     - pipewire
     - pipewire-pulse
+    - libfido2
 
 - pacman:
     - qt5-wayland
