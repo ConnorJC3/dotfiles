@@ -1,6 +1,3 @@
-// Parrot begin guard (if you see this instead of the end guard you messed up)
-user_pref("_user.js.parrot", "FAIL: Starting user-overrides.js");
-
 // // Globally useful settings
 // // You almost certainly want these
 // //
@@ -51,6 +48,7 @@ user_pref("privacy.sanitize.sanitizeOnShutdown", false);
 user_pref("privacy.clearOnShutdown.downloads", false);
 user_pref("privacy.clearOnShutdown.history", false);
 user_pref("privacy.clearOnShutdown.sessions", false);
+user_pref("network.cookie.lifetimePolicy", 0);
 // Allow service workers (and related features)
 user_pref("dom.serviceWorkers.enabled", true);
 user_pref("dom.push.enabled", true);
@@ -75,13 +73,6 @@ user_pref("dom.storageManager.enabled", false);
 user_pref("gfx.webrender.all", true);
 // Fission (separate process per domain)
 user_pref("fission.autostart", true);
-// Proton (new firefox design)
-user_pref("browser.proton.enabled", true);
-user_pref("browser.proton.appmenu.enabled", true);
-user_pref("browser.proton.tabs.enabled", true);
-user_pref("browser.proton.toolbar.enabled", true);
-user_pref("browser.proton.urlbar.enabled", true);
-user_pref("browser.newtabpage.activity-stream.newNewtabExperience.enabled", true);
 // Explicitly disable proton context menu (use native)
 user_pref("browser.proton.contextmenus.enabled", false);
 
@@ -122,6 +113,5 @@ user_pref("mousewheel.system_scroll_override_on_root_content.horizontal.factor",
 user_pref("mousewheel.system_scroll_override_on_root_content.vertical.factor", 175);
 user_pref("toolkit.scrollbox.horizontalScrollDistance", 6);
 user_pref("toolkit.scrollbox.verticalScrollDistance", 2);
-
-// Parrot end guard
-user_pref("_user.js.parrot", "SUCCESS: Ending user-overrides.js");
+// Disable RFP letterboxing
+user_pref("privacy.resistFingerprinting.letterboxing", false);
