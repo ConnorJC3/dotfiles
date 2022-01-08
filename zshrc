@@ -55,6 +55,7 @@ export SPACESHIP_BATTERY_SHOW=false
 export SPACESHIP_DOCKER_SHOW=false
 export SPACESHIP_DOCKER_CONTEXT_SHOW=false
 export SPACESHIP_PACKAGE_SHOW=false
+export SPACESHIP_GRADLE_JVM_SHOW=false
 export SPACESHIP_GIT_STATUS_COLOR="yellow"
 export SPACESHIP_GIT_STATUS_RENAMED="!"
 export SPACESHIP_GIT_STATUS_DELETED="X"
@@ -82,27 +83,28 @@ export SPACESHIP_PYENV_SYMBOL="python "
 export SPACESHIP_EMBER_SYMBOL="ember "
 export SPACESHIP_KUBECTL_SYMBOL="k8s "
 export SPACESHIP_TERRAFORM_SYMBOL="terraform "
+export SPACESHIP_GRADLE_SYMBOL="gradle "
 
-# zinit installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-  command mkdir -p "$HOME/.zinit" > /dev/null && command chmod g-rwx "$HOME/.zinit" > /dev/null
-  command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zinit/bin" &> /dev/null || echo "Failed to clone zinit!"
+# zi installer
+if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
+  command mkdir -p "$HOME/.zi" > /dev/null && command chmod g-rwx "$HOME/.zi" > /dev/null
+  command git clone https://github.com/z-shell/zi "$HOME/.zi/bin" &> /dev/null || echo "Failed to clone zi!"
 fi
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+source "$HOME/.zi/bin/zi.zsh"
+autoload -Uz _zi
+(( ${+_comps} )) && _comps[zi]=_zi
 
 # prompt (sync load)
-zinit light denysdovhan/spaceship-prompt
+zi light denysdovhan/spaceship-prompt
 
 # plugins (async load)
-zinit wait"0" lucid for \
+zi wait"0" lucid for \
   skywind3000/z.lua \
   atinit"zicompinit; zicdreplay" \
-    zdharma-continuum/fast-syntax-highlighting \
+    z-shell/fast-syntax-highlighting \
   atload"_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions \
-  blockf atpull"zinit creinstall -q ." \
+  blockf atpull"zi creinstall -q ." \
     zsh-users/zsh-completions \
   atclone"dircolors -b LS_COLORS > clrs.zsh" atpull"%atclone" pick"clrs.zsh" nocompile"!" \
     trapd00r/LS_COLORS
