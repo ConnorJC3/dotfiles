@@ -139,15 +139,6 @@ user_pref("javascript.use_us_english_locale", true); // [HIDDEN PREF]
 
 /*** [SECTION 0300]: QUIETER FOX ***/
 user_pref("_user.js.parrot", "0300 syntax error: the parrot's not pinin' for the fjords!");
-/** UPDATES ***/
-/* 0302: disable auto-INSTALLING Firefox updates via a background service [FF90+] [WINDOWS]
- * [SETTING] General>Firefox Updates>Automatically install updates>When Firefox is not running
- * [1] https://support.mozilla.org/kb/enable-background-updates-firefox-windows ***/
-user_pref("app.update.background.scheduling.enabled", false);
-/* 0306: disable search engine updates (e.g. OpenSearch)
- * [NOTE] This does not affect Mozilla's built-in or Web Extension search engines ***/
-user_pref("browser.search.update", false);
-
 /** RECOMMENDATIONS ***/
 /* 0320: disable recommendation pane in about:addons (uses Google Analytics) ***/
 user_pref("extensions.getAddons.showPane", false); // [HIDDEN PREF]
@@ -219,9 +210,6 @@ user_pref("network.captive-portal-service.enabled", false); // [FF52+]
 /* 0361: disable Network Connectivity checks [FF65+]
  * [1] https://bugzilla.mozilla.org/1460537 ***/
 user_pref("network.connectivity-service.enabled", false);
-/* 0362: enforce disabling of Web Compatibility Reporter [FF56+]
- * Web Compatibility Reporter adds a "Report Site Issue" button to send data to Mozilla ***/
-user_pref("extensions.webcompat-reporter.enabled", false); // [DEFAULT: false]
 
 /*** [SECTION 0400]: SAFE BROWSING (SB)
    SB has taken many steps to preserve privacy. If required, a full url is never sent
@@ -546,8 +534,8 @@ user_pref("dom.security.https_only_mode", true); // [FF76+]
 /* 1245: enable HTTPS-Only mode for local resources [FF77+] ***/
    // user_pref("dom.security.https_only_mode.upgrade_local", true);
 /* 1246: disable HTTP background requests [FF82+]
- * When attempting to upgrade, if the server doesn't respond within 3 seconds,
- * Firefox sends HTTP requests in order to check if the server supports HTTPS or not
+ * When attempting to upgrade, if the server doesn't respond within 3 seconds, Firefox sends
+ * a top-level HTTP request without path in order to check if the server supports HTTPS or not
  * This is done to avoid waiting for a timeout which takes 90 seconds
  * [1] https://bugzilla.mozilla.org/buglist.cgi?bug_id=1642387,1660945 ***/
 user_pref("dom.security.https_only_mode_send_http_background_request", false);
@@ -567,8 +555,6 @@ user_pref("browser.ssl_override_behavior", 1);
  * i.e. it doesn't work for HSTS discrepancies (https://subdomain.preloaded-hsts.badssl.com/)
  * [TEST] https://expired.badssl.com/ ***/
 user_pref("browser.xul.error_pages.expert_bad_cert", true);
-/* 1273: display "Not Secure" text on HTTP sites ***/
-user_pref("security.insecure_connection_text.enabled", true); // [FF60+]
 
 /*** [SECTION 1400]: FONTS ***/
 user_pref("_user.js.parrot", "1400 syntax error: the parrot's bereft of life!");
@@ -585,7 +571,6 @@ user_pref("gfx.font_rendering.opentype_svg.enabled", false);
    // user_pref("layout.css.font-visibility.trackingprotection", 1);
 
 /*** [SECTION 1600]: HEADERS / REFERERS
-   Expect some breakage e.g. banks: use an extension if you need precise control
                   full URI: https://example.com:8888/foo/bar.html?id=1234
      scheme+host+port+path: https://example.com:8888/foo/bar.html
           scheme+host+port: https://example.com:8888
@@ -594,7 +579,8 @@ user_pref("gfx.font_rendering.opentype_svg.enabled", false);
 user_pref("_user.js.parrot", "1600 syntax error: the parrot rests in peace!");
 /* 1601: control when to send a cross-origin referer
  * 0=always (default), 1=only if base domains match, 2=only if hosts match
- * [SETUP-WEB] Known to cause issues with older modems/routers and some sites e.g vimeo, icloud, instagram ***/
+ * [SETUP-WEB] Breakage: older modems/routers and some sites e.g banks, vimeo, icloud, instagram
+ * If "2" is too strict, then override to "0" and use Smart Referer (Strict mode + add exceptions) ***/
 user_pref("network.http.referer.XOriginPolicy", 2);
 /* 1602: control the amount of cross-origin information to send [FF52+]
  * 0=send full URI (default), 1=scheme+host+port+path, 2=scheme+host+port ***/
@@ -1110,6 +1096,10 @@ user_pref("extensions.webcompat.enable_shims", true); // [DEFAULT: true]
  * [NOTE] In FF97+ the TLS 1.0/1.1 downgrade UX was removed
  * [TEST] https://tls-v1-1.badssl.com:1010/ ***/
 user_pref("security.tls.version.enable-deprecated", false); // [DEFAULT: false]
+/* 6011: enforce disabling of Web Compatibility Reporter [FF56+]
+ * Web Compatibility Reporter adds a "Report Site Issue" button to send data to Mozilla
+ * [WHY] To prevent wasting Mozilla's time with a custom setup ***/
+user_pref("extensions.webcompat-reporter.enabled", false); // [DEFAULT: false]
 /* 6050: prefsCleaner: reset items removed from arkenfox FF92+ ***/
    // user_pref("dom.caches.enabled", "");
    // user_pref("dom.storageManager.enabled", "");
@@ -1117,6 +1107,7 @@ user_pref("security.tls.version.enable-deprecated", false); // [DEFAULT: false]
    // user_pref("privacy.firstparty.isolate.block_post_message", "");
    // user_pref("privacy.firstparty.isolate.restrict_opener_access", "");
    // user_pref("privacy.firstparty.isolate.use_site", "");
+   // user_pref("security.insecure_connection_text.enabled", "");
 
 /*** [SECTION 7000]: DON'T BOTHER ***/
 user_pref("_user.js.parrot", "7000 syntax error: the parrot's pushing up daisies!");
@@ -1278,8 +1269,10 @@ user_pref("browser.startup.homepage_override.mstone", "ignore"); // master switc
    // user_pref("full-screen-api.warning.timeout", 0);
 /* UPDATES ***/
    // user_pref("app.update.auto", false); // [NON-WINDOWS] disable auto app updates
-     // [NOTE] You will still get prompts to update, and should do so in a timely manner
-     // [SETTING] General>Firefox Updates>Check for updates but let you choose to install them
+      // [NOTE] You will still get prompts to update, and should do so in a timely manner
+      // [SETTING] General>Firefox Updates>Check for updates but let you choose to install them
+   // user_pref("browser.search.update", false); // disable search engine updates (e.g. OpenSearch)
+      // [NOTE] This does not affect Mozilla's built-in or Web Extension search engines
    // user_pref("extensions.update.enabled", false); // disable extension and theme update checks
    // user_pref("extensions.update.autoUpdateDefault", false); // disable installing extension and theme updates
       // [SETTING] about:addons>Extensions>[cog-wheel-icon]>Update Add-ons Automatically (toggle)
@@ -1338,6 +1331,12 @@ user_pref("_user.js.parrot", "9999 syntax error: the parrot's shuffled off 'is m
 // 0807: disable location bar contextual suggestions [FF92+] - replaced by new 0807
    // [-] https://bugzilla.mozilla.org/1735976
 user_pref("browser.urlbar.suggest.quicksuggest", false);
+// FF96
+// 0302: disable auto-INSTALLING Firefox updates via a background service + hide the setting [FF90+] [WINDOWS]
+   // [SETTING] General>Firefox Updates>Automatically install updates>When Firefox is not running
+   // [1] https://support.mozilla.org/kb/enable-background-updates-firefox-windows
+   // [-] https://bugzilla.mozilla.org/1738983
+user_pref("app.update.background.scheduling.enabled", false);
 // ***/
 
 /* END: internal custom pref to test for syntax errors ***/

@@ -41,9 +41,6 @@ bindkey "^e" end-of-line
 export ZSH_AUTOSUGGEST_STRATEGY=(completion)
 export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
-export _ZL_MATCH_MODE=1
-export _ZL_HYPHEN=1
-export _ZL_ADD_ONCE=1
 
 # prompt options
 export SPACESHIP_CHAR_SYMBOL="$ "
@@ -99,7 +96,6 @@ zi light denysdovhan/spaceship-prompt
 
 # plugins (async load)
 zi wait"0" lucid for \
-  skywind3000/z.lua \
   atinit"zicompinit; zicdreplay" \
     z-shell/fast-syntax-highlighting \
   atload"_zsh_autosuggest_start" \

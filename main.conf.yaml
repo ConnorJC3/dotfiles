@@ -27,6 +27,7 @@
     ~/.zshrc:
     ~/.zshenv:
     ~/.config/neofetch:
+    ~/.config/paru:
 
 - clean:
     ~/:
