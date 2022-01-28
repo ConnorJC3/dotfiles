@@ -14,6 +14,7 @@
     - curl
     - diff-so-fancy
     - linux-headers
+    - polkit
 
 - pacman:
     - booster

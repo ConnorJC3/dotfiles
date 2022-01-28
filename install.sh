@@ -33,9 +33,11 @@ fi
 invoke_dotbot main.conf.yaml
 
 if [[ -z $BOOTSTRAP ]]; then
-  echo "\n\nChanges require a reboot"
+  echo
+  echo
+  echo "Changes require a reboot"
   read -n 1 -r -p "Reboot now? (y/n) " REBOOT_NOW
   if [[ $REBOOT_NOW =~ ^[Yy]$ ]]; then
-    sudo systemctl reboot
+    systemctl reboot
   fi
 fi

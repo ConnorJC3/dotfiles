@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
-LATEST_VERSION=5
+LATEST_VERSION=6
 
 function ask_question {
   read -n 1 -r -p "${1} (y/n) " "$2"
   # move to new line
   echo
   if [[ "${!2}" =~ ^[Yy]$ ]]; then
-    echo "$2=y" >> ./saved-config.sh
+    if [[ "$2" != "CONFIRM" ]]; then
+      echo "$2=y" >> ./saved-config.sh
+    fi
   else
     unset "$2"
   fi

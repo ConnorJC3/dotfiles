@@ -26,7 +26,7 @@
 - paru:
     - nerd-fonts-hack
     - firefox-nightly
-    - adwaita-slim-gtk-theme
+    - mkmm
     - qgnomeplatform
     - qgnomeplatform-qt6
 
@@ -46,4 +46,7 @@
     - [sudo ln -sf /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d, Disabling bitmap fonts]
     - [sudo ln -sf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d, Enabling sub-pixel RGB]
     - [sudo ln -sf /etc/fonts/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d, Enabling LCD filter]
+    - [sudo ln -sf /usr/share/mkmm/10-mkmm-pre.hook /etc/pacman.d/hooks, Enabling mkmm pre-hook]
+    - [sudo ln -sf /usr/share/mkmm/10-mkmm-post.hook /etc/pacman.d/hooks, Enabling mkmm post-hook]
+    - [systemctl enable mkmm-bleach.service, Enabling mkmm bleach service]
     - [sudo systemctl enable gdm, Enabling display manager]
