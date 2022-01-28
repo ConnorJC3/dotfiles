@@ -9,6 +9,7 @@
     - pigz
     - pbzip2
     - ccache
+    - polkit
 
 - link:
     ~/.config/pacman:
