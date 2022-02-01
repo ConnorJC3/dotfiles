@@ -1,10 +1,4 @@
 ---
-- defaults:
-    link:
-      create: true
-      relink: true
-      force: true
-
 - pacman:
     - zsh
     - bat
@@ -22,18 +16,6 @@
 - paru:
     - containerd
     - nerdctl-bin
-
-- link:
-    ~/.zshrc:
-    ~/.zshenv:
-    ~/.config/neofetch:
-    ~/.config/paru:
-
-- clean:
-    ~/:
-    ~/.config:
-      recursive: true
-
 
 - shell:
     - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]

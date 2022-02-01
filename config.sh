@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LATEST_VERSION=7
+LATEST_VERSION=8
 
 function ask_question {
   read -n 1 -r -p "${1} (y/n) " "$2"
@@ -24,6 +24,7 @@ function setup_config {
     [[ $GRAPHICAL ]] && ask_question "Using Intel iGPU?" INTEL_GPU
     [[ $GRAPHICAL ]] && ask_question "Using AMD GPU?" AMD_GPU
     [[ $GRAPHICAL ]] && ask_question "Using NVIDIA GPU?" NVIDIA_GPU
+    ask_question "User only (skip ALL package installs and gloabl config)?" USER_ONLY
     ask_question "Confirm answers?" CONFIRM
     echo
   done

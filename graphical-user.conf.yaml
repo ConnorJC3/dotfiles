@@ -1,0 +1,14 @@
+---
+- defaults:
+    link:
+      create: true
+      relink: true
+      force: true
+
+- link:
+    ~/.config/kitty:
+    ~/.config/fontconfig:
+    ~/.config/environment.d:
+    ~/.mozilla/firefox/profiles.ini: firefox/profiles.ini
+    ~/.mozilla/firefox/main/user.js: firefox/user.js
+    ~/.mozilla/managed-storage: firefox/managed-storage

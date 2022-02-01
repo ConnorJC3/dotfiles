@@ -6,6 +6,12 @@ if [[ "$HOSTNAME" == "archiso" ]]; then
   exit 1
 fi
 
+if [[ ! -x "$(command -v pacman)" ]]; then
+  echo "Missing pacman"
+  echo "These dotfiles only support Arch Linux"
+  exit 2
+fi
+
 if [[ ! -x "$(command -v git)" ]]; then
   echo "Missing git (how did you even get this repo?)"
   echo "pacman -S git"
@@ -29,33 +35,4 @@ if [[ "$EUID" -eq 0 ]]; then
   echo "useradd -m -U USERNAME"
   echo "passwd USERNAME"
   exit 3
-fi
-
-if ! sudo true; then
-  echo "You appear not to have sudo access"
-  echo "Add yourself to /etc/sudoers via visudo"
-  exit 4
-fi
-
-if [[ $EFISTUB ]]; then
-  if [[ ! -L /dev/disk/by-label/BOOT ]]; then
-    echo "Your boot (EFI system) partition MUST be labeled BOOT"
-    echo "fatlabel /dev/sdaX BOOT"
-    echo "Run partprove after labeling to reload partitions"
-    exit 5
-  fi
-
-  if [[ ! -L /dev/disk/by-label/ARCH ]]; then
-    echo "Your primary arch partition MUST be labeled ARCH"
-    echo "ext2/3/4 - e2label /dev/sdaX ARCH"
-    echo "btrfs    - btrfs filesystem label / ARCH"
-    echo "Run partprobe after labeling to reload partitions"
-    exit 5
-  fi
-
-  if ! findmnt /boot/ &> /dev/null; then
-    echo "You MUST mount your ESP directly at /boot/"
-    echo "Mounting at /boot/EFI/ or similar is unsupported"
-    exit 6
-  fi
 fi

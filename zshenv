@@ -9,6 +9,3 @@ export EDITOR="vim"
 
 # Default Pager
 export PAGER="less"
-
-# bat theme
-export BAT_THEME="TwoDark"

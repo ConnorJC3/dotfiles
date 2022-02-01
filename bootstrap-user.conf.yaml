@@ -1,0 +1,10 @@
+---
+- defaults:
+    link:
+      create: true
+      relink: true
+      force: true
+
+- link:
+    ~/.config/pacman:
+    ~/.config/paru:

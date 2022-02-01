@@ -1,10 +1,4 @@
 ---
-- defaults:
-    link:
-      create: true
-      relink: true
-      force: true
-
 - pacman:
     - gnome
     - gnome-tweaks
@@ -30,14 +24,6 @@
     - qgnomeplatform
     - qgnomeplatform-qt6
 
-- link:
-    ~/.config/kitty:
-    ~/.config/fontconfig:
-    ~/.config/environment.d:
-    ~/.mozilla/firefox/profiles.ini: firefox/profiles.ini
-    ~/.mozilla/firefox/main/user.js: firefox/user.js
-    ~/.mozilla/managed-storage: firefox/managed-storage
-
 - shell:
     - [systemctl enable --user --now pipewire, Enabling pipewire]
     - [systemctl enable --user --now pipewire-pulse, Enabling pipewire-pulse]
@@ -49,5 +35,5 @@
     - [sudo mkdir -p /etc/pacman.d/hooks/, Creating pacman hooks directory]
     - [sudo ln -sf /usr/share/mkmm/10-mkmm-pre.hook /etc/pacman.d/hooks/, Enabling mkmm pre-hook]
     - [sudo ln -sf /usr/share/mkmm/10-mkmm-post.hook /etc/pacman.d/hooks/, Enabling mkmm post-hook]
-    - [systemctl enable mkmm-bleach.service, Enabling mkmm bleach service]
+    - [sudo systemctl enable mkmm-bleach.service, Enabling mkmm bleach service]
     - [sudo systemctl enable gdm, Enabling display manager]
