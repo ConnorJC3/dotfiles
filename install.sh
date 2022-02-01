@@ -41,15 +41,16 @@ invoke_dotbot cleanup.conf.yaml
 if [[ -z $BOOTSTRAP ]]; then
   echo
   echo
-  if [[ $USER_ONLY ]] && [ -z "`$SHELL -c 'echo $ZSH_VERSION'`" ]; then
-    echo "Changing shell to zsh, will likely prompt for password"
-    chsh -s /usr/bin/zsh
-    echo
-    echo
-  fi
-  echo "Changes (probably) require a reboot"
-  read -n 1 -r -p "Reboot now? (y/n) " REBOOT_NOW
-  if [[ $REBOOT_NOW =~ ^[Yy]$ ]]; then
-    systemctl reboot
+  if [[ $USER_ONLY ]]; then
+    if [ -z "`$SHELL -c 'echo $ZSH_VERSION'`" ]; then
+      echo "Changing shell to zsh, will likely prompt for password"
+      chsh -s /usr/bin/zsh
+    fi
+  else
+    echo "Changes (probably) require a reboot"
+    read -n 1 -r -p "Reboot now? (y/n) " REBOOT_NOW
+    if [[ $REBOOT_NOW =~ ^[Yy]$ ]]; then
+      systemctl reboot
+    fi
   fi
 fi
