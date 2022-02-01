@@ -5,10 +5,12 @@ set -e
 source ./config.sh
 source ./check.sh
 
-if [[ -x "$(command -v paru)" ]]; then
-  paru --noconfirm -Syu
-else
-  sudo pacman --noconfirm -Syu
+if [[ -z $USER_ONLY ]]; then
+  if [[ -x "$(command -v paru)" ]]; then
+    paru --noconfirm -Syu
+  else
+    sudo pacman --noconfirm -Syu
+  fi
 fi
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
