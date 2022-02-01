@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = nvidia*
+
+[Action]
+Description = Signing EFI binaries (due to NVIDIA-related package)...
+When = PostTransaction
+Depends = sbctl
+Exec = /usr/bin/sbctl sign-all -g

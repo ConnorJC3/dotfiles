@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = nvidia*
+
+[Action]
+Description = Regenerating booster images (due to NVIDIA-related package)...
+When = PostTransaction
+Depends = booster
+Exec = /usr/lib/booster/regenerate_images

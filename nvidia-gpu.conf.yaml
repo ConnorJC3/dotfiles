@@ -3,3 +3,7 @@
     - nvidia
     - nvidia-utils
     - libva-vdpau-driver
+
+- shell:
+    - [sudo cp ./root-config/50-booster-nvidia.hook /etc/pacman.d/hooks/, Installing NVIDIA booster hook]
+    - [sudo cp ./root-config/51-sbctl-nvidia.hook /etc/pacman.d/hooks/, Installing NVIDIA sbctl hook]
