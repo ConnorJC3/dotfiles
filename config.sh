@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LATEST_VERSION=6
+LATEST_VERSION=7
 
 function ask_question {
   read -n 1 -r -p "${1} (y/n) " "$2"

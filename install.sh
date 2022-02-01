@@ -35,7 +35,7 @@ invoke_dotbot main.conf.yaml
 if [[ -z $BOOTSTRAP ]]; then
   echo
   echo
-  echo "Changes require a reboot"
+  echo "Changes (probably) require a reboot"
   read -n 1 -r -p "Reboot now? (y/n) " REBOOT_NOW
   if [[ $REBOOT_NOW =~ ^[Yy]$ ]]; then
     systemctl reboot
