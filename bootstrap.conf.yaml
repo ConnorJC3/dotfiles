@@ -1,13 +1,12 @@
 ---
+- shell:
+    - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
+
 - pacman:
     - pigz
     - pbzip2
     - ccache
     - polkit
-    - reflector
 
 - shell:
     - [sudo cp ./root-config/49-nopasswd_global.rules /etc/polkit-1/rules.d/, Disabling polkit password]
-    - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
-    - [sudo cp ./root-config/reflector.conf /etc/xdg/reflector/, Installing reflector config]
-    - [sudo systemctl enable --now reflector.service, Enabling reflector service]
