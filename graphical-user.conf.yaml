@@ -9,6 +9,7 @@
     ~/.config/kitty:
     ~/.config/fontconfig:
     ~/.config/environment.d:
+    ~/.config/electron-flags.conf:
     ~/.mozilla/firefox/profiles.ini: firefox/profiles.ini
     ~/.mozilla/firefox/main/user.js: firefox/user.js
     ~/.mozilla/managed-storage: firefox/managed-storage
