@@ -13,10 +13,6 @@
     - booster
     - sbctl
 
-- paru:
-    - containerd
-    - nerdctl-bin
-
 - shell:
     - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
 
