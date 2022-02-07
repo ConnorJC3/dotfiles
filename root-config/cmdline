@@ -1,1 +1,1 @@
-rw quiet loglevel=3 rd.udev.log-priority=3 vt.global_cursor_default=0 intel_iommu=on amd_iommu=on nvidia-drm.modeset=1
+rw quiet loglevel=3 rd.udev.log-priority=3 vt.global_cursor_default=0 intel_iommu=on amd_iommu=on iommu=pt nvidia-drm.modeset=1
