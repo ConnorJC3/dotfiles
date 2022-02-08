@@ -20,7 +20,6 @@
 - paru:
     - nerd-fonts-hack
     - firefox-nightly
-    - libva-nvidia-driver
     - mkmm
     - qgnomeplatform
     - qgnomeplatform-qt6
