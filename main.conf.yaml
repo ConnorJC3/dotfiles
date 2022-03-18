@@ -8,6 +8,8 @@
     - curl
     - diff-so-fancy
     - linux-headers
+    - linux-zen
+    - linux-zen-headers
 
 - pacman:
     - booster
