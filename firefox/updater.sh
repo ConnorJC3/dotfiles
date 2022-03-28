@@ -2,7 +2,7 @@
 
 ## arkenfox user.js updater for macOS and Linux
 
-## version: 3.3
+## version: 3.4
 ## Author: Pat Johnson (@overdodactyl)
 ## Additional contributors: @earthlng, @ema-pe, @claustromaniac
 
@@ -106,7 +106,7 @@ Optional Arguments:
 download_file() { # expects URL as argument ($1)
   declare -r tf=$(mktemp)
 
-  $DOWNLOAD_METHOD "${tf}" "$1" && echo "$tf" || echo '' # return the temp-filename or empty string on error
+  $DOWNLOAD_METHOD "${tf}" "$1" &>/dev/null && echo "$tf" || echo '' # return the temp-filename or empty string on error
 }
 
 open_file() { # expects one argument: file_path
