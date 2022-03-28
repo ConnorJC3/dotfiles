@@ -1,4 +1,10 @@
 ---
+- defaults:
+    link:
+      create: true
+      relink: true
+      force: true
+
 - pacman:
     - nvidia-dkms
     - nvidia-utils
@@ -6,6 +12,9 @@
 
 - paru:
     - libva-nvidia-driver
+
+- link:
+  ~/.config/environment.d/firefox-nvidia.conf: environment.d-nvidia/firefox-nvidia.conf
 
 - shell:
     - [sudo cp ./root-config/50-booster-nvidia.hook /etc/pacman.d/hooks/, Installing NVIDIA booster hook]
