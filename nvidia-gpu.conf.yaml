@@ -10,12 +10,6 @@
     - nvidia-utils
     - libva-vdpau-driver
 
-- paru:
-    - libva-nvidia-driver
-
-- link:
-  ~/.config/environment.d/firefox-nvidia.conf: environment.d-nvidia/firefox-nvidia.conf
-
 - shell:
     - [sudo cp ./root-config/50-booster-nvidia.hook /etc/pacman.d/hooks/, Installing NVIDIA booster hook]
     - [sudo cp ./root-config/51-sbctl-nvidia.hook /etc/pacman.d/hooks/, Installing NVIDIA sbctl hook]

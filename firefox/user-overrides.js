@@ -22,6 +22,8 @@ user_pref("privacy.userContext.enabled", false);
 // Increase connection count per-domain
 // (Trust me you want this)
 user_pref("network.http.max-persistent-connections-per-server", 64);
+// Disable "you have unsent crash reports" popup that is bugged
+user_pref("browser.crashReports.unsubmittedCheck.enabled", false);
 
 // // Fix the web settings
 // // Revert some privacy/security fixes to improve browsing experience
