@@ -1,0 +1,9 @@
+[Unit]
+Description=Download package updates hourly
+
+[Timer]
+OnBootSec=1min
+OnUnitInactiveSec=1hour
+
+[Install]
+WantedBy=timers.target

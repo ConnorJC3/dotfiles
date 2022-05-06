@@ -1,0 +1,15 @@
+[Unit]
+Description=Download package updates to cache
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/checkupdates -d
+SuccessExitStatus=2
+# Lowering priority
+OOMScoreAdjust=1000
+Nice=19
+CPUSchedulingPolicy=idle
+IOSchedulingClass=idle
+IOSchedulingPriority=7
