@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 LATEST_VERSION=8
 
@@ -16,14 +17,14 @@ function ask_question {
 }
 
 function setup_config {
-  while [[ -z $CONFIRM ]]; do
+  while [[ -z ${CONFIRM+x} ]]; do
     rm -f ./saved-config.sh
     echo "#!/usr/bin/env bash" >> ./saved-config.sh
 
     ask_question "Graphical system?" GRAPHICAL
-    [[ $GRAPHICAL ]] && ask_question "Using Intel iGPU?" INTEL_GPU
-    [[ $GRAPHICAL ]] && ask_question "Using AMD GPU?" AMD_GPU
-    [[ $GRAPHICAL ]] && ask_question "Using NVIDIA GPU?" NVIDIA_GPU
+    [[ ${GRAPHICAL+x} ]] && ask_question "Using Intel iGPU?" INTEL_GPU
+    [[ ${GRAPHICAL+x} ]] && ask_question "Using AMD GPU?" AMD_GPU
+    [[ ${GRAPHICAL+x} ]] && ask_question "Using NVIDIA GPU?" NVIDIA_GPU
     ask_question "User only (skip ALL package installs and gloabl config)?" USER_ONLY
     ask_question "Confirm answers?" CONFIRM
     echo
@@ -37,7 +38,7 @@ function setup_config {
 
 if [[ -f ./saved-config.sh ]]; then
   source ./saved-config.sh
-  if [[ -z $VERSION ]]; then
+  if [[ -z ${VERSION+x} ]]; then
     setup_config
   elif (( $VERSION < $LATEST_VERSION )); then
     setup_config

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 if [[ "$HOSTNAME" == "archiso" ]]; then
   echo "Do NOT run on the installation medium, install arch first!"
@@ -30,7 +31,7 @@ if [[ ! -x "$(command -v python)" ]]; then
   exit 2
 fi
 
-if [[ "$EUID" -eq 0 ]] && [[ -z $USER_ONLY ]]; then
+if [[ "$EUID" -eq 0 ]] && [[ -z ${USER_ONLY+x} ]]; then
   echo "Do NOT run as root, create your own user!"
   echo "useradd -m -U USERNAME"
   echo "passwd USERNAME"
