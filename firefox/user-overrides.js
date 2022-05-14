@@ -77,10 +77,10 @@ user_pref("gfx.webrender.all", true);
 user_pref("fission.autostart", true);
 // Explicitly disable proton context menu (use native)
 user_pref("browser.proton.contextmenus.enabled", false);
-// https://github.com/elFarto/nvidia-vaapi-driver
+// VAAPI decoding
 user_pref("media.ffmpeg.vaapi.enabled", true);
-user_pref("media.rdd-ffmpeg.enabled", true);
-user_pref("media.av1.enabled", false);
+user_pref("media.rdd-process.enabled", false);
+user_pref("media.av1.enabled", true);
 
 // // Personal settings
 // //

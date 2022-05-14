@@ -21,7 +21,7 @@
     - nerd-fonts-hack
     - firefox-nightly
     - mkmm
-    - qgnomeplatform
+    - qgnomeplatform-qt5
     - qgnomeplatform-qt6
 
 - shell:
