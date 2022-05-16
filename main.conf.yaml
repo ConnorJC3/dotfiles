@@ -23,6 +23,8 @@
     - [sudo cp ./root-config/sysctl.conf /etc/sysctl.d/99-sysctl.conf, Installing sysctl tweaks]
     - [sudo sysctl --system, Loading sysctl tweaks]
     - [sudo cp ./root-config/checkupdates.* /etc/systemd/system/, Installing checkupdates service and timer]
+    - [sudo cp -r ./root-config/systemd-boot-update.service.d/ /etc/systemd/system/, Installing systemd-boot-update dropin]
+    - [sudo systemctl enable --now systemd-boot-update.service, Enabling systemd-boot-update service]
     - [sudo systemctl enable --now checkupdates.timer, Enabling checkupdates timer]
     - [sudo systemctl mask systemd-fsck-root.service, Disable root fsck (not needed on btrfs)]
     - [sudo systemctl enable --now paccache.timer, Enabling paccache timer]
