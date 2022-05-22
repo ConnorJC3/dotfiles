@@ -9,3 +9,4 @@
     - lib32-libva-mesa-driver
     - mesa-vdpau
     - lib32-mesa-vdpau
+    - radeontop
