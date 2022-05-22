@@ -1,7 +1,10 @@
 ---
+- paru:
+    - plasma-meta
+    - plasma-wayland-session
+    - sddm
+
 - pacman:
-    - gnome
-    - gnome-tweaks
     - noto-fonts
     - noto-fonts-emoji
     - noto-fonts-cjk
@@ -21,8 +24,6 @@
     - nerd-fonts-hack
     - firefox-nightly
     - mkmm
-    - qgnomeplatform-qt5
-    - qgnomeplatform-qt6
 
 - shell:
     - [systemctl enable --user --now pipewire, Enabling pipewire]
@@ -36,4 +37,4 @@
     - [sudo ln -sf /usr/share/mkmm/10-mkmm-pre.hook /etc/pacman.d/hooks/, Enabling mkmm pre-hook]
     - [sudo ln -sf /usr/share/mkmm/10-mkmm-post.hook /etc/pacman.d/hooks/, Enabling mkmm post-hook]
     - [sudo systemctl enable mkmm-bleach.service, Enabling mkmm bleach service]
-    - [sudo systemctl enable gdm, Enabling display manager]
+    - [sudo systemctl enable sddm, Enabling display manager]
