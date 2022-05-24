@@ -22,6 +22,7 @@
     - pipewire
     - pipewire-pulse
     - libfido2
+    - arch-audit-gtk
 
 - pacman:
     - qt5-wayland
