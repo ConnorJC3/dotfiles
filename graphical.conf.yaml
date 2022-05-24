@@ -7,6 +7,11 @@
     - kde-gtk-config
     - xdg-desktop-portal
     - xdg-desktop-portal-kde
+    - colord-kde
+    - dolphin
+    - dolphin-plugins
+    - ark
+    - kate
 
 - pacman:
     - noto-fonts

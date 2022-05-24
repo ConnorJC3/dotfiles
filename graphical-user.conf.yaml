@@ -13,3 +13,6 @@
     ~/.mozilla/firefox/profiles.ini: firefox/profiles.ini
     ~/.mozilla/firefox/main/user.js: firefox/user.js
     ~/.mozilla/managed-storage: firefox/managed-storage
+
+- shell:
+    - [balooctl disable, Disabling baloo indexer (CPU hog)]
