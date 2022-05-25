@@ -17,7 +17,7 @@ user_pref("media.autoplay.blocking_policy", 0);
 // Allow animations in browser UI
 // (Disables disgusting hourglass loading icon)
 user_pref("ui.prefersReducedMotion", 0);
-// Disable containers (useless conflict with FPI)
+// Disable containers (useless conflict with TCP/partitioning)
 user_pref("privacy.userContext.enabled", false);
 // Increase connection count per-domain
 // (Trust me you want this)
@@ -31,7 +31,7 @@ user_pref("browser.crashReports.unsubmittedCheck.enabled", false);
 // It's just too slow and adds so little security
 user_pref("security.OCSP.enabled", 0);
 user_pref("security.OCSP.require", false);
-// Safe(r) with FPI
+// Safe(r) with TCP/partitioning
 user_pref("network.http.altsvc.enabled", true);
 user_pref("network.http.altsvc.oe", true);
 user_pref("security.ssl.disable_session_identifiers", false);
