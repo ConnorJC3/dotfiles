@@ -79,7 +79,6 @@ user_pref("fission.autostart", true);
 user_pref("browser.proton.contextmenus.enabled", false);
 // VAAPI decoding
 user_pref("media.ffmpeg.vaapi.enabled", true);
-user_pref("media.rdd-process.enabled", false);
 user_pref("media.av1.enabled", true);
 
 // // Personal settings
