@@ -50,6 +50,8 @@ user_pref("privacy.sanitize.sanitizeOnShutdown", false);
 user_pref("privacy.clearOnShutdown.downloads", false);
 user_pref("privacy.clearOnShutdown.history", false);
 user_pref("privacy.clearOnShutdown.sessions", false);
+user_pref("privacy.clearOnShutdown.offlineApps", false);
+user_pref("privacy.clearOnShutdown.cookies", false);
 user_pref("network.cookie.lifetimePolicy", 0);
 // Allow service workers (and related features)
 user_pref("dom.serviceWorkers.enabled", true);
