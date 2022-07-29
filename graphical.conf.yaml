@@ -32,7 +32,7 @@
 
 - paru:
     - nerd-fonts-hack
-    - firefox-nightly
+    - firefox-nightly-bin
     - mkmm
 
 - shell:
