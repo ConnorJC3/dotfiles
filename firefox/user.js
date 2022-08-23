@@ -1,7 +1,7 @@
 /******
 *    name: arkenfox user.js
-*    date: 1 July 2022
-* version: 102
+*    date: 18 August 2022
+* version: 103
 *     url: https://github.com/arkenfox/user.js
 * license: MIT: https://github.com/arkenfox/user.js/blob/master/LICENSE.txt
 
@@ -30,8 +30,9 @@
   * It is best to use the arkenfox release that is optimized for and matches your Firefox version
   * EVERYONE: each release
     - run prefsCleaner to reset prefs made inactive, including deprecated (9999s)
-    ESR91
-    - If you are not using arkenfox v91... (not a definitive list)
+    ESR102
+    - If you are not using arkenfox v102-1... (not a definitive list)
+      - 2815: clearOnShutdown cookies + offlineApps should be false
       - 9999: switch the appropriate deprecated section(s) back on
 
 * INDEX:
@@ -82,7 +83,7 @@ user_pref("_user.js.parrot", "0100 syntax error: the parrot's dead!");
 user_pref("browser.shell.checkDefaultBrowser", false);
 /* 0102: set startup page [SETUP-CHROME]
  * 0=blank, 1=home, 2=last visited page, 3=resume previous session
- * [NOTE] Session Restore is cleared with history (2811, 2820), and not used in Private Browsing mode
+ * [NOTE] Session Restore is cleared with history (2811), and not used in Private Browsing mode
  * [SETTING] General>Startup>Restore previous session ***/
 user_pref("browser.startup.page", 0);
 /* 0103: set HOME+NEWWINDOW page
@@ -119,6 +120,7 @@ user_pref("geo.provider.network.url", "https://location.services.mozilla.com/v1/
 user_pref("geo.provider.ms-windows-location", false); // [WINDOWS]
 user_pref("geo.provider.use_corelocation", false); // [MAC]
 user_pref("geo.provider.use_gpsd", false); // [LINUX]
+user_pref("geo.provider.use_geoclue", false); // [FF102+] [LINUX]
 /* 0203: disable region updates
  * [1] https://firefox-source-docs.mozilla.org/toolkit/modules/toolkit_modules/Region.html ***/
 user_pref("browser.region.network.url", ""); // [FF78+]
@@ -219,6 +221,7 @@ user_pref("network.connectivity-service.enabled", false);
    [1] https://feeding.cloud.geek.nz/posts/how-safe-browsing-works-in-firefox/
    [2] https://wiki.mozilla.org/Security/Safe_Browsing
    [3] https://support.mozilla.org/kb/how-does-phishing-and-malware-protection-work
+   [4] https://educatedguesswork.org/posts/safe-browsing-privacy/
 ***/
 user_pref("_user.js.parrot", "0400 syntax error: the parrot's passed on!");
 /* 0401: disable SB (Safe Browsing)
@@ -333,7 +336,7 @@ user_pref("keyword.enabled", false);
  * as the 411 for DNS errors?), privacy issues (why connect to sites you didn't
  * intend to), can leak sensitive data (e.g. query strings: e.g. Princeton attack),
  * and is a security risk (e.g. common typos & malicious sites set up to exploit this) ***/
-user_pref("browser.fixup.alternate.enabled", false);
+user_pref("browser.fixup.alternate.enabled", false); // [DEFAULT: false FF104+]
 /* 0804: disable live search suggestions
  * [NOTE] Both must be true for the location bar to work
  * [SETUP-CHROME] Override these if you trust and use a privacy respecting search engine
@@ -344,9 +347,9 @@ user_pref("browser.urlbar.suggest.searches", false);
  * [1] https://bugzilla.mozilla.org/1348275 ***/
 user_pref("browser.urlbar.speculativeConnect.enabled", false);
 /* 0806: disable location bar leaking single words to a DNS provider **after searching** [FF78+]
- * 0=never resolve single words, 1=heuristic (default), 2=always resolve
+ * 0=never resolve, 1=use heuristics, 2=always resolve
  * [1] https://bugzilla.mozilla.org/1642623 ***/
-user_pref("browser.urlbar.dnsResolveSingleWordsAfterSearch", 0);
+user_pref("browser.urlbar.dnsResolveSingleWordsAfterSearch", 0); // [DEFAULT: 0 FF104+]
 /* 0807: disable location bar contextual suggestions [FF92+]
  * [SETTING] Privacy & Security>Address Bar>Suggestions from...
  * [1] https://blog.mozilla.org/data/2021/09/15/data-and-firefox-suggest/ ***/
@@ -493,11 +496,10 @@ user_pref("security.OCSP.require", true);
  * 2=detect Family Safety mode and import the root
  * [1] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/21686 ***/
 user_pref("security.family_safety.mode", 0);
-/* 1223: enable strict pinning
- * PKP (Public Key Pinning) 0=disabled, 1=allow user MiTM (such as your antivirus), 2=strict
- * [SETUP-WEB] If you rely on an AV (antivirus) to protect your web browsing
- * by inspecting ALL your web traffic, then leave at current default=1
- * [1] https://gitlab.torproject.org/tpo/applications/tor-browser/-/issues/16206 ***/
+/* 1223: enable strict PKP (Public Key Pinning)
+ * 0=disabled, 1=allow user MiTM (default; such as your antivirus), 2=strict
+ * [SETUP-WEB] MOZILLA_PKIX_ERROR_KEY_PINNING_FAILURE: If you rely on an AV (antivirus) to protect
+ * your web browsing by inspecting ALL your web traffic, then override to current default ***/
 user_pref("security.cert_pinning.enforcement_level", 2);
 /* 1224: enable CRLite [FF73+]
  * 0 = disabled
@@ -623,17 +625,6 @@ user_pref("media.peerconnection.ice.default_address_only", true);
  * [1] https://www.eff.org/deeplinks/2017/10/drms-dead-canary-how-we-just-lost-web-what-we-learned-it-and-what-we-need-do-next ***/
 user_pref("media.eme.enabled", false);
    // user_pref("browser.eme.ui.enabled", false);
-/* 2030: disable autoplay of HTML5 media [FF63+]
- * 0=Allow all, 1=Block non-muted media (default), 5=Block all
- * [NOTE] You can set exceptions under site permissions
- * [SETTING] Privacy & Security>Permissions>Autoplay>Settings>Default for all websites ***/
-   // user_pref("media.autoplay.default", 5);
-/* 2031: disable autoplay of HTML5 media if you interacted with the site [FF78+]
- * 0=sticky (default), 1=transient, 2=user
- * Firefox's Autoplay Policy Documentation (PDF) is linked below via SUMO
- * [NOTE] If you have trouble with some video sites, then add an exception (2030)
- * [1] https://support.mozilla.org/questions/1293231 ***/
-user_pref("media.autoplay.blocking_policy", 2);
 
 /*** [SECTION 2400]: DOM (DOCUMENT OBJECT MODEL) ***/
 user_pref("_user.js.parrot", "2400 syntax error: the parrot's kicked the bucket!");
@@ -763,36 +754,43 @@ user_pref("privacy.partition.serviceWorkers", true);
 
 /*** [SECTION 2800]: SHUTDOWN & SANITIZING ***/
 user_pref("_user.js.parrot", "2800 syntax error: the parrot's bleedin' demised!");
-/** SANITIZE ON SHUTDOWN: ALLOWS COOKIES + SITE DATA EXCEPTIONS FF102+ ***/
-/* 2810: enable Firefox to clear items on shutdown (2811)
- * [NOTE] Exceptions: A "cookie" block permission also controls "offlineApps" (see note in 2811).
- * serviceWorkers require an "Allow" permission. For cross-domain logins, add exceptions for
- * both sites e.g. https://www.youtube.com (site) + https://accounts.google.com (single sign on)
- * [WARNING] Be selective with what cookies you keep, as they also disable partitioning (1767271)
- * [SETTING] Privacy & Security>History>Custom Settings>Clear history when Firefox closes
- * [SETTING] to add site exceptions: Ctrl+I>Permissions>Cookies>Allow (when on the website in question)
- * [SETTING] to manage site exceptions: Options>Privacy & Security>Permissions>Settings ***/
+/* 2810: enable Firefox to clear items on shutdown
+ * [SETTING] Privacy & Security>History>Custom Settings>Clear history when Firefox closes | Settings ***/
 user_pref("privacy.sanitize.sanitizeOnShutdown", true);
+
+/** SANITIZE ON SHUTDOWN: IGNORES "ALLOW" SITE EXCEPTIONS ***/
 /* 2811: set/enforce what items to clear on shutdown (if 2810 is true) [SETUP-CHROME]
  * [NOTE] If "history" is true, downloads will also be cleared
  * [NOTE] "sessions": Active Logins: refers to HTTP Basic Authentication [1], not logins via cookies
- * [NOTE] "offlineApps": Offline Website Data: localStorage, service worker cache, QuotaManager (IndexedDB, asm-cache)
- * [SETTING] Privacy & Security>History>Custom Settings>Clear history when Firefox closes>Settings
  * [1] https://en.wikipedia.org/wiki/Basic_access_authentication ***/
 user_pref("privacy.clearOnShutdown.cache", true);     // [DEFAULT: true]
 user_pref("privacy.clearOnShutdown.downloads", true); // [DEFAULT: true]
 user_pref("privacy.clearOnShutdown.formdata", true);  // [DEFAULT: true]
 user_pref("privacy.clearOnShutdown.history", true);   // [DEFAULT: true]
 user_pref("privacy.clearOnShutdown.sessions", true);  // [DEFAULT: true]
-user_pref("privacy.clearOnShutdown.offlineApps", true);
-user_pref("privacy.clearOnShutdown.cookies", true);
    // user_pref("privacy.clearOnShutdown.siteSettings", false); // [DEFAULT: false]
-/* 2812: delete cache on exit [FF96+]
+/* 2812: set Session Restore to clear on shutdown (if 2810 is true) [FF34+]
+ * [NOTE] Not needed if Session Restore is not used (0102) or it is already cleared with history (2811)
+ * [NOTE] If true, this prevents resuming from crashes (also see 5008) ***/
+   // user_pref("privacy.clearOnShutdown.openWindows", true);
+
+/** SANITIZE ON SHUTDOWN: RESPECTS "ALLOW" SITE EXCEPTIONS FF103+ ***/
+/* 2815: set "Cookies" and "Site Data" to clear on shutdown (if 2810 is true) [SETUP-CHROME]
+ * [NOTE] Exceptions: A "cookie" block permission also controls "offlineApps" (see note below).
+ * serviceWorkers require an "Allow" permission. For cross-domain logins, add exceptions for
+ * both sites e.g. https://www.youtube.com (site) + https://accounts.google.com (single sign on)
+ * [NOTE] "offlineApps": Offline Website Data: localStorage, service worker cache, QuotaManager (IndexedDB, asm-cache)
+ * [WARNING] Be selective with what sites you "Allow", as they also disable partitioning (1767271)
+ * [SETTING] to add site exceptions: Ctrl+I>Permissions>Cookies>Allow (when on the website in question)
+ * [SETTING] to manage site exceptions: Options>Privacy & Security>Permissions>Settings ***/
+user_pref("privacy.clearOnShutdown.cookies", true); // Cookies
+user_pref("privacy.clearOnShutdown.offlineApps", true); // Site Data
+/* 2816: set cache to clear on exit [FF96+]
  * [NOTE] We already disable disk cache (1001) and clear on exit (2811) which is more robust
  * [1] https://bugzilla.mozilla.org/1671182 ***/
    // user_pref("privacy.clearsitedata.cache.enabled", true);
 
-/** SANITIZE MANUAL: ALL OR NOTHING ***/
+/** SANITIZE MANUAL: IGNORES "ALLOW" SITE EXCEPTIONS ***/
 /* 2820: reset default items to clear with Ctrl-Shift-Del [SETUP-CHROME]
  * This dialog can also be accessed from the menu History>Clear Recent History
  * Firefox remembers your last choices. This will reset them when you start Firefox
@@ -805,14 +803,9 @@ user_pref("privacy.cpd.sessions", true); // [DEFAULT: true]
 user_pref("privacy.cpd.offlineApps", false); // [DEFAULT: false]
 user_pref("privacy.cpd.cookies", false);
    // user_pref("privacy.cpd.downloads", true); // not used, see note above
-   // user_pref("privacy.cpd.passwords", false); // [DEFAULT: false] not listed
-   // user_pref("privacy.cpd.siteSettings", false); // [DEFAULT: false]
-/* 2821: clear Session Restore data when sanitizing on shutdown or manually [FF34+]
- * [NOTE] Not needed if Session Restore is not used (0102) or it is already cleared with history (2811)
- * [NOTE] privacy.clearOnShutdown.openWindows prevents resuming from crashes (also see 5008)
- * [NOTE] privacy.cpd.openWindows has a bug that causes an additional window to open ***/
-   // user_pref("privacy.clearOnShutdown.openWindows", true);
-   // user_pref("privacy.cpd.openWindows", true);
+   // user_pref("privacy.cpd.openWindows", false); // Session Restore
+   // user_pref("privacy.cpd.passwords", false);
+   // user_pref("privacy.cpd.siteSettings", false);
 /* 2822: reset default "Time range to clear" for "Clear Recent History" (2820)
  * Firefox remembers your last choice. This will reset the value when you start Firefox
  * 0=everything, 1=last hour, 2=last two hours, 3=last four hours, 4=today
@@ -915,7 +908,7 @@ user_pref("privacy.resistFingerprinting.letterboxing", true); // [HIDDEN PREF]
 user_pref("browser.startup.blankWindow", false);
 /* 4510: disable using system colors
  * [SETTING] General>Language and Appearance>Fonts and Colors>Colors>Use system colors ***/
-user_pref("browser.display.use_system_colors", false); // [DEFAULT false NON-WINDOWS]
+user_pref("browser.display.use_system_colors", false); // [DEFAULT: false NON-WINDOWS]
 /* 4511: enforce non-native widget theme
  * Security: removes/reduces system API calls, e.g. win32k API [1]
  * Fingerprinting: provides a uniform look and feel across platforms [2]
@@ -976,7 +969,8 @@ user_pref("_user.js.parrot", "5000 syntax error: the parrot's taken 'is last bow
    // user_pref("browser.chrome.site_icons", false);
 /* 5007: exclude "Undo Closed Tabs" in Session Restore ***/
    // user_pref("browser.sessionstore.max_tabs_undo", 0);
-/* 5008: disable resuming session from crash ***/
+/* 5008: disable resuming session from crash
+ * [TEST] about:crashparent ***/
    // user_pref("browser.sessionstore.resume_from_crash", false);
 /* 5009: disable "open with" in download dialog [FF50+]
  * Application data isolation [1]
@@ -1076,8 +1070,6 @@ user_pref("security.tls.version.enable-deprecated", false); // [DEFAULT: false]
  * Web Compatibility Reporter adds a "Report Site Issue" button to send data to Mozilla
  * [WHY] To prevent wasting Mozilla's time with a custom setup ***/
 user_pref("extensions.webcompat-reporter.enabled", false); // [DEFAULT: false]
-/* 6012: disable SHA-1 certificates ***/
-user_pref("security.pki.sha1_enforcement_level", 1); // [DEFAULT: 1 FF102+]
 /* 6050: prefsCleaner: reset items removed from arkenfox FF92+ ***/
    // user_pref("browser.urlbar.trimURLs", "");
    // user_pref("dom.caches.enabled", "");
@@ -1172,7 +1164,7 @@ user_pref("_user.js.parrot", "7000 syntax error: the parrot's pushing up daisies
    // user_pref("privacy.donottrackheader.enabled", true);
 /* 7016: customize ETP settings
  * [WHY] Arkenfox only supports strict (2701) which sets these at runtime ***/
-   // user_pref("network.cookie.cookieBehavior", 5);
+   // user_pref("network.cookie.cookieBehavior", 5); // [DEFAULT: 5 FF103+]
    // user_pref("network.http.referer.disallowCrossSiteRelaxingDefault", true);
    // user_pref("network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation", true); // [FF100+]
    // user_pref("privacy.partition.network_state.ocsp_cache", true);
@@ -1238,7 +1230,7 @@ user_pref("browser.startup.homepage_override.mstone", "ignore"); // master switc
    // user_pref("startup.homepage_welcome_url.additional", "");
    // user_pref("startup.homepage_override_url", ""); // What's New page after updates
 /* WARNINGS ***/
-   // user_pref("browser.tabs.warnOnClose", false); // [DEFAULT false FF94+]
+   // user_pref("browser.tabs.warnOnClose", false); // [DEFAULT: false FF94+]
    // user_pref("browser.tabs.warnOnCloseOtherTabs", false);
    // user_pref("browser.tabs.warnOnOpen", false);
    // user_pref("browser.warnOnQuitShortcut", false); // [FF94+]
@@ -1265,6 +1257,14 @@ user_pref("browser.startup.homepage_override.mstone", "ignore"); // master switc
    // user_pref("accessibility.typeaheadfind", true); // enable "Find As You Type"
    // user_pref("clipboard.autocopy", false); // disable autocopy default [LINUX]
    // user_pref("layout.spellcheckDefault", 2); // 0=none, 1-multi-line, 2=multi-line & single-line
+/* HTML5 MEDIA AUTOPLAY ***/
+   // [NOTE] You can set exceptions under site permissions
+   // user_pref("media.autoplay.default", 5); // [FF63+]
+      // 0=Allow all, 1=Block non-muted media (default), 5=Block all
+      // [SETTING] Privacy & Security>Permissions>Autoplay>Settings>Default for all websites
+   // user_pref("media.autoplay.blocking_policy", 2); // disable autoplay if you interacted with the site [FF78+]
+      // 0=sticky (default), 1=transient, 2=user
+      // [1] https://support.mozilla.org/questions/1293231 // links to Autoplay Policy Documentation (PDF)
 /* UX BEHAVIOR ***/
    // user_pref("browser.backspace_action", 2); // 0=previous page, 1=scroll up, 2=do nothing
    // user_pref("browser.quitShortcut.disabled", true); // disable Ctrl-Q quit shortcut [LINUX] [MAC] [FF87+]
@@ -1340,14 +1340,22 @@ user_pref("security.ask_for_password", 2);
    // 0902: set how long in minutes Firefox should remember the primary password (0901)
    // [-] https://bugzilla.mozilla.org/1767099
 user_pref("security.password_lifetime", 5); // [DEFAULT: 30]
+   // 6007: enforce Local Storage Next Generation (LSNG) [FF65+]
+   // [-] https://bugzilla.mozilla.org/1764696
+user_pref("dom.storage.next_gen", true); // [DEFAULT: true FF92+]
+// ***/
+
+/* ESR102.x still uses all the following prefs
+// [NOTE] replace the * with a slash in the line above to re-enable them
+// FF103
    // 2801: delete cookies and site data on exit - replaced by sanitizeOnShutdown* (2810)
    // 0=keep until they expire (default), 2=keep until you close Firefox
    // [SETTING] Privacy & Security>Cookies and Site Data>Delete cookies and site data when Firefox is closed
    // [-] https://bugzilla.mozilla.org/buglist.cgi?bug_id=1681493,1681495,1681498,1759665
 user_pref("network.cookie.lifetimePolicy", 2);
-   // 6007: enforce Local Storage Next Generation (LSNG) [FF65+]
-   // [-] https://bugzilla.mozilla.org/1764696
-user_pref("dom.storage.next_gen", true); // [DEFAULT: true FF92+]
+// 6012: disable SHA-1 certificates
+   // [-] https://bugzilla.mozilla.org/1766687
+user_pref("security.pki.sha1_enforcement_level", 1); // [DEFAULT: 1 FF102+]
 // ***/
 
 /* END: internal custom pref to test for syntax errors ***/
