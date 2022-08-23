@@ -104,3 +104,6 @@ zi wait"0" lucid for \
     zsh-users/zsh-completions \
   atclone"dircolors -b LS_COLORS > clrs.zsh" atpull"%atclone" pick"clrs.zsh" nocompile"!" \
     trapd00r/LS_COLORS
+
+# load SSH key
+ssh-add &> /dev/null
