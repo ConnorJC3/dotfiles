@@ -15,3 +15,4 @@
 
 - shell:
     - [systemctl --user enable --now ssh-agent.service, Enabling SSH agent service]
+    - [git config --global --add --bool push.autoSetupRemote true, Enable git autoSetupRemote]
