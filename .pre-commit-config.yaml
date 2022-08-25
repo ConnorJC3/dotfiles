@@ -2,7 +2,7 @@
 exclude: firefox/profiles.ini
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.3.0
     hooks:
       - id: check-added-large-files
         args: [--maxkb, '2048']
@@ -18,7 +18,7 @@ repos:
         args: [--fix, lf]
       - id: trailing-whitespace
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.26.0
+    rev: v1.27.1
     hooks:
       - id: yamllint
         name: Check YAML style with yamllint
