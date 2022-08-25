@@ -1,11 +1,5 @@
 ---
-- defaults:
-    link:
-      create: true
-      relink: true
-      force: true
-
-- pacman:
+- paru:
     - nvidia-dkms
     - nvidia-utils
     - libva-vdpau-driver

@@ -1,5 +1,5 @@
 ---
-- pacman:
+- paru:
     - mesa
     - xf86-video-intel
     - vulkan-intel

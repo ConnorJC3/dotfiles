@@ -13,7 +13,7 @@
     - ark
     - kate
 
-- pacman:
+- paru:
     - noto-fonts
     - noto-fonts-emoji
     - noto-fonts-cjk
@@ -24,7 +24,7 @@
     - libfido2
     - arch-audit-gtk
 
-- pacman:
+- paru:
     - qt5-wayland
     - qt6-wayland
     - glfw-wayland
@@ -32,7 +32,7 @@
 
 - paru:
     - nerd-fonts-hack
-    - firefox-nightly-bin
+    - firefox-nightly
     - mkmm
 
 - shell:

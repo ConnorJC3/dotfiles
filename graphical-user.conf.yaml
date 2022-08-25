@@ -15,4 +15,4 @@
     ~/.mozilla/managed-storage: firefox/managed-storage
 
 - shell:
-    - [balooctl disable, Disabling baloo indexer (CPU hog)]
+    - [balooctl disable || true, Disabling baloo indexer (CPU hog)]

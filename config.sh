@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-LATEST_VERSION=8
+LATEST_VERSION=9
 
 function ask_question {
   read -n 1 -r -p "${1} (y/n) " "$2"

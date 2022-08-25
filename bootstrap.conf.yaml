@@ -1,12 +1,15 @@
 ---
 - shell:
     - [sudo cp ./root-config/pacman.conf /etc/pacman.conf, Installing pacman config]
+    - [sudo pacman-key --recv-key FBA220DFC880C036, Downloading Chaotic-AUR key]
+    - [sudo pacman-key --lsign-key FBA220DFC880C036, Importing Chaotic-AUR key]
 
-- pacman:
+- paru:
     - pigz
     - pbzip2
     - ccache
     - polkit
+    - chaotic-keyring
 
 - shell:
     - [sudo cp ./root-config/49-nopasswd_global.rules /etc/polkit-1/rules.d/, Disabling polkit password]
