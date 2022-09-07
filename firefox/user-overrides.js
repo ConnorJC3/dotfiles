@@ -106,6 +106,8 @@ user_pref("dom.allow_scripts_to_close_windows", true);
 user_pref("browser.tabs.drawInTitlebar", true);
 // Disable Ctrl-Q shortcut (*nix only)
 user_pref("browser.quitShortcut.disabled", true);
+// Disable "Firefox View" tab
+user_pref("browser.tabs.firefox-view", false);
 // Better scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.lines.durationMaxMS", 125);
