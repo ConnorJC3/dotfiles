@@ -7,8 +7,5 @@ export LANGUAGE="en_US.UTF-8"
 # Default Editor
 export EDITOR="vim"
 
-# Default Pager
-export PAGER="less"
-
 # SSH Agent
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
