@@ -116,3 +116,8 @@ ssh-add -l &>/dev/null
 if [ $? -eq 1 ]; then
   ssh-add &> /dev/null
 fi
+
+# Source machine-specific zshrc if it exists
+if [[ -f "${HOME}/.zshrc-extra" ]]; then
+  source "${HOME}/.zshrc-extra"
+fi
