@@ -76,7 +76,7 @@ export SPACESHIP_HASKELL_SYMBOL="haskell "
 export SPACESHIP_JULIA_SYMBOL="julia "
 export SPACESHIP_AWS_SYMBOL="aws "
 export SPACESHIP_GCLOUD_SYMBOL="gcp "
-export SPACESHIP_PYENV_SYMBOL="python "
+export SPACESHIP_PYTHON_SYMBOL="python "
 export SPACESHIP_EMBER_SYMBOL="ember "
 export SPACESHIP_KUBECTL_SYMBOL="k8s "
 export SPACESHIP_TERRAFORM_SYMBOL="terraform "
@@ -105,5 +105,14 @@ zi wait"0" lucid for \
   atclone"dircolors -b LS_COLORS > clrs.zsh" atpull"%atclone" pick"clrs.zsh" nocompile"!" \
     trapd00r/LS_COLORS
 
-# load SSH key
-ssh-add &> /dev/null
+# Start ssh-agent if not running
+ssh-add -l &>/dev/null
+if [ $? -eq 2 ]; then
+  ssh-agent -a ${SSH_AUTH_SOCK} &>/dev/null
+fi
+
+# Add identities to ssh-agent if none
+ssh-add -l &>/dev/null
+if [ $? -eq 1 ]; then
+  ssh-add &> /dev/null
+fi

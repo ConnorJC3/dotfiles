@@ -10,9 +10,6 @@
     ~/.zshenv:
     ~/.config/neofetch:
     ~/.config/paru:
-    ~/.config/systemd/user/ssh-agent.service: systemd-user/ssh-agent.service
-    ~/.ssh/config: ssh/config
 
 - shell:
-    - [systemctl --user enable --now ssh-agent.service, Enabling SSH agent service]
     - [git config --global --add --bool push.autoSetupRemote true, Enable git autoSetupRemote]

@@ -7,7 +7,7 @@ if [[ "$HOSTNAME" == "archiso" ]]; then
   exit 1
 fi
 
-if [[ ! -x "$(command -v pacman)" ]]; then
+if [[ ! -x "$(command -v pacman)" ]] && [[ -z ${USER_ONLY+x} ]]; then
   echo "Missing pacman"
   echo "These dotfiles only support Arch Linux"
   exit 2
