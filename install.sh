@@ -28,9 +28,9 @@ if [[ -z ${BOOTSTRAP+x} ]]; then
   [[ -z ${USER_ONLY+x} ]] && invoke_dotbot bootstrap.conf.yaml
   echo "BOOTSTRAP=n" >> ./saved-config.sh
 fi
-[[ ${INTEL_GPU+x} ]] && invoke_dotbot intel-gpu.conf.yaml
-[[ ${AMD_GPU+x} ]] && invoke_dotbot amd-gpu.conf.yaml
-[[ ${NVIDIA_GPU+x} ]] && invoke_dotbot nvidia-gpu.conf.yaml
+[[ ${INTEL_GPU+x} ]] && [[ -z ${USER_ONLY+x} ]] && invoke_dotbot intel-gpu.conf.yaml
+[[ ${AMD_GPU+x} ]] && [[ -z ${USER_ONLY+x} ]] && invoke_dotbot amd-gpu.conf.yaml
+[[ ${NVIDIA_GPU+x} ]] && [[ -z ${USER_ONLY+x} ]] && invoke_dotbot nvidia-gpu.conf.yaml
 [[ ${GRAPHICAL+x} ]] && invoke_dotbot graphical-user.conf.yaml
 [[ ${GRAPHICAL+x} ]] && [[ -z ${USER_ONLY+x} ]] && invoke_dotbot graphical.conf.yaml
 invoke_dotbot main-user.conf.yaml

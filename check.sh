@@ -25,7 +25,7 @@ if [[ ! -x "$(command -v ssh)" ]]; then
   exit 2
 fi
 
-if [[ ! -x "$(command -v python)" ]]; then
+if [[ ! -x "$(command -v python)" ]] && [[ ! -x "$(command -v python3)" ]]; then
   echo "Missing python (required for dotbot)"
   echo "pacman -S python"
   exit 2
