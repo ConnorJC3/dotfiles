@@ -1433,6 +1433,8 @@ user_pref("dom.push.enabled", true);
 user_pref("network.http.redirection-limit", 50);
 // Enable WebGL (required on some websites, safe(r) with RFP)
 user_pref("webgl.disabled", false);
+// Chime on VPN fix
+user_pref("media.peerconnection.ice.default_address_only", false);
 
 // // Anti-tracking settings
 // // You probably want these, but they may break particularly weird sites
