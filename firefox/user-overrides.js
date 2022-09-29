@@ -24,6 +24,9 @@ user_pref("privacy.userContext.enabled", false);
 user_pref("network.http.max-persistent-connections-per-server", 64);
 // Disable "you have unsent crash reports" popup that is bugged
 user_pref("browser.crashReports.unsubmittedCheck.enabled", false);
+// Disable WebRTC popup
+user_pref("privacy.webrtc.legacyGlobalIndicator", false);
+user_pref("privacy.webrtc.hideGlobalIndicator", true);
 
 // // Fix the web settings
 // // Revert some privacy/security fixes to improve browsing experience
