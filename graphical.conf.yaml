@@ -31,7 +31,7 @@
     - xorg-xwayland
 
 - paru:
-    - nerd-fonts-hack
+    - ttf-hack-nerd
     - firefox-nightly
     - mkmm
 
