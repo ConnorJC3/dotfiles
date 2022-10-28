@@ -5,6 +5,9 @@
       relink: true
       force: true
 
+- shell:
+    - [./firefox/run.sh, Creating user.js]
+
 - link:
     ~/.config/kitty:
     ~/.config/fontconfig:
