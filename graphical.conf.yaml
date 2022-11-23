@@ -33,7 +33,6 @@
 - paru:
     - ttf-hack-nerd
     - firefox-nightly
-    - mkmm
 
 - shell:
     - [systemctl enable --user --now pipewire, Enabling pipewire]
