@@ -113,6 +113,8 @@ user_pref("browser.tabs.drawInTitlebar", true);
 user_pref("browser.quitShortcut.disabled", true);
 // Disable "Firefox View" tab
 user_pref("browser.tabs.firefox-view", false);
+// Disable "Unified Extensions" (restore overflow menu)
+user_pref("extensions.unifiedExtensions.enabled", false);
 // Better scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.lines.durationMaxMS", 125);
