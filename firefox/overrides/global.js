@@ -94,7 +94,7 @@ user_pref("media.av1.enabled", true);
 user_pref("ui.systemUsesDarkTheme", 1);
 user_pref("browser.in-content.dark-mode", true);
 // Enable dark theme
-user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
+user_pref("extensions.activeThemeID", "default-theme@mozilla.org");
 // UI density "Compact"
 user_pref("browser.uidensity", 1);
 // Restore previous session on startup
