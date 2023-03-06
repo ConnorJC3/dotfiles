@@ -103,7 +103,7 @@ zi wait"0a" from"gh-r" as"program" lucid for \
     mikefarah/yq
 
 # arkade tools (async)
-zi wait"0b" atpull"%atclone" run-atpull lucid for \
+zi wait"0b" atpull"%atclone" run-atpull has"arkade" lucid for \
   id-as"kubectl" atclone"arkade get kubectl" eval"kubectl completion zsh" z-shell/null \
   id-as"clusterctl" atclone"arkade get clusterctl" eval"clusterctl completion zsh" z-shell/null \
   id-as"kind" atclone"arkade get kind" eval"kind completion zsh" z-shell/null \
