@@ -110,7 +110,8 @@ zi wait"0b" atpull"%atclone" run-atpull has"arkade" lucid for \
   id-as"kubectx" atclone"arkade get kubectx" z-shell/null \
   id-as"kubens" atclone"arkade get kubens" z-shell/null \
   id-as"talosctl" atclone"arkade get talosctl" eval"talosctl completion zsh" z-shell/null \
-  id-as"kops" atclone"arkade get kops" eval"kops completion zsh" z-shell/null
+  id-as"kops" atclone"arkade get kops" eval"kops completion zsh" z-shell/null \
+  id-as"eksctl" atclone"arkade get eksctl" eval"eksctl completion zsh" z-shell/null
 
 # external completions (async)
 zi wait"0b" as"completion" lucid for \
