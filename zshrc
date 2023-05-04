@@ -94,13 +94,14 @@ zi light-mode for \
   z-shell/z-a-eval
 
 # github releases (async)
-zi wait"0a" from"gh-r" as"program" lucid for \
-  pick"arkade" eval"arkade completion zsh" \
-    alexellis/arkade \
-  mv"jq* -> jq" pick"jq" \
-    stedolan/jq \
-  mv"yq* -> yq" pick"yq" \
-    mikefarah/yq
+zi wait"0a" from"gh-r" as"command" lucid for \
+  pick"arkade" eval"arkade completion zsh" alexellis/arkade \
+  mv"jq* -> jq" pick"jq" stedolan/jq \
+  mv"yq* -> yq" pick"yq" mikefarah/yq
+
+# github commands
+zi wait"0a" as"command" lucid for \
+  pick"bin/goenv" eval"goenv init -" syndbg/goenv
 
 # arkade tools (async)
 zi wait"0b" atpull"%atclone" run-atpull has"arkade" lucid for \
@@ -122,17 +123,14 @@ zi wait"0b" as"completion" lucid for \
 
 # plugins (async)
 zi wait"0c" lucid for \
-  eval"dircolors -b LS_COLORS" \
-    trapd00r/LS_COLORS
+  eval"dircolors -b LS_COLORS" trapd00r/LS_COLORS
 
 # special plugins (async)
 # These MUST be loaded AFTER anything that adds completions
 # Put all completions in wait"0b" or earlier!
 zi wait"0c" lucid for \
-  atinit"zicompinit; zicdreplay" \
-    z-shell/F-Sy-H \
-  atload"_zsh_autosuggest_start" \
-    zsh-users/zsh-autosuggestions \
+  atinit"zicompinit; zicdreplay" z-shell/F-Sy-H \
+  atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
 
 if [[ "${+commands[ssh-add]}" == 1 ]] && [[ "${+commands[ssh-agent]}" == 1 ]]; then
   # Start ssh-agent if not running
