@@ -97,11 +97,11 @@ zi light-mode for \
 zi wait"0a" from"gh-r" as"command" lucid for \
   pick"arkade" eval"arkade completion zsh" alexellis/arkade \
   mv"jq* -> jq" pick"jq" stedolan/jq \
-  mv"yq* -> yq" pick"yq" mikefarah/yq
+  mv"yq* -> yq" pick"yq" mikefarah/yq \
 
 # github commands
 zi wait"0a" as"command" lucid for \
-  pick"bin/goenv" eval"goenv init -" syndbg/goenv
+  pick"bin/goenv" eval"goenv init -" syndbg/goenv \
 
 # arkade tools (async)
 zi wait"0b" atpull"%atclone" run-atpull has"arkade" lucid for \
@@ -113,17 +113,17 @@ zi wait"0b" atpull"%atclone" run-atpull has"arkade" lucid for \
   id-as"talosctl" atclone"arkade get talosctl" eval"talosctl completion zsh" z-shell/null \
   id-as"kops" atclone"arkade get kops" eval"kops completion zsh" z-shell/null \
   id-as"eksctl" atclone"arkade get eksctl" eval"eksctl completion zsh" z-shell/null \
-  id-as"helm" atclone"arkade get helm" eval"helm completion zsh" z-shell/null
+  id-as"helm" atclone"arkade get helm" eval"helm completion zsh" z-shell/null \
 
 # external completions (async)
 zi wait"0b" as"completion" lucid for \
   zsh-users/zsh-completions \
   pick"completion/_kubectx.zsh" ahmetb/kubectx \
-  pick"completion/_kubens.zsh" ahmetb/kubectx
+  pick"completion/_kubens.zsh" ahmetb/kubectx \
 
 # plugins (async)
 zi wait"0c" lucid for \
-  eval"dircolors -b LS_COLORS" trapd00r/LS_COLORS
+  eval"dircolors -b LS_COLORS" trapd00r/LS_COLORS \
 
 # special plugins (async)
 # These MUST be loaded AFTER anything that adds completions
