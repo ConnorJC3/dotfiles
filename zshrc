@@ -93,9 +93,13 @@ zi light denysdovhan/spaceship-prompt
 zi light-mode for \
   z-shell/z-a-eval
 
+# arkade (sync)
+# MUST be sync to be in $PATH for later
+zi ice from"gh-r" as"command" pick"arkade" eval"./arkade completion zsh"
+zi light alexellis/arkade
+
 # github releases (async)
 zi wait"0a" from"gh-r" as"command" lucid for \
-  pick"arkade" eval"arkade completion zsh" alexellis/arkade \
   mv"jq* -> jq" pick"jq" jqlang/jq \
   mv"yq* -> yq" pick"yq" mikefarah/yq \
 
@@ -104,7 +108,7 @@ zi wait"0a" as"command" lucid for \
   pick"bin/goenv" eval"goenv init -" syndbg/goenv \
 
 # arkade tools (async)
-zi wait"0b" atpull"%atclone" run-atpull has"arkade" lucid for \
+zi wait"0a" atpull"%atclone" run-atpull has"arkade" lucid for \
   id-as"kubectl" atclone"arkade get kubectl" eval"kubectl completion zsh" z-shell/null \
   id-as"clusterctl" atclone"arkade get clusterctl" eval"clusterctl completion zsh" z-shell/null \
   id-as"kind" atclone"arkade get kind" eval"kind completion zsh" z-shell/null \
