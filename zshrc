@@ -96,7 +96,7 @@ zi light-mode for \
 # github releases (async)
 zi wait"0a" from"gh-r" as"command" lucid for \
   pick"arkade" eval"arkade completion zsh" alexellis/arkade \
-  mv"jq* -> jq" pick"jq" stedolan/jq \
+  mv"jq* -> jq" pick"jq" jqlang/jq \
   mv"yq* -> yq" pick"yq" mikefarah/yq \
 
 # github commands
