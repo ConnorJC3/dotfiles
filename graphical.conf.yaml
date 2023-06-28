@@ -38,5 +38,6 @@
     - [systemctl enable --user --now pipewire, Enabling pipewire]
     - [systemctl enable --user --now pipewire-pulse, Enabling pipewire-pulse]
     - [sudo mkdir -p /etc/firefox/policies, Creating policies.json directory]
-    - [sudo cp ./root-config/policies.json /etc/firefox/policies/policies.json, Installing policies.json]
+    - [sudo cp ./root-config/policies.json /etc/firefox/policies/policies.json, Installing Firefox policies.json]
+    - [sudo cp ./root-config/10-wayland.conf /etc/sddm.conf.d/10-wayland.conf, Installing SDDM 10-wayland.conf]
     - [sudo systemctl enable sddm, Enabling display manager]
