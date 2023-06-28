@@ -1,3 +1,13 @@
+// // WALL OF SHAME
+// // The top of this file is dedicated to websites so broken
+// // that I had to modify settings to get them specifically to work
+// //
+// chase.com is broken
+// JP Morgan & Chase, a company with a >$400 USD market cap, has a
+// website that breaks if you don't supply a referer
+// Referer-based security in 2023!!!
+user_pref("network.http.referer.XOriginPolicy", 1);
+
 // // Globally useful settings
 // // You almost certainly want these
 // //
