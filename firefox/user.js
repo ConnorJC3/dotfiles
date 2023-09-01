@@ -94,6 +94,7 @@ user_pref("network.http.referer.XOriginTrimmingPolicy", 2);
 user_pref("accessibility.force_disabled", 1);
 // Disable "Firefox View" tab
 user_pref("browser.tabs.firefox-view", false);
+user_pref("browser.tabs.firefox-view-next", false);
 
 // // Setup specific settings
 // // These _may_ not work for you, toggle if you have issues
