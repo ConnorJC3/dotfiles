@@ -101,7 +101,7 @@ user_pref("browser.tabs.firefox-view-next", false);
 // //
 // WebRender
 user_pref("gfx.webrender.all", true);
-user_pref("gfx.webrender.compositor.force-enabled", true);
+user_pref("gfx.webrender.compositor.force-enabled", false);
 // Fission (process-based isolation)
 user_pref("fission.autostart", true);
 // Explicitly disable proton context menu (use native)
