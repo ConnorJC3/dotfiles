@@ -1,7 +1,6 @@
 ---
 - paru:
     - plasma-meta
-    - plasma-wayland-session
     - sddm
     - breeze-gtk
     - kde-gtk-config

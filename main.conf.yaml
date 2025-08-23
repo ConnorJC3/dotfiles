@@ -3,7 +3,7 @@
     - zsh
     - bat
     - pacman-contrib
-    - neofetch
+    - unifetch
     - ccache
     - curl
     - diff-so-fancy
