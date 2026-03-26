@@ -8,7 +8,7 @@ export LANGUAGE="en_US.UTF-8"
 export EDITOR="vim"
 
 # SSH Agent
-export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+export SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-${XDG_RUNTIME_DIR}/ssh-agent.socket}"
 
 # goenv settings
 export GOENV_GOMOD_VERSION_ENABLE=1
